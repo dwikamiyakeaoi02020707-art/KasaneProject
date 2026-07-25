@@ -9,3 +9,5 @@ public/
 .env
 .env.build
 .vercel
+.tmp
+*lock*

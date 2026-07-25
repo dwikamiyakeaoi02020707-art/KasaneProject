@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Teto OS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: #ff4d6d; /* Teto Red/Pink */
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #a0a0b8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .download-card {
+            background-color: #24243e;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border-top: 4px solid #ff4d6d;
+            margin-bottom: 2rem;
+        }
+
+        .download-card h2 {
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .info-text {
+            color: #a0a0b8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn .icon {
+            margin-right: 10px;
+        }
+
+        /* Warna unik untuk masing-masing tombol */
+        .pixeldrain { background-color: #3b3b58; }
+        .pixeldrain:hover { background-color: #4a4a6d; transform: translateY(-2px); }
+
+        .gdrive { background-color: #1fa363; }
+        .gdrive:hover { background-color: #17824e; transform: translateY(-2px); }
+
+        .mediafire { background-color: #0078D7; }
+        .mediafire:hover { background-color: #005a9e; transform: translateY(-2px); }
+
+        .archive { background-color: #ff4d6d; color: #ffffff; }
+        .archive:hover { background-color: #e63956; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3); }
+
+        .other-projects {
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: #a0a0b8;
+        }
+
+        .highlight {
+            color: #ff4d6d;
+            font-weight: bold;
+        }
+
+        footer {
+            font-size: 0.85rem;
+            color: #6b6b8e;
+            border-top: 1px solid #3b3b58;
+            padding-top: 1rem;
+        }
+
+        footer p {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Notifikasi (Toast) */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4d6d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: opacity 0.4s ease;
+            z-index: 1000;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Teto OS</h1>
+            <p class="subtitle">Lightweight Custom Windows Build.</p>
+        </header>
+
+        <main class="download-card">
+            <h2>Pilih Server Unduhan</h2>
+            <p class="info-text">Pilih salah satu tautan di bawah ini untuk mengunduh file ISO Teto OS terbaru.</p>
+
+            <div class="button-group">
+                <a href="https://sfl.gl/Bdf6Z" target="_blank" class="btn pixeldrain" data-server="Pixeldrain">
+                    <span class="icon">⬇️</span> Pixeldrain
+                </a>
+                <a href="https://sfl.gl/5qOjJu" target="_blank" class="btn gdrive" data-server="Google Drive">
+                    <span class="icon">⬇️</span> Google Drive
+                </a>
+                <a href="https://sfl.gl/HNUabb45" target="_blank" class="btn mediafire" data-server="Mediafire">
+                    <span class="icon">⬇️</span> Mediafire
+                </a>
+                <a href="https://sfl.gl/9a4OHgv" target="_blank" class="btn archive" data-server="Arsip Teto OS">
+                    <span class="icon">📦</span> Arsip Teto OS
+                </a>
+            </div>
+        </main>
+
+        <section class="other-projects">
+            <p>Coba juga custom build kami lainnya: <span class="highlight">Nookleaf</span> & <span class="highlight">Hana</span></p>
+        </section>
+
+        <div id="toast" class="toast hidden">Unduhan dimulai dari server...</div>
+
+        <footer>
+            <p><strong>TetoYapping Community Network</strong></p>
+            <p>Developed & Moderated by: Arie Eka Saputra, Hirozilia, Jihan, & Abqari</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.btn');
+            const toast = document.getElementById('toast');
+            let toastTimeout;
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const serverName = button.getAttribute('data-server');
+                    showToast(`Membuka tab unduhan ${serverName}...`);
+                });
+            });
+
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.remove('hidden');
+
+                // Hapus timeout yang lama jika tombol diklik berkali-kali
+                clearTimeout(toastTimeout);
+
+                // Sembunyikan toast setelah 3 detik
+                toastTimeout = setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

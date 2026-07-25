@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TetoYapping Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- CSS SETUP --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,700;1,900&display=swap');
+
+        :root {
+            --primary-red: #d00040;
+            --bg-dark: #050000;
+            --text-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #3a0000 0%, #000000 70%);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: hidden; /* Lock scroll saat OOBE */
+        }
+
+        /* --- OOBE (WELCOME SCREEN) --- */
+        #oobe-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+        }
+
+        .oobe-content { padding: 20px; animation: fadeIn 1s ease; }
+        .oobe-title { font-size: 4rem; font-weight: 900; font-style: italic; color: var(--primary-red); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 20px rgba(208, 0, 64, 0.6); }
+        .oobe-subtitle { font-size: 1.2rem; color: #ddd; margin-bottom: 40px; font-weight: 300; }
+
+        .oobe-btn {
+            background: transparent; color: var(--primary-red); border: 2px solid var(--primary-red);
+            padding: 15px 40px; font-size: 1.5rem; font-weight: 800; font-style: italic;
+            text-transform: uppercase; cursor: pointer; border-radius: 50px;
+            transition: all 0.3s; box-shadow: 0 0 15px rgba(208, 0, 64, 0.3);
+        }
+        .oobe-btn:hover { background: var(--primary-red); color: white; box-shadow: 0 0 30px rgba(208, 0, 64, 0.8); transform: scale(1.1); }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            z-index: 100;
+            position: relative;
+        }
+
+        .nav-logo {
+            font-style: italic; font-weight: 900; font-size: 1.5rem;
+            color: white; text-transform: uppercase; letter-spacing: 1px;
+            display: none;
+        }
+
+        .desktop-menu {
+            display: flex; align-items: center; gap: 20px;
+            width: 100%; justify-content: flex-end;
+        }
+
+        .desktop-menu a {
+            color: white; text-decoration: none; text-transform: uppercase;
+            font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.3s;
+        }
+
+        .desktop-menu a:hover { color: var(--primary-red); text-shadow: 0 0 10px var(--primary-red); }
+
+        .btn-report-nav {
+            background-color: var(--primary-red); color: white !important;
+            padding: 8px 20px; border-radius: 20px; display: flex; align-items: center;
+            gap: 8px; box-shadow: 0 0 15px rgba(208, 0, 64, 0.4); border: 1px solid transparent;
+        }
+        .btn-report-nav:hover { background-color: transparent !important; border-color: var(--primary-red); transform: scale(1.05); }
+
+        .hamburger { display: none; font-size: 1.8rem; color: white; cursor: pointer; z-index: 102; }
+
+        /* Mobile Menu */
+        .mobile-menu-overlay {
+            position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+            background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(10px);
+            border-left: 1px solid var(--primary-red); z-index: 101;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            gap: 30px; transition: right 0.4s ease;
+        }
+        .mobile-menu-overlay.active { right: 0; }
+        .mobile-menu-overlay a { color: white; font-size: 1.5rem; font-weight: 700; text-decoration: none; text-transform: uppercase; font-style: italic; }
+        .mobile-menu-overlay a:hover { color: var(--primary-red); }
+
+        /* Main Layout */
+        .main-container { display: flex; flex-wrap: wrap; padding: 0 50px; align-items: center; min-height: calc(100vh - 80px); position: relative; }
+        .left-col { flex: 1; padding-right: 50px; min-width: 300px; animation: slideInLeft 1s ease; }
+        h1.title { font-size: 5rem; font-style: italic; font-weight: 900; line-height: 1; margin-bottom: 10px; text-shadow: 3px 3px 0px #d00040; }
+        p.slogan { font-style: italic; font-size: 1.2rem; margin-bottom: 30px; color: #eee; font-weight: 300; border-left: 4px solid var(--primary-red); padding-left: 15px; }
+        p.description { font-size: 1rem; line-height: 1.6; max-width: 600px; color: #ccc; text-align: justify; margin-bottom: 20px; }
+
+        .right-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 300px; position: relative; animation: slideInRight 1s ease; }
+        .status-bar { margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px; }
+        .dot { height: 10px; width: 10px; background-color: #25d366; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #25d366; }
+        .join-text { font-style: italic; font-weight: 700; font-size: 1.5rem; margin-bottom: 25px; text-align: center; }
+
+        .btn-group { display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 380px; }
+        .btn-white { background: white; color: black; border: none; padding: 15px 0; border-radius: 50px; font-size: 1.3rem; font-style: italic; font-weight: 800; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 15px; position: relative; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .btn-white i { font-size: 1.6rem; transition: transform 0.3s; }
+        .icon-wa { color: #25D366; } .icon-dc { color: #5865F2; } .icon-donate { color: #FFD700; text-shadow: 0 0 2px rgba(0,0,0,0.5); }
+        .btn-white:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(255, 255, 255, 0.4); }
+
+        .jp-text { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; text-orientation: upright; font-size: 5rem; font-weight: 900; color: transparent; -webkit-text-stroke: 2px #d00040; z-index: -1; user-select: none; pointer-events: none; opacity: 0.5; }
+
+        .mini-player { position: fixed; bottom: 20px; left: 50px; background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 30px; border: 1px solid var(--primary-red); display: flex; align-items: center; gap: 15px; font-size: 0.85rem; z-index: 100; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.5); transition: all 0.3s ease; }
+        .btn-play { background: var(--primary-red); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .playing-indicator { display: none; width: 8px; height: 8px; background: #25d366; border-radius: 50%; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 20px 25px; }
+            .nav-logo { display: block; } .desktop-menu { display: none; } .hamburger { display: block; }
+            .main-container { flex-direction: column; padding: 10px 25px 120px 25px; text-align: center; }
+            h1.title { font-size: 3rem; } p.slogan { font-size: 0.9rem; border: none; color: #ff80ab; }
+            .left-col { padding-right: 0; } .right-col { width: 100%; }
+            .btn-group { width: 100%; } .btn-white { font-size: 1.1rem; }
+            .jp-text { display: none; }
+            .mini-player { left: 50%; transform: translateX(-50%); width: 90%; justify-content: center; }
+            .oobe-title { font-size: 2.5rem; } .oobe-subtitle { font-size: 0.9rem; }
+        }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; backdrop-filter: blur(8px); padding: 20px; }
+        .modal.show { display: flex; }
+        .modal-content { background: #111; border: 2px solid var(--primary-red); padding: 25px; border-radius: 20px; width: 100%; max-width: 500px; text-align: center; position: relative; max-height: 85vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 20px; cursor: pointer; color: #fff; background: #333; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        .rules-title { color: var(--primary-red); font-style: italic; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; font-size: 1.5rem; }
+        .rules-body { text-align: left; font-size: 0.9rem; line-height: 1.5; color: #ddd; }
+        .rules-item strong { color: #fff; font-size: 0.95rem; display: block; }
+
+        .credit-role { color: var(--primary-red); font-weight: bold; margin-top: 15px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        .credit-names { list-style: none; color: #fff; margin-bottom: 5px; font-size: 0.95rem; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://files.catbox.moe/qco9k3.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- OOBE / WELCOME SCREEN -->
+    <div id="oobe-overlay">
+        <div class="oobe-content">
+            <h1 class="oobe-title">TETOYAPPING</h1>
+            <p class="oobe-subtitle">"Oho? Akhirnya kamu datang juga..."<br>System Initialized. Music Ready.</p>
+            <button class="oobe-btn" onclick="enterSite()">ENTER SYSTEM</button>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-logo">TETOYAPPING</div>
+        <div class="desktop-menu">
+            <a onclick="location.reload()">HOME</a>
+            <a onclick="openRules()">RULES</a>
+            <a onclick="openCredits()">CREDITS</a>
+
+            <!-- Link: Nookleaf -->
+            <a onclick="nookleafClick()">NOOKLEAF</a>
+
+            <a onclick="evolutionClick()">EVOLUTION</a>
+
+            <a href="https://wa.me/62895631954782" target="_blank" class="btn-report-nav">
+                <i class="fas fa-triangle-exclamation"></i> LAPOR ADMIN
+            </a>
+        </div>
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU DRAWER -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div style="position: absolute; top: 20px; right: 20px; font-size: 2rem; color:white; cursor:pointer;" onclick="toggleMobileMenu()">&times;</div>
+
+        <a href="https://wa.me/62895631954782" target="_blank" style="color: var(--primary-red) !important; border: 1px solid var(--primary-red); padding: 10px 20px; border-radius: 50px;">
+            <i class="fas fa-triangle-exclamation"></i> LAPOR ADMIN
+        </a>
+
+        <a onclick="location.reload(); toggleMobileMenu()">HOME</a>
+        <a onclick="openRules(); toggleMobileMenu()">RULES</a>
+        <a onclick="openCredits(); toggleMobileMenu()">CREDITS</a>
+
+        <!-- Link: Nookleaf -->
+        <a onclick="nookleafClick(); toggleMobileMenu()">NOOKLEAF</a>
+
+        <a onclick="evolutionClick(); toggleMobileMenu()">EVOLUTION</a>
+    </div>
+
+    <div class="jp-text">テトヤッピング</div>
+
+    <div class="main-container">
+        <div class="left-col">
+            <h1 class="title">TetoYapping</h1>
+            <p class="slogan">"Share your voice, connect, and keep yapping!"</p>
+            <p class="description">
+                Dari sirkel kecil menjadi komunitas publik, TetoYapping hadir sebagai markas bagi antusias teknologi, homebase mod Windows <b>KasaneProject</b>, serta arena pamer score Project Sekai. Tempat bebas buat yapping!
+            </p>
+        </div>
+
+        <div class="right-col">
+            <!-- UPDATE JUMLAH MEMBER DI SINI -->
+            <div class="status-bar">
+                <span class="dot"></span>
+                <span>Member WhatsApp 207 Member</span>
+            </div>
+            <div class="join-text">Link Join Komunitas</div>
+
+            <div class="btn-group">
+                <!-- UPDATE LINK WHATSAPP DI SINI -->
+                <a href="https://chat.whatsapp.com/CWIT9rEQ29D0UViL6B4Kkq" target="_blank" class="btn-white">
+                    <i class="fab fa-whatsapp icon-wa"></i> WhatsApp
+                </a>
+                <a href="https://discord.com/invite/7WbAnbuhBJ" target="_blank" class="btn-white">
+                    <i class="fab fa-discord icon-dc"></i> Discord
+                </a>
+                <a href="https://saweria.co/tetoyapping29312" target="_blank" class="btn-white">
+                    <i class="fas fa-hand-holding-heart icon-donate"></i> Donasi
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini Player -->
+    <div class="mini-player" onclick="toggleMusic(event)">
+        <button id="playBtn" class="btn-play"><i class="fas fa-play"></i></button>
+        <div id="playingIndicator" class="playing-indicator"></div>
+        <span id="songTitle">Music Ready 🎵</span>
+    </div>
+
+    <!-- MODALS -->
+    <div id="rulesModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeRules()">&times;</span>
+            <h2 class="rules-title">RULES KOMUNITAS</h2>
+            <div class="rules-body">
+                <div class="rules-item"><strong>1. Verifikasi Member</strong>Member baru WAJIB Intro. No intro = dianggap bot.</div>
+                <div class="rules-item"><strong>2. Chill & Respect</strong>Beda pendapat wajar. Toxic boleh, tapi sewajarnya.</div>
+                <div class="rules-item"><strong>3. No Drama</strong>Dilarang menyerang personal atau problematic.</div>
+                <div class="rules-item"><strong>4. Larangan Keras (Auto Kick) 🚫</strong>• SARA & Rasisme.<br>• Pornografi/NSFW (Kecuali View Once).<br>• Spam Hoax & JUDOL.</div>
+                <div class="rules-item"><strong>5. Bot</strong>Pakai bot secukupnya, jangan spam.</div>
+                <div class="rules-divider"></div>
+                <div class="rules-item"><strong>⚖️ SANKSI</strong>Teguran 1-2x -> Kick. SARA/Judol -> Kick Permanen.</div>
+                <div class="rules-footer"><strong>Catatan:</strong> NSFW wajib "View Once". Jika dikacangin, coba nimbrung lagi nanti ya! 😄</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="creditsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCredits()">&times;</span>
+            <h2 class="rules-title">CREDITS</h2>
+            <div class="credit-role">👑 Owner Grup</div><ul class="credit-names"><li>Holymagi</li></ul>
+            <div class="credit-role">🛡️ Admin</div><ul class="credit-names"><li>Hirolzia, AES</li><li>Ikachia Kishishako</li><li>Nero Claudius, Sarwan</li></ul>
+            <div class="credit-role">🤖 Bot WhatsApp</div><ul class="credit-names"><li>Arisubot, Ido@rexprjkt, HBII</li></ul>
+            <div class="credit-role" style="margin-top:20px; font-size: 0.7rem; color: #666;">Ambrosius Gang 2021-2024</div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById("bgMusic");
+        const playBtn = document.getElementById("playBtn");
+        const songTitle = document.getElementById("songTitle");
+        const indicator = document.getElementById("playingIndicator");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const oobeOverlay = document.getElementById("oobe-overlay");
+
+        let isPlaying = false;
+
+        function enterSite() {
+            audio.volume = 0.5;
+            audio.play().then(() => {
+                isPlaying = true; updateVisuals(true);
+            }).catch(e => console.log("Audio error:", e));
+
+            oobeOverlay.style.opacity = '0';
+            oobeOverlay.style.visibility = 'hidden';
+            document.body.style.overflowY = 'auto';
+        }
+
+        function toggleMobileMenu() { mobileMenu.classList.toggle("active"); }
+
+        function updateVisuals(playing) {
+            if (playing) {
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                songTitle.innerText = "Now Playing: Teto Vibes";
+                indicator.style.display = "block";
+                songTitle.style.color = "#ff4081";
+            } else {
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                songTitle.innerText = "Music Paused";
+                indicator.style.display = "none";
+                songTitle.style.color = "#ffffff";
+            }
+        }
+
+        function toggleMusic(e) {
+            e.stopPropagation();
+            if (isPlaying) { audio.pause(); isPlaying = false; updateVisuals(false); }
+            else { audio.volume = 0.5; audio.play(); isPlaying = true; updateVisuals(true); }
+        }
+
+        function evolutionClick() { alert("🚧 Evolution Web sedang WIP (Work In Progress)!"); }
+
+        // FUNGSI NOOKLEAF
+        function nookleafClick() {
+            alert("🌿 Nookleaf Project (Windows 11 Mod)\n\nStatus: Coming Soon / WIP!");
+        }
+
+        const creditsModal = document.getElementById("creditsModal");
+        const rulesModal = document.getElementById("rulesModal");
+        function openCredits() { creditsModal.classList.add("show"); }
+        function openRules() { rulesModal.classList.add("show"); }
+        function closeCredits() { creditsModal.classList.remove("show"); }
+        function closeRules() { rulesModal.classList.remove("show"); }
+        window.onclick = function(e) {
+            if(e.target == creditsModal) closeCredits();
+            if(e.target == rulesModal) closeRules();
+        }
+    </script>
+</body>
+</html>

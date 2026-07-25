@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TetoOS Download Archive</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* Top Navigation Bar Mimic */
+        .navbar {
+            background-color: #161b22;
+            padding: 15px 20px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #f0f6fc;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        .search-bar {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 6px 12px;
+            color: #c9d1d9;
+            width: 250px;
+            font-size: 0.9rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* README / Panel Box */
+        .archive-panel {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .panel-header {
+            background-color: #21262d;
+            padding: 12px 20px;
+            border-bottom: 1px solid #30363d;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b949e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .panel-body {
+            padding: 25px;
+        }
+
+        /* Typography inside Panel */
+        h1 {
+            color: #f0f6fc;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .divider {
+            height: 1px;
+            background-color: #30363d;
+            margin: 20px 0;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #c9d1d9;
+        }
+        .status-text {
+            color: #8b949e;
+            font-size: 0.95rem;
+        }
+
+        /* Highlight / Download Section */
+        h2 {
+            color: #f0f6fc;
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+            margin-top: 20px;
+        }
+        .download-link {
+            color: #58a6ff;
+            text-decoration: none;
+            word-break: break-all;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .download-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Directory Listing Table */
+        .directory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .directory-table th {
+            background-color: #21262d;
+            color: #8b949e;
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid #30363d;
+        }
+        .directory-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #21262d;
+            font-size: 0.9rem;
+        }
+        .directory-table tr:last-child td {
+            border-bottom: none;
+        }
+        .directory-table tr:hover td {
+            background-color: #1f242c;
+        }
+
+        /* Column alignments & widths */
+        .col-name { width: 65%; }
+        .col-size { width: 15%; text-align: right; color: #8b949e; }
+        .col-date { width: 20%; text-align: right; color: #8b949e; }
+        .directory-table th.col-size, .directory-table th.col-date {
+            text-align: right;
+        }
+
+        /* File/Folder Items */
+        .item-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #c9d1d9;
+            text-decoration: none;
+        }
+        .item-link:hover {
+            color: #58a6ff;
+        }
+
+        /* Icons via SVG */
+        .icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+        .icon-folder { color: #e3b341; }
+        .icon-file { color: #8b949e; }
+        .icon-readme { color: #4bc66d; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #8b949e;
+        }
+        .footer a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="#" class="navbar-brand">
+            <svg class="icon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill="#f0f6fc" d="M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.25a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195l-5.25-4.2Z"></path></svg>
+            TetoOS Archive
+        </a>
+        <input type="text" class="search-bar" placeholder="Cari file...">
+    </div>
+
+    <div class="container">
+
+        <div class="archive-panel">
+            <div class="panel-header">
+                <svg class="icon icon-readme" viewBox="0 0 16 16" version="1.1" width="16" height="16"><path fill="currentColor" d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25V1.75Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25H1.75Z"></path><path fill="currentColor" d="M3.75 3.5a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Zm0 3a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Zm0 3a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"></path></svg>
+                README.txt
+            </div>
+            <div class="panel-body">
+                <h1>TetoOS Download Archive</h1>
+                <div class="divider"></div>
+                <p>Halaman ini berisi arsip resmi untuk file sistem operasi <strong>TetoOS</strong>.</p>
+                <p class="status-text"><em>Pengembangan aktif berjalan. Silakan unduh berkas melalui direktori di bawah atau menggunakan direct link yang disediakan.</em></p>
+
+                <div class="divider"></div>
+
+                <h2>Rilisan Saat Ini (Current Release)</h2>
+                <p>Versi yang tersedia saat ini adalah <strong>tetoOS-early_ver-08513M26</strong>. Kamu bisa mengunduhnya secara langsung (direct download) melalui link berikut:</p>
+                <a href="https://download1580.mediafire.com/fr8p82kfhojg4Up4C08lq_xBMhPu9q8cIfvHgiw17jX5Fy8V93Wg0zUuGZGrwdD1KMhIPmMT8KTnH4TiYqDfwlJy5wyHEuTImhDTBxz4GgQ6hA--uAMTwTDQIm8QcBjP6HRr0H3tMYXC_whiRDDUAkjJD4zPkwug6tuoHD98zx4/idgg8m5lkntblpm/tetoOS-early_ver-08513M26.zip" class="download-link" target="_blank">
+                    [Direct Download] tetoOS-early_ver-08513M26.zip (MediaFire)
+                </a>
+            </div>
+        </div>
+
+        <table class="directory-table">
+            <thead>
+                <tr>
+                    <th class="col-name">Nama File / Folder</th>
+                    <th class="col-size">Ukuran</th>
+                    <th class="col-date">Tanggal Dimodifikasi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#" class="item-link">
+                            <svg class="icon icon-folder" viewBox="0 0 16 16"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.586l-1.72-1.72A.74.74 0 0 0 5.34 1H1.75ZM1.5 2.75c0-.138.112-.25.25-.25H5.34l1.72 1.72a.74.74 0 0 0 .53.22h6.66c.138 0 .25.112.25.25v1.25H1.5V2.75Zm0 4h13v6.5a.25.25 0 0 1-.25.25H1.75a.25.25 0 0 1-.25-.25v-6.5Z"></path></svg>
+                            old-releases
+                        </a>
+                    </td>
+                    <td class="col-size">-</td>
+                    <td class="col-date">2026-07-08</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="https://download1580.mediafire.com/fr8p82kfhojg4Up4C08lq_xBMhPu9q8cIfvHgiw17jX5Fy8V93Wg0zUuGZGrwdD1KMhIPmMT8KTnH4TiYqDfwlJy5wyHEuTImhDTBxz4GgQ6hA--uAMTwTDQIm8QcBjP6HRr0H3tMYXC_whiRDDUAkjJD4zPkwug6tuoHD98zx4/idgg8m5lkntblpm/tetoOS-early_ver-08513M26.zip" class="item-link" target="_blank">
+                            <svg class="icon icon-file" viewBox="0 0 16 16"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l3.25 3.25c.329.329.513.774.513 1.237v9.25A1.75 1.75 0 0 1 13.5 16h-9.75A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.75a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9.5 4.25V1.5Zm6.75.06v2.69a.25.25 0 0 0 .25.25h2.69a.25.25 0 0 0-.06-.06l-3.25-3.25a.25.25 0 0 0-.06-.06Z"></path></svg>
+                            tetoOS-early_ver-08513M26.zip
+                        </a>
+                    </td>
+                    <td class="col-size">2 GB</td>
+                    <td class="col-date">2026-07-08</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="https://download1472.mediafire.com/5f9xi3414cugW7vfPnkQwVw8Iiv8Rm1Xo2wy6WuC4cZ0kRILjeMXhOZyCY9AZRy58bZDioek7qi5ajbMXvKVuXwCWc8AGRCh83SdHU-I5xBQ6iFXthgtNldVohlGv-2oPHRGlzxqGMM08y6TuuSYOXw29yreoGvmQsVZ9NTYKgjVFmU/av0l796gljhurrk/README.txt" class="item-link" target="_blank">
+                            <svg class="icon icon-readme" viewBox="0 0 16 16"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25V1.75Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25H1.75Z"></path><path d="M3.75 3.5a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Zm0 3a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Zm0 3a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"></path></svg>
+                            README.txt
+                        </a>
+                    </td>
+                    <td class="col-size">546 B</td>
+                    <td class="col-date">2026-07-08</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            Powered by <a href="#">Directory Lister Clone</a> &bull; TetoOS Archive &copy; 2026
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nookleaf & tetoOS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* === DARK MODE (DEFAULT - HIJAU NOOKLEAF) === */
+        body {
+            background-color: #05100a;
+            background-image: radial-gradient(circle at 80% -10%, #114226 0%, #05100a 60%),
+                              radial-gradient(circle at 10% 90%, #0a2617 0%, transparent 50%);
+            color: #e2e8f0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            transition: background-color 0.8s ease, background-image 0.8s ease, color 0.5s;
+        }
+
+        /* === TRANSISI SEWAKTU MASUK KE BERANDA TETO OS === */
+        body.teto-theme {
+            background-color: #0a0506;
+            background-image: radial-gradient(circle at 80% -10%, #42111a 0%, #0a0506 60%),
+                              radial-gradient(circle at 10% 90%, #260a0f 0%, transparent 50%);
+        }
+
+        #oobe-screen, #shutdown-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #030805;
+            background-image: radial-gradient(circle at 50% 50%, #0a2617 0%, #030805 100%);
+            z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1.5s ease-out, visibility 1.5s, background 0.5s;
+        }
+
+        #shutdown-screen { opacity: 0; visibility: hidden; text-align: center; padding: 0 20px; }
+
+        .oobe-logo { font-size: 3rem; font-weight: 800; color: #fff; margin-bottom: 20px; animation: pulse-glow 2s infinite alternate; }
+        .oobe-logo span { color: #10b981; }
+
+        @keyframes pulse-glow { from { text-shadow: 0 0 10px rgba(16, 185, 129, 0.2); } to { text-shadow: 0 0 20px rgba(16, 185, 129, 0.6); } }
+
+        .blinking-text { color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; animation: blinker 1.5s linear infinite; cursor: pointer; margin-top: 20px; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        .loading-container { width: 300px; margin-top: 20px; display: none; flex-direction: column; align-items: center; }
+        .progress-bar-box { width: 100%; height: 8px; background: rgba(16, 185, 129, 0.1); border-radius: 10px; border: 1px solid rgba(16, 185, 129, 0.3); overflow: hidden; position: relative; }
+        .progress-bar-fill { height: 100%; width: 0%; background: #10b981; box-shadow: 0 0 10px #10b981; transition: width 0.1s linear; }
+        .loading-text { color: #94a3b8; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-top: 10px; }
+        .shutdown-loader { width: 40px; height: 40px; border: 4px solid rgba(16, 185, 129, 0.2); border-top-color: #10b981; border-radius: 50%; animation: spin 1s linear infinite; margin-top: 30px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .navbar { padding: 1.5rem 5%; background: rgba(5, 16, 10, 0.4); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(16, 185, 129, 0.1); cursor: default; transition: background 0.3s, border-color 0.5s; }
+        body.teto-theme .navbar { border-bottom-color: rgba(244, 63, 94, 0.2); }
+
+        .navbar-brand { color: #fff; font-weight: 700; font-size: 1.4rem; cursor: pointer; }
+        .brand-highlight { color: #10b981; transition: color 0.5s; }
+        body.teto-theme .brand-highlight { color: #f43f5e; }
+
+        .nav-link { color: #94a3b8; font-weight: 500; margin: 0 10px; transition: 0.3s; cursor: pointer; }
+        .nav-link:hover, .nav-link.active { color: #10b981 !important; }
+        body.teto-theme .nav-link:hover, body.teto-theme .nav-link.active { color: #f43f5e; }
+
+        .glass-dropdown { background: rgba(10, 25, 15, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); min-width: 340px; margin-top: 20px !important; transition: border-color 0.5s; }
+        body.teto-theme .glass-dropdown { border-color: rgba(244, 63, 94, 0.3); background: rgba(15, 10, 12, 0.85); }
+
+        .glass-dropdown .dropdown-item { border-radius: 10px; padding: 14px 16px; transition: all 0.3s ease; background: transparent; margin-bottom: 5px; cursor: pointer;}
+        .glass-dropdown .dropdown-item:hover { background: rgba(16, 185, 129, 0.1); }
+        body.teto-theme .glass-dropdown .dropdown-item:hover { background: rgba(244, 63, 94, 0.1); }
+
+        .project-icon-box { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px; font-size: 1.3rem; flex-shrink: 0; }
+        .icon-nookleaf { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .icon-archleaf { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .icon-teto     { background: rgba(244, 63, 94, 0.15);  color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
+        .icon-teto11   { background: rgba(234, 179, 8, 0.15);  color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+
+        .dropdown-title { color: #fff; font-weight: 700; font-size: 1.05rem; margin-bottom: 3px; display: flex; align-items: center; gap: 8px; }
+        .dropdown-desc { color: #94a3b8; font-size: 0.85rem; margin: 0; }
+        .badge-comingsoon { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); font-size: 0.6rem; padding: 4px 8px; border-radius: 6px; }
+        .badge-stable { background-color: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.6rem; padding: 4px 8px; border-radius: 6px; }
+
+        /* THEME HIJAU (NOOKLEAF) */
+        .btn-primary-green { background-color: #10b981; color: #022c22; border: none; border-radius: 8px; padding: 12px 28px; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+        .btn-primary-green:hover { background-color: #34d399; color: #022c22; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); }
+        .btn-outline-green { border: 2px solid rgba(16, 185, 129, 0.5); color: #10b981; border-radius: 8px; padding: 10px 24px; font-weight: 600; transition: all 0.3s ease; background: transparent; }
+        .btn-outline-green:hover { border-color: #10b981; background-color: rgba(16, 185, 129, 0.1); color: #34d399; }
+        .btn-donate { background-color: #fbbf24; color: #78350f; border: none; border-radius: 8px; padding: 10px 24px; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .btn-donate:hover { background-color: #f59e0b; color: #451a03; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
+        .btn-cbt { background-color: #eab308; color: #422006; border: none; border-radius: 8px; padding: 10px 24px; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3); }
+        .btn-cbt:hover { background-color: #facc15; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(234, 179, 8, 0.4); }
+
+        /* === TETO OS RED THEME === */
+        .status-badge-red { background: rgba(244, 63, 94, 0.1) !important; color: #fb7185 !important; border: 1px solid rgba(244, 63, 94, 0.2) !important; }
+        .status-badge-red .dot { background-color: #fb7185 !important; box-shadow: 0 0 10px #fb7185 !important; }
+        .text-gradient-red { background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+        .btn-primary-red { background-color: #f43f5e; color: #fff; border: none; border-radius: 8px; padding: 12px 28px; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3); }
+        .btn-primary-red:hover { background-color: #e11d48; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(244, 63, 94, 0.4); }
+        .btn-outline-red { border: 2px solid rgba(244, 63, 94, 0.5); color: #f43f5e; border-radius: 8px; padding: 10px 24px; font-weight: 600; transition: all 0.3s ease; background: transparent; }
+        .btn-outline-red:hover { border-color: #f43f5e; background-color: rgba(244, 63, 94, 0.1); color: #fb7185; }
+        .glass-card-red { border: 1px solid rgba(244, 63, 94, 0.2) !important; transition: background 0.3s, border 0.3s; }
+        .glass-card-red::before { background: linear-gradient(90deg, transparent, #f43f5e, transparent) !important; }
+        .glass-card-red h4 { color: #f43f5e !important; }
+
+        .teto-mascot { max-height: 80vh; filter: drop-shadow(0 0 25px rgba(244, 63, 94, 0.2)); object-fit: contain; transform: scale(1.1); transition: 0.3s; }
+
+        /* === PERBAIKAN LAYOUT HERO AGAR TENGAH DI SEMUA DEVICE === */
+        .hero-wrapper { min-height: 100vh; display: flex; align-items: center; padding-top: 100px; padding-bottom: 60px; }
+
+        .status-badge { display: inline-flex; align-items: center; background: rgba(16, 185, 129, 0.1); color: #34d399; padding: 8px 18px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; margin-bottom: 25px; border: 1px solid rgba(16, 185, 129, 0.2); transition: 0.3s; }
+        .status-badge .dot { width: 8px; height: 8px; background-color: #34d399; border-radius: 50%; margin-right: 10px; box-shadow: 0 0 10px #34d399; }
+        .main-title { font-size: 4rem; font-weight: 800; line-height: 1.15; color: #ffffff; margin-bottom: 25px; }
+        .text-gradient { background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-desc { color: #94a3b8; font-size: 1.15rem; line-height: 1.7; margin-bottom: 40px; max-width: 90%; }
+
+        .glass-card, .glass-modal { background: rgba(10, 25, 15, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; transition: background 0.3s, border 0.3s; }
+        .glass-card { padding: 30px; }
+        .glass-card::before, .glass-modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #10b981, transparent); opacity: 0.5; }
+        .system-font { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; line-height: 1.8; color: #cbd5e1; transition: color 0.3s; }
+        .system-label { color: #64748b; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block; }
+        .modal-header { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 20px 30px; }
+        .modal-body { padding: 30px; }
+        .modal-footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 20px 30px; }
+        .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
+        .changelog-section { background: rgba(0,0,0,0.2); border-radius: 10px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.02); transition: 0.3s; }
+        .changelog-title { color: #10b981; font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .warning-box { background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 15px 20px; border-radius: 0 8px 8px 0; }
+        ul.custom-list { list-style-type: none; padding-left: 0; }
+        ul.custom-list li { margin-bottom: 8px; padding-left: 24px; position: relative; color: #cbd5e1; }
+        ul.custom-list li::before { content: '>'; color: #10b981; position: absolute; left: 0; font-family: 'JetBrains Mono', monospace; font-weight: bold; }
+
+        /* === COMMUNITY PILL BUTTONS === */
+        .btn-community { display: flex; align-items: center; justify-content: center; padding: 14px 24px; border-radius: 30px; font-weight: 700; font-size: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none; }
+        .btn-community:hover { transform: translateY(-3px); }
+        .btn-discord { background: #5865F2; color: #fff; box-shadow: 0 0 20px rgba(88,101,242,0.3); border: none; }
+        .btn-wa { background: #25D366; color: #000; box-shadow: 0 0 20px rgba(37,211,102,0.3); border: none; }
+        .btn-fb { background: #1877F2; color: #fff; box-shadow: 0 0 20px rgba(24,119,242,0.3); border: none; }
+        .btn-teto { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+
+        /* === FOOTER STYLES === */
+        .footer-nookleaf { padding: 60px 5% 30px; border-top: 1px solid rgba(16, 185, 129, 0.1); background: #030805; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.5s, border-color 0.5s; }
+        .footer-heading { color: #64748b; letter-spacing: 1px; font-weight: 700; margin-bottom: 20px; font-size: 0.85rem; }
+        .footer-link { color: #cbd5e1; text-decoration: none; transition: 0.3s; cursor: pointer; }
+        .footer-link:hover { color: #10b981; }
+
+        /* === LIGHT MODE OVERRIDES === */
+        body.light-mode {
+            background-color: #f8fafc;
+            background-image: radial-gradient(circle at 80% -10%, #d1fae5 0%, #f8fafc 60%),
+                              radial-gradient(circle at 10% 90%, #e2e8f0 0%, transparent 50%);
+            color: #1e293b;
+        }
+        body.light-mode.teto-theme {
+            background-color: #fff5f6;
+            background-image: radial-gradient(circle at 80% -10%, #ffe4e6 0%, #fff5f6 60%),
+                              radial-gradient(circle at 10% 90%, #f1f5f9 0%, transparent 50%);
+        }
+        body.light-mode #oobe-screen, body.light-mode #shutdown-screen { background-color: #f8fafc; background-image: radial-gradient(circle at 50% 50%, #d1fae5 0%, #f8fafc 100%); }
+        body.light-mode .oobe-logo { color: #0f172a; }
+        body.light-mode .oobe-logo span { color: #059669; }
+        body.light-mode .blinking-text { color: #059669; }
+        body.light-mode .navbar { background: rgba(255, 255, 255, 0.8); border-bottom: 1px solid rgba(16, 185, 129, 0.3); }
+        body.light-mode .navbar-brand { color: #0f172a; }
+        body.light-mode .nav-link { color: #475569; }
+        body.light-mode .nav-link:hover, body.light-mode .nav-link.active { color: #059669; }
+        body.light-mode .main-title { color: #0f172a; }
+        body.light-mode .text-gradient { background: linear-gradient(135deg, #059669 0%, #047857 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        body.light-mode .hero-desc, body.light-mode .system-font, body.light-mode ul.custom-list li { color: #475569; }
+        body.light-mode .system-label { color: #64748b; }
+        body.light-mode .glass-card, body.light-mode .glass-modal, body.light-mode .dev-card { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        body.light-mode .glass-dropdown { background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        body.light-mode .dropdown-title { color: #0f172a; }
+        body.light-mode .glass-card h3, body.light-mode .glass-card h4, body.light-mode .glass-card h5, body.light-mode .dev-card h4 { color: #0f172a !important; }
+        body.light-mode .dev-card h4 a { color: #0f172a !important; }
+        body.light-mode .section-title { color: #0f172a !important; }
+        body.light-mode .modal-content { color: #1e293b; background: rgba(255, 255, 255, 0.9); }
+        body.light-mode .modal-header .modal-title { color: #0f172a; }
+        body.light-mode .btn-close-white { filter: invert(0) grayscale(0%) brightness(0%); opacity: 0.5; }
+        body.light-mode .changelog-section { background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
+        body.light-mode .status-badge { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #059669; }
+        body.light-mode .btn-teto { background: rgba(0,0,0,0.05); color: #0f172a; border-color: rgba(0,0,0,0.1); }
+
+        body.light-mode .footer-nookleaf { background: #f8fafc; border-top: 1px solid rgba(16, 185, 129, 0.2); }
+        body.light-mode .footer-link { color: #475569; }
+        body.light-mode .footer-link:hover { color: #059669; }
+        body.light-mode .footer-heading { color: #0f172a; }
+        body.light-mode .shared-bg-2 { background: rgba(255, 255, 255, 0.3) !important; }
+
+        /* Light Mode Khusus Teto Red */
+        body.light-mode .status-badge-red { background: rgba(244, 63, 94, 0.15) !important; color: #e11d48 !important; border-color: rgba(244, 63, 94, 0.3) !important; }
+        body.light-mode .text-gradient-red { background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+        body.light-mode .glass-card-red { border: 1px solid rgba(244, 63, 94, 0.3) !important; }
+        body.light-mode .glass-card-red h4 { color: #e11d48 !important; }
+
+        /* Light Mode Khusus Privacy Policy Warning Box */
+        body.light-mode .warning-box-privacy { background: rgba(245, 158, 11, 0.1) !important; border-left-color: #f59e0b !important; }
+        body.light-mode .warning-box-privacy .fw-bold { color: #d97706 !important; }
+        body.light-mode .warning-box-privacy p, body.light-mode .warning-box-privacy ol { color: #92400e !important; }
+
+        /* RICKROLL CONTAINER */
+        #rickroll-container { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999999; background: #000; }
+        #rickroll-video { width: 100%; height: 100%; object-fit: cover; }
+
+        /* RESPONSIVE MOBILE DESIGN */
+        @media (max-width: 991px) {
+            .teto-mascot { max-height: 45vh; transform: scale(1); margin-top: 2rem; margin-bottom: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            body { overflow-y: auto; }
+            .navbar { padding: 1rem 3%; }
+            .navbar-brand { font-size: 1.1rem; }
+            .nav-link { margin: 0 5px; font-size: 0.9rem; }
+            .hero-wrapper { padding-top: 130px; padding-bottom: 60px; min-height: 100vh; }
+            .main-title { font-size: 2.2rem; margin-bottom: 20px; }
+            .hero-desc { font-size: 0.95rem; max-width: 100%; margin-bottom: 30px; }
+            .btn-primary-green, .btn-outline-green, .btn-primary-red, .btn-outline-red, .btn-donate, .btn-cbt { padding: 12px 20px; font-size: 0.9rem; width: 100%; margin-bottom: 10px; }
+            .glass-dropdown { min-width: auto !important; width: 90vw; }
+            .project-icon-box { width: 40px; height: 40px; font-size: 1.1rem; }
+            .dropdown-title { font-size: 0.95rem; }
+            .dropdown-desc { font-size: 0.8rem; }
+            .status-badge { font-size: 0.8rem; padding: 6px 14px; }
+            .glass-card { padding: 20px; margin-bottom: 15px; }
+            .glass-card h3, .glass-card h4, .glass-card h5 { font-size: 1rem; }
+            .system-font { font-size: 0.85rem; }
+            .row { padding: 0 10px; }
+            .col-12, .col-md-10 { padding: 10px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-wrapper { padding-top: 140px; padding-bottom: 50px; min-height: 100vh; }
+            .main-title { font-size: 1.8rem; line-height: 1.2; margin-bottom: 15px; }
+            .text-gradient, .text-gradient-red { display: block; }
+            .hero-desc { font-size: 0.85rem; line-height: 1.5; margin-bottom: 20px; }
+            .btn-primary-green, .btn-outline-green, .btn-primary-red, .btn-outline-red, .btn-donate, .btn-cbt { padding: 11px 16px; font-size: 0.85rem; width: 100%; margin-bottom: 8px; min-height: 44px; }
+            .status-badge { font-size: 0.75rem; padding: 5px 12px; margin-bottom: 20px; }
+            .status-badge .dot { width: 6px; height: 6px; }
+            .container { padding: 0 15px; }
+            .glass-card { padding: 15px; }
+            .glass-card h3, .glass-card h4 { font-size: 0.95rem; }
+            .system-font { font-size: 0.8rem; line-height: 1.6; }
+            .system-label { font-size: 0.7rem; margin-bottom: 10px; }
+            .navbar { padding: 0.8rem 2%; }
+            .navbar-brand { font-size: 1rem; }
+            .nav-link { margin: 0 3px; font-size: 0.8rem; }
+            .d-none.d-lg-flex { flex-direction: column !important; gap: 8px !important; }
+            .oobe-logo { font-size: 2rem; margin-bottom: 15px; }
+            .blinking-text { font-size: 0.9rem; margin-top: 15px; }
+            .loading-container { width: 250px; }
+            .modal-header { padding: 15px 20px; }
+            .modal-header .modal-title { font-size: 1.1rem; }
+            .modal-body { padding: 20px; }
+            .modal-footer { padding: 15px 20px; flex-direction: column; }
+            .modal-footer button { width: 100%; }
+        }
+
+        .dev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .section-title { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 15px; transition: 0.3s;}
+        .section-subtitle { color: #94a3b8; font-size: 1.1rem; }
+        .dev-card { background: rgba(10, 25, 15, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 30px; text-align: center; transition: all 0.3s ease; overflow: hidden; position: relative; }
+        .dev-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #10b981, transparent); opacity: 0.5; }
+        .dev-card img { width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px; border: 3px solid rgba(16, 185, 129, 0.3); object-fit: cover; }
+        .dev-card h4 { color: #fff; font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; transition: 0.3s;}
+        .dev-card p { color: #94a3b8; font-size: 0.9rem; line-height: 1.6; }
+
+        @media (max-width: 768px) {
+            .dev-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+            .section-title { font-size: 1.8rem; }
+            .section-subtitle { font-size: 1rem; }
+            .dev-card { padding: 20px; }
+            .dev-card img { width: 120px; height: 120px; }
+            .dev-card h4 { font-size: 1rem; }
+            .dev-card p { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 480px) {
+            .dev-grid { grid-template-columns: 1fr; gap: 15px; }
+            .section-title { font-size: 1.5rem; }
+            .section-subtitle { font-size: 0.9rem; }
+            .dev-card { padding: 15px; }
+            .dev-card img { width: 100px; height: 100px; margin-bottom: 15px; }
+            .dev-card h4 { font-size: 0.95rem; margin-bottom: 5px; }
+            .dev-card p { font-size: 0.8rem; margin-bottom: 5px; }
+        }
+
+        #music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: transparent;
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="rickroll-container">
+        <!-- Elemen video dibiarkan kosong, source akan diisi secara dinamis dengan Javascript -->
+        <video id="rickroll-video" src="" loop preload="auto"></video>
+    </div>
+
+    <audio id="startup-audio" src="https://files.catbox.moe/m8ewdl.mp3" preload="auto"></audio>
+    <audio id="shutdown-audio" src="https://files.catbox.moe/xr0v4f.mp3" preload="auto"></audio>
+    <audio id="bg-music" src="https://files.catbox.moe/ck141f.mp3" loop></audio>
+    <div id="music-toggle" onclick="toggleMusic(true)">⏸️</div>
+
+    <!-- OOBE BOOT SCREEN -->
+    <div id="oobe-screen">
+        <div class="oobe-logo">🌿 Welcome to Nook<span>leaf</span></div>
+        <div class="system-font mb-2" id="oobe-sub">Nook Core Architecture v1.0</div>
+        <div id="interact-prompt" class="blinking-text">> PRESS ANY KEY OR CLICK TO INITIALIZE...</div>
+        <div id="loading-container" class="loading-container">
+            <div class="progress-bar-box">
+                <div id="progress-fill" class="progress-bar-fill"></div>
+            </div>
+            <div id="loading-status" class="loading-text">Loading Kernel Modules [0%]</div>
+        </div>
+    </div>
+
+    <!-- OOBE SHUTDOWN SCREEN -->
+    <div id="shutdown-screen">
+        <div class="oobe-logo">👋 Bye bye!</div>
+        <div class="system-font mb-4" style="max-width: 650px; font-size: 1.05rem;">
+            <div style="color: #10b981; margin-bottom: 15px;">Shutting down Nook Core...</div>
+            <p>Terima kasih telah berkunjung ke situs resmi Nookleaf.</p>
+            <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 15px; border-radius: 0 8px 8px 0; text-align: left; font-size: 0.9rem; margin-top: 20px;">
+                <span style="color: #fca5a5; font-weight: bold;">⚠️ REMINDER SEBELUM PERGI:</span><br>
+                <span style="color: #fecaca;">- Dilarang reupload ISO ke platform lain.<br>
+                - Dilarang keras membagikan ulang file menggunakan shortlink demi cuan.<br>
+                - Hargai selalu kerja keras para kreator proyek ini!</span>
+            </div>
+        </div>
+        <div class="shutdown-loader"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" onclick="toggleView('home')">🌿 Nook<span class="brand-highlight">leaf</span></a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="filter: invert(1);"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link active" onclick="toggleView('home')">Overview</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarProjects" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projects</a>
+                        <ul class="dropdown-menu glass-dropdown" aria-labelledby="navbarProjects">
+                            <li><a class="dropdown-item d-flex align-items-center rickroll-trigger" href="#"><div class="project-icon-box icon-nookleaf">🌿</div><div><div class="dropdown-title">Nookleaf <span class="badge badge-comingsoon">COMING SOON</span></div><p class="dropdown-desc">Privacy, Productivity & Fluid UI</p></div></a></li>
+                            <li><a class="dropdown-item d-flex align-items-center rickroll-trigger" href="#"><div class="project-icon-box icon-archleaf">🦅</div><div><div class="dropdown-title">Archleaf <span class="badge badge-comingsoon">COMING SOON</span></div><p class="dropdown-desc">Advanced Custom OS Architecture</p></div></a></li>
+
+                            <li><a class="dropdown-item d-flex align-items-center rickroll-teto11-trigger" href="#"><div class="project-icon-box icon-teto11">⚡</div><div><div class="dropdown-title">tetoOS 11 <span class="badge badge-comingsoon">COMING SOON</span></div><p class="dropdown-desc">Next Generation Experience</p></div></a></li>
+
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" onclick="toggleView('teto')">
+                                    <div class="project-icon-box icon-teto">🥖</div>
+                                    <div>
+                                        <div class="dropdown-title">tetoOS <span class="badge badge-stable">STABLE</span></div>
+                                        <p class="dropdown-desc">The Ultimate Lightweight Experience</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#docsModal">Docs</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#creditsModal">Credits</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="document.getElementById('community-section').scrollIntoView({behavior: 'smooth'})">Community</a></li>
+                </ul>
+            </div>
+            <div class="d-flex gap-2 d-none d-lg-flex">
+                <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-outline-green oobe-link">TetoYapping Chat</a>
+                <a href="https://saweria.co/tetoyapping29312/toko-top-up" target="_blank" class="btn btn-donate oobe-link">Top-up & Support ☕</a>
+                <button class="btn btn-outline-green d-flex align-items-center justify-content-center" onclick="toggleTheme()" id="theme-btn" style="padding: 8px 15px; border-radius: 8px;">☀️</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==============================================
+         WRAPPER BERANDA UTAMA (HOME - GREEN THEME)
+         ============================================== -->
+    <div id="home-view">
+        <div class="hero-wrapper container">
+            <div class="row align-items-center w-100 m-0">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="status-badge"><span class="dot"></span> Nookleaf Projects</div>
+                    <h1 class="main-title">Redefining your<br><span class="text-gradient">Desktop Experience.</span></h1>
+                    <p class="hero-desc">Pusat pengembangan modifikasi Sistem Operasi yang dirancang khusus untuk memberikan latency terendah, penggunaan RAM efisien, dan stabilitas maksimal.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <button type="button" class="btn btn-primary-green" onclick="toggleView('teto')">Explore tetoOS</button>
+                        <button type="button" class="btn btn-donate rickroll-trigger">Free Windows License 🎁</button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row gap-4 justify-content-end">
+                        <div class="col-12 col-md-10">
+                            <div class="glass-card">
+                                <span class="system-label">Project In Development</span>
+                                <div class="d-flex justify-content-between align-items-center mb-3"><h3 class="m-0 fw-bold" style="color: #fff;">Nookleaf OS</h3><span class="badge badge-comingsoon">COMING SOON</span></div>
+                                <div class="system-font mb-4"><span style="color: #10b981;">></span> Architecture: Nook Core v1.0<br><span style="color: #10b981;">></span> Focus: Privacy, Productivity & Fluid UI<br><span style="color: #10b981;">></span> Progress: Building kernel modules... 45%<br></div>
+                                <button class="btn w-100" style="background-color: rgba(255,255,255,0.02); color: #64748b; border: 1px dashed #475569; cursor: not-allowed; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem;" disabled>🔒 Changelog (Classified)</button>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-10">
+                            <div class="glass-card" style="padding: 20px 30px; background: rgba(16, 185, 129, 0.05);">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="system-label" style="margin-bottom: 5px;">Stable Release</span>
+                                        <h5 class="m-0 fw-bold" style="color: #fff;">tetoOS 10</h5>
+                                    </div>
+                                    <span class="badge badge-stable">ONLINE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- END WRAPPER HOME -->
+
+    <!-- ==============================================
+         WRAPPER BERANDA BARU KHUSUS TETO OS (RED THEME)
+         ============================================== -->
+    <div id="teto-view" style="display: none;">
+        <div class="hero-wrapper container">
+            <div class="row align-items-center w-100 m-0">
+
+                <!-- Kiri: Teks & Tombol -->
+                <div class="col-lg-5 order-1 mb-4 mb-lg-0" style="z-index: 2;">
+                    <div class="status-badge status-badge-red"><span class="dot"></span> tetoOS 10 is Now Live</div>
+                    <h1 class="main-title text-gradient-red">tetoOS 10</h1>
+                    <p class="hero-desc">Dibangun di atas base Windows 10 Enterprise LTSC IoT 22H2, OS ini dirancang khusus untuk performa maksimal dengan sentuhan estetik Kasane Teto. Cocok untuk PC/Laptop "kentang" atau yang ingin performa gaming tanpa gangguan bloatware.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="teto/link" target="_blank" class="btn btn-primary-red text-decoration-none oobe-link">Download tetoOS</a>
+                        <!-- TOMBOL BARU: CBT ACCESS -->
+                        <button type="button" class="btn btn-cbt" data-bs-toggle="modal" data-bs-target="#cbtModal">CBT Access 🔒</button>
+                        <a href="teto/archive" dhref="https://sfl.gl/9a4OHgv" target="_blank" class="btn btn-outline-red text-decoration-none oobe-link">Arsip tetoOS</a>
+                        <button type="button" class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#changelogModal">View Changelog</button>
+                    </div>
+                </div>
+
+                <!-- Tengah: Maskot Kasane Teto -->
+                <div class="col-lg-3 order-3 order-lg-2 d-flex justify-content-center align-items-end" style="position: relative; z-index: 1;">
+                    <img src="https://files.catbox.moe/uvak7b.png" alt="Kasane Teto" class="img-fluid teto-mascot">
+                </div>
+
+                <!-- Kanan: Cards Fitur dengan Aksen Merah -->
+                <div class="col-lg-4 order-2 order-lg-3" style="z-index: 2;">
+                    <div class="glass-card glass-card-red mb-4" style="padding: 20px;">
+                        <h4>Performance Boost</h4>
+                        <p class="system-font m-0">Debloated, Compact NTFS Compression, & Custom Power Profile.</p>
+                    </div>
+                    <div class="glass-card glass-card-red mb-4" style="padding: 20px;">
+                        <h4>Teto Aesthetic</h4>
+                        <p class="system-font m-0">Kursor, wallpaper, dan skema suara eksklusif Kasane Teto.</p>
+                    </div>
+                    <div class="glass-card glass-card-red" style="padding: 20px;">
+                        <h4>Stay Stable</h4>
+                        <p class="system-font m-0">Windows Update Permanent Pause Mode (Anti-update tiba-tiba!).</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- END WRAPPER TETO OS -->
+
+    <!-- ==============================================
+         SHARED BOTTOM SECTIONS
+         Seksi ini global, akan selalu tampil di-scroll ke bawah
+         entah kamu berada di Home ataupun TetoOS.
+         ============================================== -->
+    <div id="shared-bottom-sections">
+
+        <!-- DEVELOPER CREDITS SECTION -->
+        <div style="padding: 80px 5%; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(16, 185, 129, 0.1); border-bottom: 1px solid rgba(16, 185, 129, 0.1);">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 class="section-title">Meet Our <span style="background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Development Team</span></h2>
+                    <p class="section-subtitle">Passionate developers creating amazing experiences</p>
+                </div>
+                <div class="dev-grid">
+                    <div class="dev-card">
+                        <img src="https://files.catbox.moe/r7az8a.jpg" alt="Vincent" style="border-color: rgba(16, 185, 129, 0.3);">
+                        <h4><a href="https://elzexd.my.id/" target="_blank" style="color: #fff; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='inherit'">elzeXD | Vincent</a></h4>
+                        <p style="color: #10b981; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Lead Modder</p>
+                        <p>Specialist in OS optimization and performance tuning for maximum system efficiency.</p>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://avatars.githubusercontent.com/u/81670647" alt="just-shadyumbrella" style="border-color: rgba(16, 185, 129, 0.3);">
+                        <h4><a href="https://github.com/just-shadyumbrella" target="_blank" style="color: #fff; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='inherit'">just-shadyumbrella</a></h4>
+                        <p style="color: #10b981; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Vice Modder</p>
+                        <p>Assists in project development and ensures smooth system modification workflow.</p>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://files.catbox.moe/yrvhcc.jpg" alt="Hirolizia" style="border-color: rgba(56, 189, 248, 0.3);">
+                        <h4><a href="https://hirumihiro.blogspot.com/" target="_blank" style="color: #fff; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='inherit'">Hirolizia</a></h4>
+                        <p style="color: #38bdf8; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Designer & Modder</p>
+                        <p>Creative mind behind UI/UX design and aesthetic implementation across projects.</p>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://files.catbox.moe/chedlr.jpg" alt="Holymagi" style="border-color: rgba(244, 63, 94, 0.3);">
+                        <h4><a href="https://ymgitech.vercel.app/" target="_blank" style="color: #fff; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#f43f5e'" onmouseout="this.style.color='inherit'">Holymagi</a></h4>
+                        <p style="color: #f43f5e; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Core Developer</p>
+                        <p>Expert in kernel modifications and system architecture implementation.</p>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://files.catbox.moe/tsyqn5.jpg" alt="Dwika Rahma Putri" style="border-color: rgba(245, 158, 11, 0.3);">
+                        <h4>Dwika Rahma Putri</h4>
+                        <p style="color: #fbbf24; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Illustrator</p>
+                        <p>Creative visual artist designing logos and graphic assets for the project.</p>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://files.catbox.moe/j6wvaq.jpg" alt="AES™" style="border-color: rgba(6, 182, 212, 0.3);">
+                        <h4>AES™</h4>
+                        <p style="color: #06b6d4; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Wallpaper Designer</p>
+                        <p>Crafts stunning wallpapers and visual themes for an enhanced aesthetic experience.</p>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://files.catbox.moe/itr8vh.jpg" alt="DavidMounder9598" style="border-color: rgba(167, 139, 250, 0.3);">
+                        <h4>DavidMounder9598</h4>
+                        <p style="color: #a78bfa; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Sound Designer</p>
+                        <p>Audio specialist creating immersive sound effects and audio schemes.</p>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://files.catbox.moe/94zjvg.jpg" alt="Arief Friedrich Hegel" style="border-color: rgba(16, 185, 129, 0.3);">
+                        <h4><a href="https://my-article.vercel.app/" target="_blank" style="color: #fff; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='inherit'">Arief Friedrich Hegel</a></h4>
+                        <p style="color: #10b981; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Tester Windows</p>
+                        <p>Ensure system stability and application compatibility through thorough testing.</p>
+                    </div>
+                    <div class="dev-card">
+                        <img src="https://files.catbox.moe/7lmn8t.jpg" alt="Bolu Isi Nasicumi Pakkris" style="border-color: rgba(16, 185, 129, 0.3);">
+                        <h4 style="color: #fff; font-weight: 700; font-size: 1.2rem; margin-bottom: 8px;">Bolu Isi Nasicumi Pakkris</h4>
+                        <p style="color: #10b981; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Wallpaper Desainer, Tester Windows</p>
+                        <p>Played a dual role in designing stunning wallpaper assets as well as performing system stability testing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPECIAL THANKS VTUBER SECTION -->
+        <div class="shared-bg-2" style="padding: 80px 5%; background: rgba(0,0,0,0.3);">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 class="section-title">Special Thanks to</h2>
+                    <p class="section-subtitle">VTuber yang telah mencoba tetoOS</p>
+                </div>
+
+                <div style="display: flex; justify-content: center;">
+                    <div class="dev-card" style="max-width: 350px; width: 100%; padding: 40px;">
+                        <img src="https://files.catbox.moe/92jb5l.jpg" alt="LortLimbah" style="width: 180px; height: 180px; border: 4px solid rgba(16, 185, 129, 0.3);">
+                        <h4 style="font-size: 1.3rem;"><a href="https://www.youtube.com/watch?v=mMEjachbxcA&t=32s" target="_blank" style="color: #fff; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='inherit'">LortLimbah</a></h4>
+                        <p style="color: #10b981; font-weight: 600; font-size: 1rem; margin-bottom: 15px;">VTuber Content Creator</p>
+                        <p style="font-size: 0.95rem;">Terima kasih telah mencoba dan memberikan ulasan tetoOS. Dukungan dari creator seperti Anda sangat berarti untuk project ini!</p>
+                        <a href="https://www.youtube.com/watch?v=mMEjachbxcA&t=32s" target="_blank" class="oobe-link" style="display: inline-block; margin-top: 20px; padding: 10px 24px; background-color: rgba(16, 185, 129, 0.1); color: #10b981; border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 8px; text-decoration: none; font-weight: 600; transition: 0.3s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.2)'; this.style.borderColor='#10b981'" onmouseout="this.style.background='rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)'">
+                            ▶️ Tonton Video Review
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMMUNITY BERANDA SECTION -->
+        <div id="community-section" style="padding: 100px 5%; background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 70%); border-top: 1px solid rgba(255,255,255,0.05);">
+            <div class="container text-center">
+                <span class="system-label" style="letter-spacing: 2px; font-weight: 700; color: #64748b; margin-bottom: 20px; display: block;">JOIN OUR COMMUNITY</span>
+                <h2 class="main-title" style="margin-bottom: 20px; font-size: 3.5rem;">Be part of the <span class="text-gradient">Nookleaf Community</span></h2>
+                <p class="hero-desc mx-auto" style="max-width: 600px;">Ask smart questions, get fast support, share what you learn, and squad up — bergabunglah dengan ekosistem kami sekarang.</p>
+
+                <div class="row justify-content-center mt-5" style="max-width: 800px; margin: 0 auto; gap: 20px;">
+                    <div class="col-md-5 p-0">
+                        <a href="https://discord.gg/3hXCNdHQ2" target="_blank" class="btn btn-community btn-discord w-100 oobe-link">
+                            Discord Server
+                        </a>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-community btn-wa w-100 oobe-link">
+                            GC WhatsApp
+                        </a>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <a href="https://facebook.com/profile.php?id=100094865010559" target="_blank" class="btn btn-community btn-fb w-100 oobe-link">
+                            Facebook Nookleaf
+                        </a>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <a href="teto/yapping" target="_blank" class="btn btn-community btn-teto btn-community-dark w-100 oobe-link">
+                            Situs TetoYapping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFESSIONAL FOOTER -->
+        <footer class="footer-nookleaf">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="footer-heading" style="font-size: 1.8rem; font-weight: 800; color: #fff; letter-spacing: normal; text-transform: none;">🌿 Nookleaf</span>
+                        </div>
+                        <p class="footer-text" style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; max-width: 400px;">
+                            Built for speed. Tuned for gaming.<br>
+                            Research-backed Windows optimizations.
+                        </p>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <h6 class="footer-heading">PRODUCTS</h6>
+                        <ul class="list-unstyled" style="line-height: 2.2; font-size: 0.95rem;">
+                            <li><a href="#" class="footer-link">Nookleaf</a></li>
+                            <li><a href="#" class="footer-link">Archleaf</a></li>
+                            <li><a onclick="toggleView('teto')" class="footer-link">tetoOS</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <h6 class="footer-heading">COMMUNITY</h6>
+                        <ul class="list-unstyled" style="line-height: 2.2; font-size: 0.95rem;">
+                            <li><a href="https://discord.gg/3hXCNdHQ2" class="footer-link">Discord</a></li>
+                            <li><a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" class="footer-link">GC WhatsApp</a></li>
+                            <li><a href="https://facebook.com/profile.php?id=100094865010559" class="footer-link">Facebook</a></li>
+                            <li><a href="teto/yapping" class="footer-link">TetoYapping</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center" style="border-top: 1px solid rgba(16,185,129,0.1); padding-top: 30px;">
+                    <div class="footer-text text-center text-md-start mb-3 mb-md-0">
+                        <p style="color: #64748b; font-size: 0.9rem; margin: 0; margin-bottom: 5px;">© 2026 <strong style="color: #10b981;">Nookleaf</strong> — This site is a work in progress and subject to change.</p>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" style="color: #94a3b8; font-size: 0.85rem; transition: 0.3s; text-decoration: underline;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='#94a3b8'">Privacy Policy & Terms of Service</a>
+                    </div>
+                    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; transition: 0.3s; cursor: pointer;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">↑ Back to top</button>
+                </div>
+            </div>
+        </footer>
+
+    </div> <!-- END SHARED BOTTOM SECTIONS -->
+
+    <!-- MODAL BARU: CBT ACCESS -->
+    <div class="modal fade" id="cbtModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <!-- Sekarang seluruh konten input dan tombol dibungkus oleh tag <form> -->
+        <form action="/cbt" method="get" class="modal-content glass-modal text-light border-0">
+
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" style="color: #eab308;">🔒 tetoOS CBT Access</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body system-font">
+            <p id="cbtInstructions">Masukkan Kode Akses CBT (Closed Beta Testing). Kode hanya bisa didapatkan dengan bergabung di Grup WhatsApp resmi Nookleaf.</p>
+            <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-outline-green w-100 mb-4 oobe-link" style="border-color: #25D366; color: #25D366;">📲 Join Grup WA Nookleaf</a>
+
+            <div class="mb-3" id="cbtInputGroup">
+              <!-- Ditambahkan name="code" dan enterkeyhint="go" agar keyboard HP memunculkan tombol 'Masuk/Pergi' -->
+              <input type="password" id="cbtCodeInput" name="code" enterkeyhint="go" class="form-control bg-dark text-light border-secondary text-center" placeholder="MASUKKAN KODE CBT" style="font-family: 'JetBrains Mono', monospace; letter-spacing: 2px;" required>
+            </div>
+          </div>
+
+          <div class="modal-footer justify-content-center" id="cbtModalFooter">
+            <!-- Diubah tipe button menjadi type="submit" agar mendeteksi Enter di PC maupun Mobile secara otomatis -->
+            <button type="submit" id="btnVerifyCbt" class="btn w-100 fw-bold" style="background-color: #eab308; color: #422006; transition: 0.3s;" onmouseover="this.style.backgroundColor='#facc15'" onmouseout="this.style.backgroundColor='#eab308'">Verifikasi Kode</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+
+    <!-- Modal (Privacy Policy) -->
+    <div class="modal fade" id="privacyModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content glass-modal text-light border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">📜 KEBIJAKAN PRIVASI & KETENTUAN LAYANAN</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body system-font">
+                    <p style="color: #10b981; font-weight: bold; margin-bottom: 5px;">NOOKLEAF PROJECT (tetoOS)</p>
+                    <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 20px;">Pembaruan Terakhir: 18 Juli 2026</p>
+                    <p style="color: #cbd5e1; line-height: 1.7;">Dengan mengunduh, menginstal, dan menggunakan <strong>tetoOS</strong> maupun produk lain dari Nookleaf Project, Anda secara otomatis menyetujui seluruh kebijakan privasi dan ketentuan layanan di bawah ini.</p>
+
+                    <div class="changelog-section">
+                        <div class="changelog-title">🔒 BAGIAN 1: KEBIJAKAN PRIVASI (PRIVACY POLICY)</div>
+                        <ul class="list-unstyled text-light" style="font-size: 0.95rem;">
+                            <li class="mb-3"><strong>1. Keamanan Data Pengguna:</strong> Nookleaf Project berkomitmen penuh menjaga privasi Anda. Kami <strong>tidak pernah</strong> menyisipkan <em>malware</em>, <em>keylogger</em>, atau skrip apa pun yang bertujuan untuk mengumpulkan, melacak, atau mencuri data pribadi, dokumen, <em>password</em>, maupun riwayat <em>browsing</em> Anda.</li>
+                            <li class="mb-3"><strong>2. Telemetri dan Pelacakan:</strong> tetoOS dirancang untuk mengutamakan privasi dan performa. Sebagian besar fitur pelacakan bawaan (telemetri) telah dimatikan atau dihapus untuk memastikan sistem berjalan sangat ringan dan data Anda tetap berada di perangkat Anda sendiri.</li>
+                            <li class="mb-0"><strong>3. Penggunaan Laporan (Bug Report):</strong> Jika Anda melaporkan <em>error</em> atau <em>bug</em> kepada tim CS kami di grup resmi, informasi teknis yang Anda berikan (seperti spesifikasi PC dan <em>screenshot error</em>) murni hanya akan digunakan oleh tim <em>developer</em> untuk keperluan perbaikan (<em>troubleshooting</em>) pada pembaruan (<em>update</em>) OS selanjutnya.</li>
+                        </ul>
+                    </div>
+
+                    <div class="changelog-section">
+                        <div class="changelog-title">⚖️ BAGIAN 2: KETENTUAN KOMERSIAL & PENGGUNAAN LISENSI</div>
+                        <p style="color: #cbd5e1; line-height: 1.7; margin-bottom: 15px;">tetoOS didistribusikan secara <strong>GRATIS (Freeware)</strong> kepada komunitas. Oleh karena itu, Nookleaf Project menetapkan aturan tegas terkait komersialisasi produk kami:</p>
+
+                        <p style="color: #34d399; font-weight: bold; margin-bottom: 5px;">✅ YANG DIPERBOLEHKAN (Jasa Install Ulang):</p>
+                        <p style="margin-bottom: 15px;">Bagi teknisi komputer, Anda <strong>DIPERBOLEHKAN</strong> menggunakan tetoOS untuk melayani pelanggan. Biaya yang Anda tarik dari pelanggan harus murni sebagai <strong>BIAYA JASA/TENAGA</strong> atas waktu, keahlian instalasi, pengaturan sistem, dan pemasangan <em>driver</em>.</p>
+
+                        <p style="color: #fb7185; font-weight: bold; margin-bottom: 5px;">❌ YANG DILARANG KERAS (Penjualan Produk/File):</p>
+                        <p style="margin-bottom: 10px;">Anda <strong>DILARANG KERAS</strong> memperjualbelikan karya intelektual Nookleaf Project dalam bentuk apa pun. Pelanggaran mencakup:</p>
+                        <ul class="custom-list mb-3">
+                            <li><strong>Menjual File ISO:</strong> Menjual <em>link download</em> atau <em>file</em> mentahan tetoOS.</li>
+                            <li><strong>Menjual Flashdisk Bootable:</strong> Memasukkan OS kami ke dalam <em>flashdisk</em> / media penyimpanan fisik dan menjualnya sebagai produk dagangan dengan embel-embel OS racikan premium.</li>
+                        </ul>
+
+                        <div class="warning-box warning-box-privacy" style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b;">
+                            <div class="fw-bold mb-2" style="color: #fbbf24;">⚠️ Sanksi Pelanggaran Komersial:</div>
+                            <p style="color: #fde68a; font-size: 0.9rem; margin-bottom: 5px;">Jika kedapatan ada pihak yang menjual <em>file</em> ISO atau <em>flashdisk bootable</em> tetoOS, Nookleaf Project akan mengambil tindakan tegas berupa:</p>
+                            <ol style="color: #fde68a; font-size: 0.9rem; margin-bottom: 0; padding-left: 20px;">
+                                <li><em>Takedown</em> paksa (pelaporan penghapusan konten/toko kepada pihak <em>platform</em>).</li>
+                                <li>Tuntutan denda ganti rugi atas pelanggaran karya komunitas.</li>
+                                <li><em>Blacklist</em> permanen dari seluruh ekosistem dan grup Nookleaf.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="changelog-section mb-0">
+                        <div class="changelog-title">🛡️ BAGIAN 3: DISCLAIMER & PELEPASAN TANGGUNG JAWAB</div>
+                        <ul class="list-unstyled text-light" style="font-size: 0.95rem;">
+                            <li class="mb-3"><strong>1. Risiko Modifikasi (<em>Use at Your Own Risk</em>):</strong> tetoOS adalah sistem operasi hasil modifikasi (<em>custom OS</em>). Dengan menggunakannya, Anda memahami dan menanggung sendiri segala risiko yang mungkin terjadi. Nookleaf Project tidak bertanggung jawab atas kehilangan data, kerusakan <em>hardware</em>, atau <em>error</em> sistem akibat kesalahan prosedur instalasi.</li>
+                            <li class="mb-0"><strong>2. Dukungan Pihak Ketiga:</strong> Kami tidak bertanggung jawab atas <em>file</em> tetoOS yang diunduh dari luar jalur resmi (seperti <em>link reupload</em> dari pihak ketiga). Selalu gunakan <em>link</em> yang disediakan langsung di dalam grup resmi Nookleaf untuk menghindari file yang sudah disusupi virus.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <span class="text-muted" style="font-size: 0.85rem;">Terima kasih telah mematuhi aturan Nookleaf Project.</span>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Docs (WIP popup) -->
+    <div class="modal fade" id="docsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-modal text-light border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">📚 Documentation</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body system-font text-center">
+                    <p style="font-size: 1.05rem;">Dokumentasi resmi Nookleaf & tetoOS sedang dalam tahap penyusunan oleh tim.<br><br><span style="color: #fbbf24;">Status: WIP (Work In Progress) 🚧</span></p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals (Credits) -->
+    <div class="modal fade" id="creditsModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content glass-modal text-light border-0"><div class="modal-header"><h5 class="modal-title fw-bold">📝 CREDITS & INFO</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body system-font"><h6 class="fw-bold mb-3" style="color: #10b981;">Nookleaf and KasaneProject Collaboration</h6><p>Selamat datang di proyek kolaborasi spesial antara Nookleaf dan KasaneProject.</p><div class="changelog-section"><div class="changelog-title">🛠️ Tim Pengembang</div><ul class="custom-list"><li><strong>Lead Modder:</strong> Vincent, Hirolizia, Holymagi</li><li><strong>Ilustrator:</strong> Dwika Rahma Putri (Logo)</li><li><strong>Wallpaper Desainer:</strong> AES™</li><li><strong>Desainer:</strong> Hirolizia, Holymagi</li><li><strong>Sound Desainer:</strong> DavidMounder9598</li></ul></div><div class="warning-box"><div class="fw-bold mb-2" style="color: #fca5a5;">📜 Catatan Lisensi</div><ul class="mb-0 ps-3" style="color: #fecaca; font-size: 0.9rem;"><li>DILARANG KERAS mengambil, mengunggah ulang, atau mendistribusikan file ISO ini di platform lain tanpa izin tertulis dari pihak Modder (Nookleaf).</li><li>Seluruh aset visual (Wallpaper/Ilustrasi) dan audio adalah hak cipta kreator.</li><li>Mod ini disediakan untuk penggunaan pribadi, bukan untuk diperjualbelikan dan <strong>tidak boleh membagikan ulang file menggunakan shortlink pribadi demi keuntungan (cuan)</strong>.</li></ul></div></div><div class="modal-footer justify-content-center"><span class="text-muted" style="font-size: 0.85rem;">Copyright (c) 2024 Nookleaf</span></div></div></div></div>
+
+    <!-- Modal (Changelog) -->
+    <div class="modal fade" id="changelogModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content glass-modal text-light border-0"><div class="modal-header"><h5 class="modal-title fw-bold">🖥️ [RELEASE] tetoOS Early Version</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body system-font"><p style="color: #cbd5e1; line-height: 1.7;">Halo sobat Nookleaf! Akhirnya yang ditunggu-tunggu tiba. tetoOS versi awal sudah siap untuk kalian coba! Dibangun di atas base Windows 10 Enterprise LTSC IoT 22H2, OS ini dirancang khusus untuk performa maksimal dengan sentuhan estetik Kasane Teto 🥖. Cocok banget buat kalian yang punya spek PC/Laptop "kentang" atau yang ingin performa gaming tanpa gangguan bloatware!</p><div class="changelog-section"><div class="changelog-title">📊 DETAIL INFORMASI</div><ul class="custom-list"><li><strong>File:</strong> tetoOS-early_ver-08513M26_prep.iso</li><li><strong>Edition:</strong> SUPERLITE</li><li><strong>State:</strong> Early Version (Prep)</li><li><strong>Base:</strong> Windows 10 Enterprise LTSC IoT 22H2</li><li><strong>Compiled:</strong> March 03, 2026</li><li><strong>MD5:</strong> 3C33150E210056DB9BDFBA19907AFC0D</li></ul></div><div class="changelog-section"><div class="changelog-title">✨ FITUR UNGGULAN</div><ul class="list-unstyled text-light" style="font-size: 0.95rem;"><li class="mb-2">✅ <strong>Teto Aesthetic:</strong> Kursor, wallpaper, dan skema suara eksklusif Kasane Teto.</li><li class="mb-2">✅ <strong>Performance Boost:</strong> Debloated, Compact NTFS Compression, & Custom Power Profile.</li><li class="mb-2">✅ <strong>New UI:</strong> Taskbar ala 8.x dan rebranding total brand Windows.</li><li class="mb-2">✅ <strong>Stay Stable:</strong> Windows Update Permanent Pause Mode (Anti-update tiba-tiba!).</li><li class="mb-2">✅ <strong>Low Footprint:</strong> Sangat ringan, ramah untuk perangkat low-mid spec.</li></ul></div><div class="changelog-section"><div class="changelog-title">🔗 LINK DOWNLOAD</div><ul class="custom-list"><li><a href="." target="_blank" class="oobe-link" style="color: #38bdf8; text-decoration: none;">https://nookleaf.vercel.app/</a></li><li style="color: #fbbf24;">Pilih KasaneProject</li></ul></div><div class="warning-box mb-4"><div class="fw-bold mb-2" style="color: #fca5a5;">⚠️ PERHATIAN (ISO RULES):</div><ul class="mb-0 ps-3" style="color: #fecaca; font-size: 0.9rem;"><li><strong>Dilarang Reupload!</strong> Gunakan link resmi untuk men-support project ini.</li><li><strong>Dilarang Shortlink Cuan!</strong> Jangan mengambil untung dari hasil reupload file kami.</li><li><strong>No Modifikasi!</strong> Dilarang membongkar/modifikasi ulang ISO ini tanpa izin.</li><li><strong>Resiko Sendiri:</strong> Gunakan di Virtual Machine terlebih dahulu jika ragu. Use at your own risk!</li></ul></div><div class="changelog-section mb-0"><div class="changelog-title">🤝 CREDITS & THANKS TO</div><ul class="custom-list"><li><strong>OS Base:</strong> elzeXD</li><li><strong>Lead Modder:</strong> Holymagi & Hirolizia</li><li><strong>Illustrators:</strong> Dwika Rahma Ghania Putri (Logo), Hirolizia (OS Assets)</li><li><strong>Stock Wallpaper:</strong> AES™</li><li><strong>Sound Schemes:</strong> DavidMounder9598</li></ul></div></div><div class="modal-footer justify-content-between"><span class="text-muted" style="font-size: 0.85rem;">Bergabunglah dengan komunitas kami di TetoYapping untuk diskusi lebih lanjut!</span><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button></div></div></div></div>
+
+    <script>
+        // === LOGIKA TEMA (DARK/LIGHT MODE) ===
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-btn');
+            body.classList.toggle('light-mode');
+
+            if (body.classList.contains('light-mode')) {
+                btn.innerHTML = '🌙';
+            } else {
+                btn.innerHTML = '☀️';
+            }
+        }
+
+        // === LOGIKA TOGGLE VIEW BERANDA (DENGAN UTK TRANSISI BACKROUND IJO KE MERAH) ===
+        function toggleView(viewName) {
+            const body = document.body;
+
+            if (viewName === 'home') {
+                changeMusic('main');
+                document.getElementById('home-view').style.display = 'block';
+                document.getElementById('teto-view').style.display = 'none';
+                body.classList.remove('teto-theme');
+            } else if (viewName === 'teto') {
+                changeMusic('teto');
+                document.getElementById('home-view').style.display = 'none';
+                document.getElementById('teto-view').style.display = 'block';
+                body.classList.add('teto-theme');
+            }
+
+            const links = document.querySelectorAll('.navbar-nav .nav-link');
+            links.forEach(l => l.classList.remove('active'));
+            if(viewName === 'home') links[0].classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        // === OOBE BOOT SEQUENCE ===
+        let isBooting = false;
+        function startBootSequence() {
+            if (isBooting) return;
+            isBooting = true;
+            document.getElementById('interact-prompt').style.display = 'none';
+            document.getElementById('loading-container').style.display = 'flex';
+            let progress = 0;
+            const progressFill = document.getElementById('progress-fill'), statusText = document.getElementById('loading-status');
+            const loadingInterval = setInterval(() => {
+                progress += Math.floor(Math.random() * 10) + 2;
+                if (progress >= 100) {
+                    progress = 100; clearInterval(loadingInterval);
+                    statusText.innerHTML = "System Ready [100%]"; statusText.style.color = "#34d399";
+                    var bootAudio = document.getElementById('startup-audio'); bootAudio.volume = 1.0; bootAudio.play().catch(err => console.log(err));
+                    setTimeout(() => { var bgMusic = document.getElementById('bg-music'); bgMusic.volume = 0.3; bgMusic.play().catch(e => console.log(e)); }, 2000);
+                    setTimeout(() => { var oobeScreen = document.getElementById('oobe-screen'); oobeScreen.style.opacity = '0'; setTimeout(function() { oobeScreen.style.visibility = 'hidden'; document.body.style.overflowY = 'auto'; }, 1500); }, 500);
+                } else { statusText.innerHTML = `Loading Kernel Modules [${progress}%]`; }
+                progressFill.style.width = progress + '%';
+            }, 150);
+        }
+        document.body.addEventListener('click', startBootSequence, { once: true });
+        document.body.addEventListener('keydown', startBootSequence, { once: true });
+
+        // === OOBE SHUTDOWN REUSABLE FUNCTION ===
+        const shutdownScreen = document.getElementById('shutdown-screen'), shutdownAudio = document.getElementById('shutdown-audio'), bgMusic = document.getElementById('bg-music');
+
+        function triggerOobeShutdown(targetUrl, isNewTab) {
+            bgMusic.pause();
+            shutdownAudio.play().catch(err => console.log(err));
+            document.body.style.overflowY = 'hidden';
+            shutdownScreen.style.visibility = 'visible';
+            shutdownScreen.style.opacity = '1';
+
+            setTimeout(() => {
+                if (isNewTab) {
+                    window.open(targetUrl, '_blank');
+                    shutdownScreen.style.opacity = '0';
+                    setTimeout(() => { shutdownScreen.style.visibility = 'hidden'; document.body.style.overflowY = 'auto'; bgMusic.play(); }, 1000);
+                } else {
+                    window.location.href = targetUrl;
+                }
+            }, 3500);
+        }
+
+        // === BG MUSIC TOGGLE ===
+        function toggleMusic(set) {
+          const musicToggle = document.getElementById('music-toggle');
+
+          // Ambil status paused (default ke true jika belum ada)
+          let isPaused = localStorage.getItem('musicPaused') === 'true';
+
+          // Jika tombol/fungsi dipanggil untuk mengubah nilai state (toggle)
+          if (set === true) {
+            isPaused = !isPaused;
+            localStorage.setItem('musicPaused', isPaused);
+          }
+
+          // Jika statusnya dimatikan/paused
+          if (isPaused) {
+            bgMusic.pause();
+            if (musicToggle) musicToggle.textContent = '▶️';
+          } else {
+            // Jika statusnya dinyalakan/playing
+            bgMusic.play().catch(err => console.log("Autoplay diblokir browser:", err));
+            if (musicToggle) musicToggle.textContent = '⏸️';
+          }
+        }
+
+        // === BG MUSIC ===
+        let currentMusic = 'main';
+        function changeMusic(musicName) {
+          const bgMusics = {
+            main: "https://files.catbox.moe/ck141f.mp3",
+            teto: "https://files.catbox.moe/t82l3n.mp3"
+          };
+
+          currentMusic = musicName;
+          bgMusic.src = bgMusics[currentMusic];
+
+          const isPaused = localStorage.getItem('musicPaused') === 'true';
+          if (!isPaused) {
+            bgMusic.play().catch(err => console.log("Autoplay diblokir browser:", err));
+          }
+        }
+
+        // document.addEventListener('visibilitychange', () => {
+        //     if (bgMusic.paused && localStorage.getItem('musicPaused') !== 'true') {
+        //       changeMusic(currentMusic);
+        //     }
+        // });
+
+        document.querySelectorAll('.oobe-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if(this.getAttribute('href') && this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    triggerOobeShutdown(this.href, this.target === '_blank');
+                }
+            });
+        });
+
+        // === RICKROLL TROLL SYSTEM ===
+        const rickrollContainer = document.getElementById('rickroll-container');
+        const rickrollVideo = document.getElementById('rickroll-video');
+
+        function enterFullscreenAndPlay() {
+            if (rickrollContainer.requestFullscreen) {
+                rickrollContainer.requestFullscreen();
+            } else if (rickrollContainer.webkitRequestFullscreen) {
+                rickrollContainer.webkitRequestFullscreen();
+            } else if (rickrollContainer.msRequestFullscreen) {
+                rickrollContainer.msRequestFullscreen();
+            }
+            rickrollVideo.play().catch(err => console.log("Gagal nge-troll:", err));
+        }
+
+        document.querySelectorAll('.rickroll-trigger').forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                bgMusic.pause();
+                rickrollVideo.src = "https://files.catbox.moe/ww2p45.mp4";
+                rickrollContainer.style.display = 'block';
+                enterFullscreenAndPlay();
+            });
+        });
+
+        document.querySelectorAll('.rickroll-teto11-trigger').forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                bgMusic.pause();
+                rickrollVideo.src = "https://files.catbox.moe/ul5orj.mp4";
+                rickrollContainer.style.display = 'block';
+                enterFullscreenAndPlay();
+            });
+        });
+
+        // === LOGIKA LOGIN CODE CBT ===
+        // document.getElementById('btnVerifyCbt').addEventListener('click', function() {
+        //     const enteredCode = document.getElementById('cbtCodeInput').value.trim();
+        //     location.href = `/cbt?code=${enteredCode}`;
+        // });
+
+        document.getElementById('cbtModal').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('cbtCodeInput').value = "";
+            document.getElementById('cbtSuccessZone').style.display = 'none';
+            document.getElementById('cbtInputGroup').style.display = 'block';
+            document.getElementById('cbtInstructions').style.display = 'block';
+            document.getElementById('cbtModalFooter').style.display = 'block';
+        });
+
+    </script>
+</body>
+</html>
