@@ -303,9 +303,9 @@
         <video id="rickroll-video" src="" loop preload="auto"></video>
     </div>
 
-    <audio id="startup-audio" src="/audio/Vista_SystemStart.wav" preload="auto"></audio>
-    <audio id="shutdown-audio" src="/audio/Vista_SystemExit.wav" preload="auto"></audio>
-    <audio id="bg-music" src="/audio/bgmain.mp3" loop></audio>
+    <audio id="startup-audio" src="/aud/Vista_SystemStart.wav" preload="auto"></audio>
+    <audio id="shutdown-audio" src="/aud/Vista_SystemExit.wav" preload="auto"></audio>
+    <audio id="bg-music" src="/aud/bgmain.mp3" loop></audio>
     <div id="music-toggle" onclick="toggleMusic(true)">⏸️</div>
 
     <!-- OOBE BOOT SCREEN -->
@@ -442,7 +442,7 @@
 
                 <!-- Tengah: Maskot Kasane Teto -->
                 <div class="col-lg-3 order-3 order-lg-2 d-flex justify-content-center align-items-end" style="position: relative; z-index: 1;">
-                    <img src="https://files.catbox.moe/uvak7b.png" alt="Kasane Teto" class="img-fluid teto-mascot">
+                    <img src="/img/teto.png" alt="Kasane Teto" class="img-fluid teto-mascot">
                 </div>
 
                 <!-- Kanan: Cards Fitur dengan Aksen Merah -->
@@ -863,8 +863,8 @@
         let currentMusic = 'main';
         function changeMusic(musicName) {
           const bgMusics = {
-            main: "/audio/bgmain.mp3",
-            teto: "/audio/tetoris.opus"
+            main: "/aud/bgmain.mp3",
+            teto: "/aud/tetoris.opus"
           };
 
           currentMusic = musicName;
