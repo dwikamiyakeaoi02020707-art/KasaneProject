@@ -303,9 +303,9 @@
         <video id="rickroll-video" src="" loop preload="auto"></video>
     </div>
 
-    <audio id="startup-audio" src="https://files.catbox.moe/m8ewdl.mp3" preload="auto"></audio>
-    <audio id="shutdown-audio" src="https://files.catbox.moe/xr0v4f.mp3" preload="auto"></audio>
-    <audio id="bg-music" src="https://files.catbox.moe/ck141f.mp3" loop></audio>
+    <audio id="startup-audio" src="/public/audio/Vista_SystemStart.wav" preload="auto"></audio>
+    <audio id="shutdown-audio" src="/public/audio/Vista_SystemExit.wav" preload="auto"></audio>
+    <audio id="bg-music" src="/public/audio/bgmain.mp3" loop></audio>
     <div id="music-toggle" onclick="toggleMusic(true)">⏸️</div>
 
     <!-- OOBE BOOT SCREEN -->
@@ -863,8 +863,8 @@
         let currentMusic = 'main';
         function changeMusic(musicName) {
           const bgMusics = {
-            main: "https://files.catbox.moe/ck141f.mp3",
-            teto: "https://files.catbox.moe/t82l3n.mp3"
+            main: "/public/audio/bgmain.mp3",
+            teto: "/public/audio/tetoris.opus"
           };
 
           currentMusic = musicName;
