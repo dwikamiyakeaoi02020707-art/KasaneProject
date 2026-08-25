@@ -344,6 +344,7 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item"><a class="nav-link active" onclick="toggleView('home')">Overview</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor:pointer;" onclick="toggleView('news')">News</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarProjects" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projects</a>
                         <ul class="dropdown-menu glass-dropdown" aria-labelledby="navbarProjects">
@@ -416,6 +417,80 @@
             </div>
         </div>
     </div> <!-- END WRAPPER HOME -->
+
+    <!-- ==============================================
+         WRAPPER NEWS VIEW
+         ============================================== -->
+    <div id="news-view" style="display: none;">
+        <!-- HEADER SECTION -->
+        <section class="news-header container" style="padding: 120px 0 60px; text-align: center;">
+            <h1 class="news-title" style="font-size: 3.5rem; font-weight: 800; color: #fff; margin-bottom: 15px;">Nookleaf <span class="text-gradient" style="background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">News</span></h1>
+            <p class="news-subtitle" style="font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto;">Pembaruan terbaru, catatan rilis, dan informasi menarik dari ekosistem Nookleaf.</p>
+        </section>
+
+        <!-- NEWS GRID SECTION -->
+        <section class="container">
+            <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 80px;">
+                
+                <!-- (Berita Hana Chan dihapus sementara karena belum rilis) -->
+
+                <!-- Berita 2 -->
+                <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
+                    <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #fbbf24;">⚡</div>
+                    <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
+                        <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">10 Agustus 2026</div>
+                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Pengembangan tetoOS 11 Dimulai</h3>
+                        <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">Tim leader kami sekarang sepenuhnya berfokus pada pengerjaan tetoOS 11 yang dibangun di atas base Windows 11. Akan membawa pengalaman gaming maksimal tanpa bloatware.</p>
+                        <a href="https://www.facebook.com/share/p/19XKCHMZae/" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Baca di Facebook →</a>
+                    </div>
+                </div>
+
+                <!-- Berita 3 -->
+                <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
+                    <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #f43f5e;">🦅</div>
+                    <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
+                        <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">1 Agustus 2026</div>
+                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Proyek Archleaf Resmi Memasuki Masa EOS</h3>
+                        <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">Terima kasih atas semua dukungan untuk Archleaf. Proyek ini resmi End of Support (EOS) dan seluruh tenaga pengembangan kami alihkan sepenuhnya untuk fokus pada ekosistem tetoOS.</p>
+                        <a href="https://www.facebook.com/share/p/18QGhSn5Yv/" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Baca di Facebook →</a>
+                    </div>
+                </div>
+
+                <!-- Berita 4 -->
+                <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
+                    <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #38bdf8;">🐧</div>
+                    <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
+                        <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">15 Juli 2026</div>
+                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Repository Nookleaf ala Linux Hadir!</h3>
+                        <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">Terima kasih kepada Iqbal Rifai yang telah mengembangkan sistem repositori khusus untuk tetoOS. Kini menginstal modul dan pembaruan akan semudah menggunakan Linux.</p>
+                        <a href="#" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Pelajari Fitur Baru →</a>
+                    </div>
+                </div>
+
+                <!-- Berita 5 -->
+                <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
+                    <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #10b981;">🥖</div>
+                    <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
+                        <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">06 Maret 2026</div>
+                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">tetoOS 10 EA Resmi Dirilis ke Publik</h3>
+                        <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">Versi STABLE dari tetoOS 10 akhirnya tersedia. Dilengkapi dengan Teto Aesthetic, Permanent Pause Update, dan optimasi menyeluruh untuk performa PC kentang.</p>
+                        <a href="https://www.facebook.com/HanaNookleaf/posts/pfbid02sUYcVt6fQYbpVDfPEXix5inWkcjD3JMZWFEwjJUbDXGbVrp2RzX8UJnhwYuQNhJCl" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Baca di Facebook →</a>
+                    </div>
+                </div>
+
+                <!-- Berita 6 -->
+                <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
+                    <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #a78bfa;">🎥</div>
+                    <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
+                        <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">05 Juni 2026</div>
+                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Review Perdana dari Bootloop ID & LortLimbah</h3>
+                        <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">TetoOS 10 baru saja diuji coba oleh Tech Content Creator terkemuka. Simak ulasan mereka mengenai seberapa ringan OS ini untuk perangkat low-end!</p>
+                        <a href="#" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Tonton Video →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div> <!-- END WRAPPER NEWS -->
 
     <!-- ==============================================
          WRAPPER BERANDA BARU KHUSUS TETO OS (RED THEME)
@@ -802,21 +877,29 @@
         function toggleView(viewName) {
             const body = document.body;
 
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('teto-view').style.display = 'none';
+            const newsView = document.getElementById('news-view');
+            if (newsView) newsView.style.display = 'none';
+
+            body.classList.remove('teto-theme');
+
             if (viewName === 'home') {
                 changeMusic('main');
                 document.getElementById('home-view').style.display = 'block';
-                document.getElementById('teto-view').style.display = 'none';
-                body.classList.remove('teto-theme');
             } else if (viewName === 'teto') {
                 changeMusic('teto');
-                document.getElementById('home-view').style.display = 'none';
                 document.getElementById('teto-view').style.display = 'block';
                 body.classList.add('teto-theme');
+            } else if (viewName === 'news') {
+                changeMusic('main');
+                if (newsView) newsView.style.display = 'block';
             }
 
             const links = document.querySelectorAll('.navbar-nav .nav-link');
             links.forEach(l => l.classList.remove('active'));
             if(viewName === 'home') links[0].classList.add('active');
+            if(viewName === 'news') links[1].classList.add('active');
 
             window.scrollTo(0, 0);
         }
