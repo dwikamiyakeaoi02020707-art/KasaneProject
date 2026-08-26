@@ -376,6 +376,16 @@
         </div>
     </nav>
 
+    <!-- GLOBAL EOS WARNING BANNER -->
+    <div class="container" style="padding-top: 100px; padding-bottom: 0px;">
+        <div class="alert alert-warning d-flex align-items-center mb-0" role="alert" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; border-radius: 12px;">
+            <div style="font-size: 1.5rem; margin-right: 15px;">⚠️</div>
+            <div>
+                <strong>Peringatan EOS:</strong> tetoOS 10 Versi Maret 2026 (EA) akan memasuki masa End of Support pada <strong>10 Oktober 2026</strong>. Versi ini direncanakan akan masuk Arsip. Harap beralih ke versi CBT atau tunggu info pembaruan dari Admin!
+            </div>
+        </div>
+    </div>
+
     <!-- ==============================================
          WRAPPER BERANDA UTAMA (HOME - GREEN THEME)
          ============================================== -->
@@ -505,7 +515,7 @@
                     <h1 class="main-title text-gradient-red">tetoOS 10</h1>
                     <p class="hero-desc">Dibangun di atas base Windows 10 Enterprise LTSC IoT 22H2, OS ini dirancang khusus untuk performa maksimal dengan sentuhan estetik Kasane Teto. Cocok untuk PC/Laptop "kentang" atau yang ingin performa gaming tanpa gangguan bloatware.</p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="teto/link" target="_blank" class="btn btn-primary-red text-decoration-none oobe-link">Download tetoOS 10</a>
+                        <button type="button" class="btn btn-primary-red" data-bs-toggle="modal" data-bs-target="#eaWarningModal">Download tetoOS 10</button>
                         <!-- TOMBOL BARU: CBT ACCESS -->
                         <button type="button" class="btn btn-cbt" data-bs-toggle="modal" data-bs-target="#cbtModal">CBT Access 🔒</button>
                         <a href="teto/archive" dhref="https://sfl.gl/9a4OHgv" target="_blank" class="btn btn-outline-red text-decoration-none oobe-link">Arsip tetoOS 10</a>
@@ -830,6 +840,32 @@
                 <div class="modal-footer justify-content-between">
                     <span class="text-muted" style="font-size: 0.85rem;">Terima kasih telah mematuhi aturan Nookleaf Project.</span>
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Download EA Warning -->
+    <div class="modal fade" id="eaWarningModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-modal text-light border-0" style="border-left: 4px solid #ef4444 !important;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold" style="color: #ef4444;">⚠️ Notice: tetoOS 10 EA (Maret)</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body system-font pt-3 pb-4">
+                    <p style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.6;">TetoOS 10 versi EA (Maret) akan memasuki masa <strong>EOS (10 Oktober 2026)</strong> dan sedang dipersiapkan untuk masuk arsip.</p>
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <p style="margin-bottom: 10px; font-size: 0.95rem; color: #fff;">Kami sangat menyarankan Anda untuk mencoba versi <strong>CBT (Closed Beta Test)</strong> terbaru yang lebih stabil dan optimal!</p>
+                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #fca5a5;">⚠️ <strong>Syarat Akses CBT:</strong> Anda diwajibkan untuk bergabung ke dalam Grup WhatsApp Nookleaf untuk mendapatkan kode akses.</p>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 justify-content-between pt-0 flex-wrap gap-2">
+                    <a href="teto/link" target="_blank" class="text-white text-decoration-underline" style="font-size: 0.85rem;" onclick="document.querySelector('#eaWarningModal .btn-close').click();">Lanjut Unduh EA (Tidak Disarankan)</a>
+                    <div class="d-flex gap-2">
+                        <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-outline-success">Grup WA</a>
+                        <button type="button" class="btn btn-cbt" data-bs-dismiss="modal" onclick="document.querySelector('[data-bs-target=\'#cbtModal\']').click();">CBT Access 🔒</button>
+                    </div>
                 </div>
             </div>
         </div>
