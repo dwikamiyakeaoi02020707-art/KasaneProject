@@ -293,6 +293,24 @@
             cursor: pointer;
             user-select: none;
         }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        body.teto11-theme {
+            background-color: #050505;
+            background-image: none;
+        }
+        
+        body.teto11-theme .navbar {
+            background: rgba(5, 5, 5, 0.6);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+        }
+        
+        body.teto11-theme #shared-bottom-sections {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -350,7 +368,15 @@
                         <ul class="dropdown-menu glass-dropdown" aria-labelledby="navbarProjects">
                             <li><a class="dropdown-item d-flex align-items-center rickroll-trigger" href="#"><div class="project-icon-box icon-archleaf">🌸</div><div><div class="dropdown-title">Hana Chan Mascot <span class="badge badge-comingsoon">COMING SOON</span></div><p class="dropdown-desc">Mascot in development</p></div></a></li>
 
-                            <li><a class="dropdown-item d-flex align-items-center rickroll-teto11-trigger" href="#"><div class="project-icon-box icon-teto11">⚡</div><div><div class="dropdown-title">tetoOS 11 <span class="badge badge-comingsoon">COMING SOON</span></div><p class="dropdown-desc">Next Generation Experience</p></div></a></li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="#" onclick="toggleView('teto11'); return false;">
+                                    <div class="project-icon-box icon-teto11">⚡</div>
+                                    <div>
+                                        <div class="dropdown-title">tetoOS 11 <span class="badge bg-warning text-dark ms-2" style="font-size: 0.65rem;">SOON</span></div>
+                                        <p class="dropdown-desc">Next Generation Experience</p>
+                                    </div>
+                                </a>
+                            </li>
 
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" onclick="toggleView('teto')">
@@ -547,6 +573,26 @@
             </div>
         </div>
     </div> <!-- END WRAPPER TETO OS -->
+
+    <!-- ==============================================
+         WRAPPER TEASER TETO OS 11 (YELLOW/BLACK THEME)
+         ============================================== -->
+    <div id="teto11-view" style="display: none; min-height: 100vh; align-items: center; justify-content: center; position: relative;">
+        <!-- Subtle glowing background effect -->
+        <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(234, 179, 8, 0.08) 0%, rgba(5, 5, 5, 0) 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;"></div>
+        
+        <div class="teaser-container" style="position: relative; z-index: 1; text-align: center; padding: 40px; animation: fadeIn 2s ease-in-out;">
+            <h1 class="main-title" style="font-size: clamp(3.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);">tetoOS <span style="color: #eab308; background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">11</span></h1>
+            <div class="subtitle" style="font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: #a1a1aa; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px;">Next Generation Experience</div>
+            
+            <div class="message" style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #d4d4d8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px);">
+                Status: <strong>Dalam Tahap Pengembangan 🛠️</strong><br><br>
+                Tim kami saat ini sedang membangun ekosistem tetoOS 11. Harap bersabar menunggu, informasi lebih lanjut akan segera diumumkan.
+            </div>
+
+            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #eab308; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#facc15'; this.style.borderBottom='1px solid #facc15'" onmouseout="this.style.color='#eab308'; this.style.borderBottom='1px solid transparent'">← Kembali ke Beranda Nookleaf</a>
+        </div>
+    </div> <!-- END WRAPPER TETO11 OS -->
 
     <!-- ==============================================
          SHARED BOTTOM SECTIONS
@@ -917,8 +963,11 @@
             document.getElementById('teto-view').style.display = 'none';
             const newsView = document.getElementById('news-view');
             if (newsView) newsView.style.display = 'none';
+            const teto11View = document.getElementById('teto11-view');
+            if (teto11View) teto11View.style.display = 'none';
 
             body.classList.remove('teto-theme');
+            body.classList.remove('teto11-theme');
 
             if (viewName === 'home') {
                 changeMusic('main');
@@ -930,6 +979,10 @@
             } else if (viewName === 'news') {
                 changeMusic('main');
                 if (newsView) newsView.style.display = 'block';
+            } else if (viewName === 'teto11') {
+                changeMusic('main'); // or pause music if you prefer, leaving main for now
+                if (teto11View) teto11View.style.display = 'flex';
+                body.classList.add('teto11-theme');
             }
 
             const links = document.querySelectorAll('.navbar-nav .nav-link');
