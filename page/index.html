@@ -308,7 +308,8 @@
             border-bottom: 1px solid rgba(234, 179, 8, 0.2);
         }
         
-        body.teto11-theme #shared-bottom-sections {
+        body.teto11-theme #shared-bottom-sections,
+        body.teto-theme #shared-bottom-sections {
             display: none !important;
         }
     </style>
@@ -531,46 +532,25 @@
     <!-- ==============================================
          WRAPPER BERANDA BARU KHUSUS TETO OS (RED THEME)
          ============================================== -->
-    <div id="teto-view" style="display: none;">
-        <div class="hero-wrapper container">
-            <div class="row align-items-center w-100 m-0">
-
-                <!-- Kiri: Teks & Tombol -->
-                <div class="col-lg-5 order-1 mb-4 mb-lg-0" style="z-index: 2;">
-                    <div class="status-badge status-badge-red"><span class="dot"></span> tetoOS 10 is Now Live</div>
-                    <h1 class="main-title text-gradient-red">tetoOS 10</h1>
-                    <p class="hero-desc">Dibangun di atas base Windows 10 Enterprise LTSC IoT 22H2, OS ini dirancang khusus untuk performa maksimal dengan sentuhan estetik Kasane Teto. Cocok untuk PC/Laptop "kentang" atau yang ingin performa gaming tanpa gangguan bloatware.</p>
-                    <div class="d-flex flex-wrap gap-3">
-                        <button type="button" class="btn btn-primary-red" data-bs-toggle="modal" data-bs-target="#eaWarningModal">Download tetoOS 10</button>
-                        <!-- TOMBOL BARU: CBT ACCESS -->
-                        <button type="button" class="btn btn-cbt" data-bs-toggle="modal" data-bs-target="#cbtModal">CBT Access 🔒</button>
-                        <a href="teto/archive" dhref="https://sfl.gl/9a4OHgv" target="_blank" class="btn btn-outline-red text-decoration-none oobe-link">Arsip tetoOS 10</a>
-                        <button type="button" class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#changelogModal">View Changelog</button>
-                    </div>
-                </div>
-
-                <!-- Tengah: Maskot Kasane Teto -->
-                <div class="col-lg-3 order-3 order-lg-2 d-flex justify-content-center align-items-end" style="position: relative; z-index: 1;">
-                    <img src="/img/teto.png" alt="Kasane Teto" class="img-fluid teto-mascot">
-                </div>
-
-                <!-- Kanan: Cards Fitur dengan Aksen Merah -->
-                <div class="col-lg-4 order-2 order-lg-3" style="z-index: 2;">
-                    <div class="glass-card glass-card-red mb-4" style="padding: 20px;">
-                        <h4>Performance Boost</h4>
-                        <p class="system-font m-0">Debloated, Compact NTFS Compression, & Custom Power Profile.</p>
-                    </div>
-                    <div class="glass-card glass-card-red mb-4" style="padding: 20px;">
-                        <h4>Teto Aesthetic</h4>
-                        <p class="system-font m-0">Kursor, wallpaper, dan skema suara eksklusif Kasane Teto.</p>
-                    </div>
-                    <div class="glass-card glass-card-red" style="padding: 20px;">
-                        <h4>Stay Stable</h4>
-                        <p class="system-font m-0">Windows Update Permanent Pause Mode (Anti-update tiba-tiba!).</p>
-                    </div>
-                </div>
-
+    <div id="teto-view" style="display: none; min-height: 100vh; align-items: center; justify-content: center; position: relative;">
+        <!-- Subtle glowing background effect RED -->
+        <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, rgba(5, 5, 5, 0) 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;"></div>
+        
+        <div class="teaser-container" style="position: relative; z-index: 1; text-align: center; padding: 40px; animation: fadeIn 2s ease-in-out;">
+            <h1 class="main-title" style="font-size: clamp(3.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);">tetoOS <span style="color: #ef4444; background: linear-gradient(135deg, #f87171 0%, #dc2626 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">10</span></h1>
+            <div class="subtitle" style="font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: #a1a1aa; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px;">Final Version (Coming Soon)</div>
+            
+            <div class="message" style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #d4d4d8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px);">
+                Status: <strong>Dalam Tahap Pengembangan Final 🛠️</strong><br><br>
+                Masa EA & CBT akan segera berakhir (EOS). Tim kami saat ini berfokus penuh untuk membangun tetoOS 10 versi Final. Harap bersabar menunggu.
             </div>
+
+            <div style="margin-bottom: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#eaWarningModal" style="background-color: #ef4444; color: #fff; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#f87171'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundColor='#ef4444'; this.style.transform='translateY(0)';">Download EA (EOS)</button>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#cbtModal" style="background-color: #fbbf24; color: #78350f; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#f59e0b'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundColor='#fbbf24'; this.style.transform='translateY(0)';">CBT Access 🔒</button>
+            </div>
+
+            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #ef4444; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#f87171'; this.style.borderBottom='1px solid #f87171'" onmouseout="this.style.color='#ef4444'; this.style.borderBottom='1px solid transparent'">← Kembali ke Beranda Nookleaf</a>
         </div>
     </div> <!-- END WRAPPER TETO OS -->
 
@@ -980,7 +960,7 @@
                 document.getElementById('home-view').style.display = 'block';
             } else if (viewName === 'teto') {
                 changeMusic('teto');
-                document.getElementById('teto-view').style.display = 'block';
+                document.getElementById('teto-view').style.display = 'flex';
                 body.classList.add('teto-theme');
             } else if (viewName === 'news') {
                 changeMusic('main');
