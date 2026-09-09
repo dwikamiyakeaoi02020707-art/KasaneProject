@@ -22,11 +22,49 @@
             transition: background-color 0.8s ease, background-image 0.8s ease, color 0.5s;
         }
 
-        /* === TRANSISI SEWAKTU MASUK KE BERANDA TETO OS === */
+        /* === TRANSISI SEWAKTU MASUK KE BERANDA TETO OS (RED) === */
         body.teto-theme {
             background-color: #0a0506;
             background-image: radial-gradient(circle at 80% -10%, #42111a 0%, #0a0506 60%),
                               radial-gradient(circle at 10% 90%, #260a0f 0%, transparent 50%);
+        }
+
+        /* === TRANSISI SEWAKTU MASUK KE BERANDA TETO OS 11 (YELLOW/BLACK) === */
+        body.teto11-theme {
+            background-color: #050505;
+            background-image: none;
+        }
+        
+        body.teto11-theme .navbar {
+            background: rgba(5, 5, 5, 0.6);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+        }
+
+        /* === TRANSISI SEWAKTU MASUK KE BERANDA TETO OS ZENTH (BLUE / FEDORA) === */
+        body.zenth-theme {
+            background-color: #030712;
+            background-image: radial-gradient(circle at 80% -10%, #1e3a8a 0%, #030712 60%),
+                              radial-gradient(circle at 10% 90%, #0f172a 0%, transparent 50%);
+        }
+        
+        body.zenth-theme .navbar {
+            background: rgba(3, 7, 18, 0.7);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.25);
+        }
+
+        body.zenth-theme .brand-highlight {
+            color: #3b82f6;
+        }
+
+        body.zenth-theme .nav-link:hover,
+        body.zenth-theme .nav-link.active {
+            color: #3b82f6 !important;
+        }
+
+        body.teto11-theme #shared-bottom-sections,
+        body.teto-theme #shared-bottom-sections,
+        body.zenth-theme #shared-bottom-sections {
+            display: none !important;
         }
 
         #oobe-screen, #shutdown-screen {
@@ -67,15 +105,18 @@
 
         .glass-dropdown { background: rgba(10, 25, 15, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); min-width: 340px; margin-top: 20px !important; transition: border-color 0.5s; }
         body.teto-theme .glass-dropdown { border-color: rgba(244, 63, 94, 0.3); background: rgba(15, 10, 12, 0.85); }
+        body.zenth-theme .glass-dropdown { border-color: rgba(59, 130, 246, 0.3); background: rgba(10, 16, 30, 0.85); }
 
         .glass-dropdown .dropdown-item { border-radius: 10px; padding: 14px 16px; transition: all 0.3s ease; background: transparent; margin-bottom: 5px; cursor: pointer;}
         .glass-dropdown .dropdown-item:hover { background: rgba(16, 185, 129, 0.1); }
         body.teto-theme .glass-dropdown .dropdown-item:hover { background: rgba(244, 63, 94, 0.1); }
+        body.zenth-theme .glass-dropdown .dropdown-item:hover { background: rgba(59, 130, 246, 0.1); }
 
         .project-icon-box { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px; font-size: 1.3rem; flex-shrink: 0; }
         .icon-archleaf { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
         .icon-teto     { background: rgba(244, 63, 94, 0.15);  color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
         .icon-teto11   { background: rgba(234, 179, 8, 0.15);  color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+        .icon-zenth    { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); }
 
         .dropdown-title { color: #fff; font-weight: 700; font-size: 1.05rem; margin-bottom: 3px; display: flex; align-items: center; gap: 8px; }
         .dropdown-desc { color: #94a3b8; font-size: 0.85rem; margin: 0; }
@@ -156,6 +197,11 @@
             background-color: #fff5f6;
             background-image: radial-gradient(circle at 80% -10%, #ffe4e6 0%, #fff5f6 60%),
                               radial-gradient(circle at 10% 90%, #f1f5f9 0%, transparent 50%);
+        }
+        body.light-mode.zenth-theme {
+            background-color: #f0f7ff;
+            background-image: radial-gradient(circle at 80% -10%, #dbeafe 0%, #f0f7ff 60%),
+                              radial-gradient(circle at 10% 90%, #e0f2fe 0%, transparent 50%);
         }
         body.light-mode #oobe-screen, body.light-mode #shutdown-screen { background-color: #f8fafc; background-image: radial-gradient(circle at 50% 50%, #d1fae5 0%, #f8fafc 100%); }
         body.light-mode .oobe-logo { color: #0f172a; }
@@ -297,27 +343,11 @@
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-        
-        body.teto11-theme {
-            background-color: #050505;
-            background-image: none;
-        }
-        
-        body.teto11-theme .navbar {
-            background: rgba(5, 5, 5, 0.6);
-            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
-        }
-        
-        body.teto11-theme #shared-bottom-sections,
-        body.teto-theme #shared-bottom-sections {
-            display: none !important;
-        }
     </style>
 </head>
 <body>
 
     <div id="rickroll-container">
-        <!-- Elemen video dibiarkan kosong, source akan diisi secara dinamis dengan Javascript -->
         <video id="rickroll-video" src="" loop preload="auto"></video>
     </div>
 
@@ -369,6 +399,17 @@
                         <ul class="dropdown-menu glass-dropdown" aria-labelledby="navbarProjects">
                             <li><a class="dropdown-item d-flex align-items-center rickroll-trigger" href="#"><div class="project-icon-box icon-archleaf">🌸</div><div><div class="dropdown-title">Hana Chan Mascot <span class="badge badge-comingsoon">COMING SOON</span></div><p class="dropdown-desc">Mascot in development</p></div></a></li>
 
+                            <!-- TOMBOL TETOOS ZENTH (LINUX FEDORA BASE) -->
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="#" onclick="toggleView('zenth'); return false;">
+                                    <div class="project-icon-box icon-zenth">🐧</div>
+                                    <div>
+                                        <div class="dropdown-title">tetoOS Zenth <span class="badge ms-2" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); font-size: 0.65rem;">COMING SOON</span></div>
+                                        <p class="dropdown-desc">Linux (Fedora Base) • In Progress</p>
+                                    </div>
+                                </a>
+                            </li>
+
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" href="#" onclick="toggleView('teto11'); return false;">
                                     <div class="project-icon-box icon-teto11">⚡</div>
@@ -403,12 +444,12 @@
         </div>
     </nav>
 
-    <!-- GLOBAL EOS WARNING BANNER -->
+    <!-- GLOBAL EOS WARNING BANNER (REVERTED TO PRE-EOS STATE) -->
     <div class="container" style="padding-top: 100px; padding-bottom: 0px;">
         <div class="alert alert-warning d-flex align-items-center mb-0" role="alert" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; border-radius: 12px;">
             <div style="font-size: 1.5rem; margin-right: 15px;">⚠️</div>
             <div>
-                <strong>Peringatan EOS:</strong> tetoOS 10 Versi Maret 2026 (EA) memasuki masa End of Support (10 Oktober 2026). Versi <strong>CBT</strong> diundur dan akan ditutup pada <strong>10 September 2026</strong> agar kalian sempat mencoba tetoOS CBT. Harap tunggu info perilisan versi Final dari Admin!
+                <strong>Peringatan EOS:</strong> tetoOS 10 Versi Maret 2026 (EA) memasuki masa End of Support (10 Oktober 2026). Versi <strong>CBT</strong> akan ditutup lebih awal. Harap perhatikan pengumuman di grup!
             </div>
         </div>
     </div>
@@ -459,19 +500,13 @@
          WRAPPER NEWS VIEW
          ============================================== -->
     <div id="news-view" style="display: none;">
-        <!-- HEADER SECTION -->
         <section class="news-header container" style="padding: 120px 0 60px; text-align: center;">
             <h1 class="news-title" style="font-size: 3.5rem; font-weight: 800; color: #fff; margin-bottom: 15px;">Nookleaf <span class="text-gradient" style="background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">News</span></h1>
             <p class="news-subtitle" style="font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto;">Pembaruan terbaru, catatan rilis, dan informasi menarik dari ekosistem Nookleaf.</p>
         </section>
 
-        <!-- NEWS GRID SECTION -->
         <section class="container">
             <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 80px;">
-                
-                <!-- (Berita Hana Chan dihapus sementara karena belum rilis) -->
-
-                <!-- Berita 2 -->
                 <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
                     <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #fbbf24;">⚡</div>
                     <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
@@ -482,7 +517,6 @@
                     </div>
                 </div>
 
-                <!-- Berita 3 -->
                 <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
                     <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #f43f5e;">🦅</div>
                     <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
@@ -493,7 +527,6 @@
                     </div>
                 </div>
 
-                <!-- Berita 4 -->
                 <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
                     <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #38bdf8;">🐧</div>
                     <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
@@ -504,7 +537,6 @@
                     </div>
                 </div>
 
-                <!-- Berita 5 -->
                 <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
                     <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #10b981;">🥖</div>
                     <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
@@ -515,7 +547,6 @@
                     </div>
                 </div>
 
-                <!-- Berita 6 -->
                 <div class="news-card" style="background: rgba(16, 185, 129, 0.03); border: 1px solid rgba(16, 185, 129, 0.1); border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 20px 40px rgba(16, 185, 129, 0.1)'; this.style.borderColor='rgba(16, 185, 129, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='rgba(16, 185, 129, 0.1)';">
                     <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #a78bfa;">🎥</div>
                     <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
@@ -533,7 +564,6 @@
          WRAPPER BERANDA BARU KHUSUS TETO OS (RED THEME)
          ============================================== -->
     <div id="teto-view" style="display: none; min-height: 100vh; align-items: center; justify-content: center; position: relative;">
-        <!-- Subtle glowing background effect RED -->
         <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, rgba(5, 5, 5, 0) 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;"></div>
         
         <div class="teaser-container" style="position: relative; z-index: 1; text-align: center; padding: 40px; animation: fadeIn 2s ease-in-out;">
@@ -542,8 +572,30 @@
             
             <div class="message" style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #d4d4d8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px);">
                 Status: <strong>Dalam Tahap Pengembangan Final 🛠️</strong><br><br>
-                Masa EA & CBT akan segera berakhir (EOS). Tim kami saat ini berfokus penuh untuk membangun tetoOS 10 versi Final. Harap bersabar menunggu.
+                Masa EA & CBT sedang berlangsung. Tim kami saat ini berfokus penuh untuk membangun tetoOS 10 versi Final. Harap perhatikan bahwa versi ini dapat berubah sewaktu-waktu.
             </div>
+
+            <!-- COUNTDOWN EOS CBT -->
+            <h6 style="color: #f87171; font-weight: bold; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase;">Hitung Mundur Penutupan CBT</h6>
+            <div id="eos-countdown" style="margin: 0 auto 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 15px; border-radius: 12px; min-width: 75px;">
+                    <div id="cd-days" style="font-size: 1.8rem; font-weight: 800; color: #f87171; line-height: 1;">00</div>
+                    <div style="font-size: 0.7rem; color: #fca5a5; text-transform: uppercase; margin-top: 5px; letter-spacing: 1px;">Hari</div>
+                </div>
+                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 15px; border-radius: 12px; min-width: 75px;">
+                    <div id="cd-hours" style="font-size: 1.8rem; font-weight: 800; color: #f87171; line-height: 1;">00</div>
+                    <div style="font-size: 0.7rem; color: #fca5a5; text-transform: uppercase; margin-top: 5px; letter-spacing: 1px;">Jam</div>
+                </div>
+                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 15px; border-radius: 12px; min-width: 75px;">
+                    <div id="cd-minutes" style="font-size: 1.8rem; font-weight: 800; color: #f87171; line-height: 1;">00</div>
+                    <div style="font-size: 0.7rem; color: #fca5a5; text-transform: uppercase; margin-top: 5px; letter-spacing: 1px;">Menit</div>
+                </div>
+                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 15px; border-radius: 12px; min-width: 75px;">
+                    <div id="cd-seconds" style="font-size: 1.8rem; font-weight: 800; color: #f87171; line-height: 1;">00</div>
+                    <div style="font-size: 0.7rem; color: #fca5a5; text-transform: uppercase; margin-top: 5px; letter-spacing: 1px;">Detik</div>
+                </div>
+            </div>
+            <div style="color: #fca5a5; font-size: 0.8rem; margin-bottom: 30px; font-family: 'JetBrains Mono', monospace;">10 September 2026, 02:00 AM (US Eastern Time)</div>
 
             <div style="margin-bottom: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#eaWarningModal" style="background-color: #ef4444; color: #fff; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#f87171'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundColor='#ef4444'; this.style.transform='translateY(0)';">Download EA (EOS)</button>
@@ -558,7 +610,6 @@
          WRAPPER TEASER TETO OS 11 (YELLOW/BLACK THEME)
          ============================================== -->
     <div id="teto11-view" style="display: none; min-height: 100vh; align-items: center; justify-content: center; position: relative;">
-        <!-- Subtle glowing background effect -->
         <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(234, 179, 8, 0.08) 0%, rgba(5, 5, 5, 0) 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;"></div>
         
         <div class="teaser-container" style="position: relative; z-index: 1; text-align: center; padding: 40px; animation: fadeIn 2s ease-in-out;">
@@ -578,9 +629,35 @@
     </div> <!-- END WRAPPER TETO11 OS -->
 
     <!-- ==============================================
+         WRAPPER TEASER TETO OS ZENTH (BLUE / FEDORA THEME)
+         ============================================== -->
+    <div id="zenth-view" style="display: none; min-height: 100vh; align-items: center; justify-content: center; position: relative;">
+        <div style="position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(3, 7, 18, 0) 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none;"></div>
+        
+        <div class="teaser-container" style="position: relative; z-index: 1; text-align: center; padding: 40px; animation: fadeIn 2s ease-in-out;">
+            <div style="display: inline-block; margin-bottom: 15px; padding: 6px 16px; border-radius: 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">
+                🐧 Linux • Base Fedora
+            </div>
+            <h1 class="main-title" style="font-size: clamp(3.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; background: linear-gradient(180deg, #ffffff 0%, #93c5fd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);">tetoOS <span style="color: #3b82f6; background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Zenth</span></h1>
+            <div class="subtitle" style="font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: #94a3b8; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px;">Coming Soon Linux Project</div>
+            
+            <div class="message" style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #d4d4d8; max-width: 520px; margin: 0 auto 30px; line-height: 1.6; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(59, 130, 246, 0.2); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px);">
+                Status: <strong style="color: #60a5fa;">Coming Soon / Belum Lanjut 🔒</strong><br><br>
+                tetoOS Zenth adalah sistem operasi berbasis <strong>Linux (Fedora Base)</strong>. Saat ini proyek masih bersifat sangat tertutup (internal only) dan dalam tahap pengerjaan modul inti. Harap tunggu info selanjutnya dari tim kami.
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <button type="button" class="btn" style="background-color: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px dashed rgba(59, 130, 246, 0.5); font-weight: 700; padding: 12px 30px; border-radius: 8px; font-size: 1rem; cursor: not-allowed;" disabled>
+                    🔒 Akses Tertutup (Coming Soon)
+                </button>
+            </div>
+
+            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #3b82f6; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#60a5fa'; this.style.borderBottom='1px solid #60a5fa'" onmouseout="this.style.color='#3b82f6'; this.style.borderBottom='1px solid transparent'">← Kembali ke Beranda Nookleaf</a>
+        </div>
+    </div> <!-- END WRAPPER TETO OS ZENTH -->
+
+    <!-- ==============================================
          SHARED BOTTOM SECTIONS
-         Seksi ini global, akan selalu tampil di-scroll ke bawah
-         entah kamu berada di Home ataupun TetoOS.
          ============================================== -->
     <div id="shared-bottom-sections">
 
@@ -747,13 +824,14 @@
                         </div>
                         <p class="footer-text" style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; max-width: 400px;">
                             Built for speed. Tuned for gaming.<br>
-                            Research-backed Windows optimizations.
+                            Research-backed Windows & Linux optimizations.
                         </p>
                     </div>
                     <div class="col-lg-3 col-6">
                         <h6 class="footer-heading">PRODUCTS</h6>
                         <ul class="list-unstyled" style="line-height: 2.2; font-size: 0.95rem;">
-                            <li><a href="#" class="footer-link">tetoOS 11</a></li>
+                            <li><a href="#" onclick="toggleView('zenth'); return false;" class="footer-link">tetoOS Zenth (Linux)</a></li>
+                            <li><a href="#" onclick="toggleView('teto11'); return false;" class="footer-link">tetoOS 11</a></li>
                             <li><a href="#" class="footer-link rickroll-trigger">Hana Chan Mascot</a></li>
                             <li><a onclick="toggleView('teto')" class="footer-link">tetoOS 10</a></li>
                         </ul>
@@ -783,36 +861,36 @@
     <!-- MODAL BARU: CBT ACCESS -->
     <div class="modal fade" id="cbtModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
-        <!-- Sekarang seluruh konten input dan tombol dibungkus oleh tag <form> -->
         <form action="/cbt" method="get" class="modal-content glass-modal text-light border-0">
-
           <div class="modal-header">
             <h5 class="modal-title fw-bold" style="color: #eab308;">🔒 tetoOS CBT Access</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
           </div>
 
           <div class="modal-body system-font">
-            <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-                <p style="margin: 0; color: #fca5a5; font-size: 0.9rem;">⚠️ <strong>INFO PENTING:</strong> Sesuai instruksi Lead Modder, penutupan versi CBT ini <strong>diundur menjadi 10 September 2026</strong> agar kalian sempat mencoba tetoOS CBT sebelum kita berfokus menunggu perilisan versi Final.</p>
-            </div>
-            <p id="cbtInstructions">Masukkan Kode Akses CBT (Closed Beta Testing). Kode hanya bisa didapatkan dengan bergabung di Grup WhatsApp resmi Nookleaf.</p>
-            <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-outline-green w-100 mb-4 oobe-link" style="border-color: #25D366; color: #25D366;">📲 Join Grup WA Nookleaf</a>
-
+            <p style="text-align: center; color: #cbd5e1; font-size: 0.95rem; margin-bottom: 20px;" id="cbtInstructions">
+              Silakan masukkan kode CBT yang telah Anda terima. Jika belum memiliki kode, bergabunglah dengan server <a href="https://discord.gg/3hXCNdHQ2" target="_blank" style="color: #38bdf8;">Discord</a> kami untuk informasi lebih lanjut.
+            </p>
+            
             <div class="mb-3" id="cbtInputGroup">
-              <!-- Ditambahkan name="code" dan enterkeyhint="go" agar keyboard HP memunculkan tombol 'Masuk/Pergi' -->
               <input type="password" id="cbtCodeInput" name="code" enterkeyhint="go" class="form-control bg-dark text-light border-secondary text-center" placeholder="MASUKKAN KODE CBT" style="font-family: 'JetBrains Mono', monospace; letter-spacing: 2px;" required>
             </div>
+
+            <div id="cbtSuccessZone" style="display: none; text-align: center;">
+                <h6 style="color: #10b981; font-weight: bold;">✅ Akses Diberikan</h6>
+                <p style="font-size: 0.85rem; color: #a7f3d0;">Anda akan segera dialihkan ke halaman CBT...</p>
+                <div class="spinner-border text-success mt-2" role="status" style="width: 1.5rem; height: 1.5rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
           </div>
 
-          <div class="modal-footer justify-content-center" id="cbtModalFooter">
-            <!-- Diubah tipe button menjadi type="submit" agar mendeteksi Enter di PC maupun Mobile secara otomatis -->
-            <button type="submit" id="btnVerifyCbt" class="btn w-100 fw-bold" style="background-color: #eab308; color: #422006; transition: 0.3s;" onmouseover="this.style.backgroundColor='#facc15'" onmouseout="this.style.backgroundColor='#eab308'">Verifikasi Kode</button>
+          <div class="modal-footer justify-content-center border-0 pt-0" id="cbtModalFooter">
+            <button type="submit" class="btn w-100 fw-bold" style="background-color: #eab308; color: #422006; transition: 0.3s;" onmouseover="this.style.backgroundColor='#facc15'" onmouseout="this.style.backgroundColor='#eab308'">Verifikasi & Akses</button>
           </div>
-
         </form>
       </div>
     </div>
-
 
     <!-- Modal (Privacy Policy) -->
     <div class="modal fade" id="privacyModal" tabindex="-1">
@@ -888,8 +966,8 @@
                 <div class="modal-body system-font pt-3 pb-4">
                     <p style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.6;">TetoOS 10 versi EA (Maret) akan memasuki masa <strong>EOS (10 Oktober 2026)</strong> dan sedang dipersiapkan untuk masuk arsip.</p>
                     <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 15px; border-radius: 8px; margin-top: 15px;">
-                        <p style="margin-bottom: 10px; font-size: 0.95rem; color: #fff;">Kami sangat menyarankan Anda untuk mencoba versi <strong>CBT (Closed Beta Test)</strong> terbaru yang lebih stabil dan optimal! Namun harap dicatat, CBT juga akan ditutup pada <strong>10 September 2026</strong> (diundur agar sempat mencoba).</p>
-                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #fca5a5;">⚠️ <strong>Syarat Akses CBT:</strong> Anda diwajibkan untuk bergabung ke dalam Grup WhatsApp Nookleaf untuk mendapatkan kode akses.</p>
+                        <p style="margin-bottom: 10px; font-size: 0.95rem; color: #fff;">Kami sangat menyarankan pengguna baru untuk bergabung dalam tahap <strong>CBT (Closed Beta Test)</strong> versi terbaru yang lebih stabil dan kaya fitur.</p>
+                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #fca5a5;">⚠️ Jika Anda tetap ingin mengunduh versi EA, kami tidak lagi memberikan dukungan teknis (support) untuk versi tersebut.</p>
                     </div>
                 </div>
                 <div class="modal-footer border-0 justify-content-between pt-0 flex-wrap gap-2">
@@ -941,7 +1019,7 @@
             }
         }
 
-        // === LOGIKA TOGGLE VIEW BERANDA (DENGAN UTK TRANSISI BACKROUND IJO KE MERAH) ===
+        // === LOGIKA TOGGLE VIEW BERANDA (DENGAN TRANSISI TEMA & WARNA) ===
         function toggleView(viewName) {
             const body = document.body;
 
@@ -951,9 +1029,12 @@
             if (newsView) newsView.style.display = 'none';
             const teto11View = document.getElementById('teto11-view');
             if (teto11View) teto11View.style.display = 'none';
+            const zenthView = document.getElementById('zenth-view');
+            if (zenthView) zenthView.style.display = 'none';
 
             body.classList.remove('teto-theme');
             body.classList.remove('teto11-theme');
+            body.classList.remove('zenth-theme');
 
             if (viewName === 'home') {
                 changeMusic('main');
@@ -966,9 +1047,13 @@
                 changeMusic('main');
                 if (newsView) newsView.style.display = 'block';
             } else if (viewName === 'teto11') {
-                changeMusic('main'); // or pause music if you prefer, leaving main for now
+                changeMusic('main');
                 if (teto11View) teto11View.style.display = 'flex';
                 body.classList.add('teto11-theme');
+            } else if (viewName === 'zenth') {
+                changeMusic('main');
+                if (zenthView) zenthView.style.display = 'flex';
+                body.classList.add('zenth-theme');
             }
 
             const links = document.querySelectorAll('.navbar-nav .nav-link');
@@ -1027,22 +1112,17 @@
         // === BG MUSIC TOGGLE ===
         function toggleMusic(set) {
           const musicToggle = document.getElementById('music-toggle');
-
-          // Ambil status paused (default ke true jika belum ada)
           let isPaused = localStorage.getItem('musicPaused') === 'true';
 
-          // Jika tombol/fungsi dipanggil untuk mengubah nilai state (toggle)
           if (set === true) {
             isPaused = !isPaused;
             localStorage.setItem('musicPaused', isPaused);
           }
 
-          // Jika statusnya dimatikan/paused
           if (isPaused) {
             bgMusic.pause();
             if (musicToggle) musicToggle.textContent = '▶️';
           } else {
-            // Jika statusnya dinyalakan/playing
             bgMusic.play().catch(err => console.log("Autoplay diblokir browser:", err));
             if (musicToggle) musicToggle.textContent = '⏸️';
           }
@@ -1064,12 +1144,6 @@
             bgMusic.play().catch(err => console.log("Autoplay diblokir browser:", err));
           }
         }
-
-        // document.addEventListener('visibilitychange', () => {
-        //     if (bgMusic.paused && localStorage.getItem('musicPaused') !== 'true') {
-        //       changeMusic(currentMusic);
-        //     }
-        // });
 
         document.querySelectorAll('.oobe-link').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1115,19 +1189,48 @@
             });
         });
 
-        // === LOGIKA LOGIN CODE CBT ===
-        // document.getElementById('btnVerifyCbt').addEventListener('click', function() {
-        //     const enteredCode = document.getElementById('cbtCodeInput').value.trim();
-        //     location.href = `/cbt?code=${enteredCode}`;
-        // });
+        // === EOS COUNTDOWN LOGIC ===
+        function updateCountdown() {
+            // Waktu 10 September 2026, Jam 02:00 AM (Zona Waktu Amerika Timur / EDT, yaitu UTC-4)
+            const eosDate = new Date("2026-09-10T02:00:00-04:00").getTime();
+            const now = new Date().getTime();
+            const distance = eosDate - now;
 
-        document.getElementById('cbtModal').addEventListener('hidden.bs.modal', function () {
-            document.getElementById('cbtCodeInput').value = "";
-            document.getElementById('cbtSuccessZone').style.display = 'none';
-            document.getElementById('cbtInputGroup').style.display = 'block';
-            document.getElementById('cbtInstructions').style.display = 'block';
-            document.getElementById('cbtModalFooter').style.display = 'block';
-        });
+            if (distance < 0) {
+                document.getElementById("cd-days").innerHTML = "00";
+                document.getElementById("cd-hours").innerHTML = "00";
+                document.getElementById("cd-minutes").innerHTML = "00";
+                document.getElementById("cd-seconds").innerHTML = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("cd-days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("cd-hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("cd-minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("cd-seconds").innerHTML = seconds.toString().padStart(2, '0');
+        }
+
+        // Hanya jalankan jika elemen countdown ada (saat di view tetoOS)
+        if (document.getElementById("eos-countdown")) {
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+
+        // RESET CBT MODAL SAAT DITUTUP
+        if(document.getElementById('cbtModal')) {
+            document.getElementById('cbtModal').addEventListener('hidden.bs.modal', function () {
+                if(document.getElementById('cbtCodeInput')) document.getElementById('cbtCodeInput').value = "";
+                if(document.getElementById('cbtSuccessZone')) document.getElementById('cbtSuccessZone').style.display = 'none';
+                if(document.getElementById('cbtInputGroup')) document.getElementById('cbtInputGroup').style.display = 'block';
+                if(document.getElementById('cbtInstructions')) document.getElementById('cbtInstructions').style.display = 'block';
+                if(document.getElementById('cbtModalFooter')) document.getElementById('cbtModalFooter').style.display = 'block';
+            });
+        }
 
     </script>
 </body>
