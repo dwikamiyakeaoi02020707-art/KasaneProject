@@ -444,12 +444,12 @@
         </div>
     </nav>
 
-    <!-- GLOBAL EOS WARNING BANNER (REVERTED TO PRE-EOS STATE) -->
+    <!-- GLOBAL EOS WARNING BANNER -->
     <div class="container" style="padding-top: 100px; padding-bottom: 0px;">
         <div class="alert alert-warning d-flex align-items-center mb-0" role="alert" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; border-radius: 12px;">
             <div style="font-size: 1.5rem; margin-right: 15px;">⚠️</div>
             <div>
-                <strong>Peringatan EOS:</strong> tetoOS 10 Versi Maret 2026 (EA) memasuki masa End of Support (10 Oktober 2026). Versi <strong>CBT</strong> akan ditutup lebih awal. Harap perhatikan pengumuman di grup!
+                <strong>Peringatan EOS:</strong> tetoOS 10 Versi Maret 2026 (EA) memasuki masa End of Support (10 Oktober 2026). Versi <strong>CBT</strong> saat ini juga <strong>telah resmi ditutup (EOS)</strong>. Harap tunggu info perilisan versi Final dari Admin!
             </div>
         </div>
     </div>
@@ -572,7 +572,7 @@
             
             <div class="message" style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #d4d4d8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px);">
                 Status: <strong>Dalam Tahap Pengembangan Final 🛠️</strong><br><br>
-                Masa EA & CBT sedang berlangsung. Tim kami saat ini berfokus penuh untuk membangun tetoOS 10 versi Final. Harap perhatikan bahwa versi ini dapat berubah sewaktu-waktu.
+                Masa EA & CBT telah resmi berakhir (EOS). Tim kami saat ini berfokus penuh untuk membangun tetoOS 10 versi Final. Harap bersabar menunggu.
             </div>
 
             <!-- COUNTDOWN EOS CBT -->
@@ -858,37 +858,31 @@
 
     </div> <!-- END SHARED BOTTOM SECTIONS -->
 
-    <!-- MODAL BARU: CBT ACCESS -->
+    <!-- MODAL BARU: CBT ACCESS (CLOSED/EOS) -->
     <div class="modal fade" id="cbtModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
-        <form action="/cbt" method="get" class="modal-content glass-modal text-light border-0">
-          <div class="modal-header">
-            <h5 class="modal-title fw-bold" style="color: #eab308;">🔒 tetoOS CBT Access</h5>
+        <div class="modal-content glass-modal text-light border-0">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold" style="color: #ef4444;">❌ tetoOS CBT Closed</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
           </div>
 
-          <div class="modal-body system-font">
-            <p style="text-align: center; color: #cbd5e1; font-size: 0.95rem; margin-bottom: 20px;" id="cbtInstructions">
-              Silakan masukkan kode CBT yang telah Anda terima. Jika belum memiliki kode, bergabunglah dengan server <a href="https://discord.gg/3hXCNdHQ2" target="_blank" style="color: #38bdf8;">Discord</a> kami untuk informasi lebih lanjut.
+          <div class="modal-body system-font text-center pt-2">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🙏</div>
+            <h4 style="font-weight: 700; color: #fff; margin-bottom: 15px;">Terima Kasih!</h4>
+            <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 20px;">
+              Periode uji coba tetoOS 10 CBT telah resmi ditutup pada <strong>10 September 2026, 02:00 AM (EST)</strong>.
             </p>
-            
-            <div class="mb-3" id="cbtInputGroup">
-              <input type="password" id="cbtCodeInput" name="code" enterkeyhint="go" class="form-control bg-dark text-light border-secondary text-center" placeholder="MASUKKAN KODE CBT" style="font-family: 'JetBrains Mono', monospace; letter-spacing: 2px;" required>
-            </div>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin-bottom: 30px;">
+              Mewakili seluruh tim developer (khususnya Lead Modder), kami mengucapkan banyak terima kasih kepada para tester yang telah berpartisipasi dan memberikan masukannya. Mari bersiap menyambut perilisan versi Final!
+            </p>
 
-            <div id="cbtSuccessZone" style="display: none; text-align: center;">
-                <h6 style="color: #10b981; font-weight: bold;">✅ Akses Diberikan</h6>
-                <p style="font-size: 0.85rem; color: #a7f3d0;">Anda akan segera dialihkan ke halaman CBT...</p>
-                <div class="spinner-border text-success mt-2" role="status" style="width: 1.5rem; height: 1.5rem;">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
+            <div class="d-flex flex-column gap-2">
+                <button type="button" class="btn w-100 fw-bold rickroll-trigger" data-bs-dismiss="modal" style="background-color: #fbbf24; color: #78350f; padding: 12px; font-size: 1rem; border-radius: 8px; transition: 0.3s;" onmouseover="this.style.backgroundColor='#f59e0b'" onmouseout="this.style.backgroundColor='#fbbf24'">Pre-Register Versi Final 📝</button>
+                <button type="button" class="btn w-100" data-bs-dismiss="modal" style="background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #cbd5e1; padding: 12px; font-size: 1rem; border-radius: 8px; transition: 0.3s;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.05)'" onmouseout="this.style.backgroundColor='transparent'">Tutup</button>
             </div>
           </div>
-
-          <div class="modal-footer justify-content-center border-0 pt-0" id="cbtModalFooter">
-            <button type="submit" class="btn w-100 fw-bold" style="background-color: #eab308; color: #422006; transition: 0.3s;" onmouseover="this.style.backgroundColor='#facc15'" onmouseout="this.style.backgroundColor='#eab308'">Verifikasi & Akses</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
 
@@ -966,8 +960,8 @@
                 <div class="modal-body system-font pt-3 pb-4">
                     <p style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.6;">TetoOS 10 versi EA (Maret) akan memasuki masa <strong>EOS (10 Oktober 2026)</strong> dan sedang dipersiapkan untuk masuk arsip.</p>
                     <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 15px; border-radius: 8px; margin-top: 15px;">
-                        <p style="margin-bottom: 10px; font-size: 0.95rem; color: #fff;">Kami sangat menyarankan pengguna baru untuk bergabung dalam tahap <strong>CBT (Closed Beta Test)</strong> versi terbaru yang lebih stabil dan kaya fitur.</p>
-                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #fca5a5;">⚠️ Jika Anda tetap ingin mengunduh versi EA, kami tidak lagi memberikan dukungan teknis (support) untuk versi tersebut.</p>
+                        <p style="margin-bottom: 10px; font-size: 0.95rem; color: #fff;">Versi <strong>CBT (Closed Beta Test)</strong> saat ini telah resmi ditutup (EOS). Terima kasih kepada semua penguji yang telah berpartisipasi.</p>
+                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #fca5a5;">⚠️ Harap bersabar dan tunggu perilisan tetoOS versi Final.</p>
                     </div>
                 </div>
                 <div class="modal-footer border-0 justify-content-between pt-0 flex-wrap gap-2">
@@ -1219,17 +1213,6 @@
         if (document.getElementById("eos-countdown")) {
             setInterval(updateCountdown, 1000);
             updateCountdown();
-        }
-
-        // RESET CBT MODAL SAAT DITUTUP
-        if(document.getElementById('cbtModal')) {
-            document.getElementById('cbtModal').addEventListener('hidden.bs.modal', function () {
-                if(document.getElementById('cbtCodeInput')) document.getElementById('cbtCodeInput').value = "";
-                if(document.getElementById('cbtSuccessZone')) document.getElementById('cbtSuccessZone').style.display = 'none';
-                if(document.getElementById('cbtInputGroup')) document.getElementById('cbtInputGroup').style.display = 'block';
-                if(document.getElementById('cbtInstructions')) document.getElementById('cbtInstructions').style.display = 'block';
-                if(document.getElementById('cbtModalFooter')) document.getElementById('cbtModalFooter').style.display = 'block';
-            });
         }
 
     </script>
