@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -245,6 +246,19 @@
         body.light-mode .warning-box-privacy .fw-bold { color: #d97706 !important; }
         body.light-mode .warning-box-privacy p, body.light-mode .warning-box-privacy ol { color: #92400e !important; }
 
+        /* Custom Alert CSS untuk Update Notice */
+        .alert-update {
+            background: rgba(16, 185, 129, 0.1); 
+            border: 1px solid rgba(16, 185, 129, 0.3); 
+            color: #34d399; 
+            border-radius: 12px;
+        }
+        body.light-mode .alert-update {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #059669;
+        }
+
         /* RICKROLL CONTAINER */
         #rickroll-container { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999999; background: #000; }
         #rickroll-video { width: 100%; height: 100%; object-fit: cover; }
@@ -358,9 +372,9 @@
 
     <!-- OOBE BOOT SCREEN -->
     <div id="oobe-screen">
-        <div class="oobe-logo">🌿 Welcome to Nook<span>leaf</span></div>
+        <div class="oobe-logo" data-i18n="oobe_welcome">🌿 Welcome to Nook<span>leaf</span></div>
         <div class="system-font mb-2" id="oobe-sub">Nook Core Architecture v1.0</div>
-        <div id="interact-prompt" class="blinking-text">> PRESS ANY KEY OR CLICK TO INITIALIZE...</div>
+        <div id="interact-prompt" class="blinking-text" data-i18n="oobe_prompt">> PRESS ANY KEY OR CLICK TO INITIALIZE...</div>
         <div id="loading-container" class="loading-container">
             <div class="progress-bar-box">
                 <div id="progress-fill" class="progress-bar-fill"></div>
@@ -371,10 +385,10 @@
 
     <!-- OOBE SHUTDOWN SCREEN -->
     <div id="shutdown-screen">
-        <div class="oobe-logo">👋 Bye bye!</div>
+        <div class="oobe-logo" data-i18n="oobe_bye">👋 Bye bye!</div>
         <div class="system-font mb-4" style="max-width: 650px; font-size: 1.05rem;">
-            <div style="color: #10b981; margin-bottom: 15px;">Shutting down Nook Core...</div>
-            <p>Terima kasih telah berkunjung ke situs resmi Nookleaf.</p>
+            <div style="color: #10b981; margin-bottom: 15px;" data-i18n="oobe_shutting">Shutting down Nook Core...</div>
+            <p data-i18n="oobe_thanks">Terima kasih telah berkunjung ke situs resmi Nookleaf.</p>
             <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 15px; border-radius: 0 8px 8px 0; text-align: left; font-size: 0.9rem; margin-top: 20px;">
                 <span style="color: #fca5a5; font-weight: bold;">⚠️ REMINDER SEBELUM PERGI:</span><br>
                 <span style="color: #fecaca;">- Dilarang reupload ISO ke platform lain.<br>
@@ -392,10 +406,10 @@
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="filter: invert(1);"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
-                    <li class="nav-item"><a class="nav-link active" onclick="toggleView('home')">Overview</a></li>
-                    <li class="nav-item"><a class="nav-link" style="cursor:pointer;" onclick="toggleView('news')">News</a></li>
+                    <li class="nav-item"><a class="nav-link active" onclick="toggleView('home')" data-i18n="nav_overview">Overview</a></li>
+                    <li class="nav-item"><a class="nav-link" style="cursor:pointer;" onclick="toggleView('news')" data-i18n="nav_news">News</a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarProjects" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projects</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarProjects" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-i18n="nav_projects">Projects</a>
                         <ul class="dropdown-menu glass-dropdown" aria-labelledby="navbarProjects">
                             <li><a class="dropdown-item d-flex align-items-center rickroll-trigger" href="#"><div class="project-icon-box icon-archleaf">🌸</div><div><div class="dropdown-title">Hana Chan Mascot <span class="badge badge-comingsoon">COMING SOON</span></div><p class="dropdown-desc">Mascot in development</p></div></a></li>
 
@@ -425,33 +439,62 @@
                                     <div class="project-icon-box icon-teto">🥖</div>
                                     <div>
                                         <div class="dropdown-title">tetoOS 10 <span class="badge badge-stable">STABLE</span></div>
-                                        <p class="dropdown-desc">The Ultimate Lightweight Experience</p>
+                                        <p class="dropdown-desc" data-i18n="proj_teto10_desc">The Ultimate Lightweight Experience</p>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#docsModal">Docs</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#creditsModal">Credits</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="document.getElementById('community-section').scrollIntoView({behavior: 'smooth'})">Community</a></li>
+                    <!-- TOMBOL DOCS DIUBAH KE MODAL COMING SOON -->
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#docsComingSoonModal" data-i18n="nav_docs">Docs</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#creditsModal" data-i18n="nav_credits">Credits</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="document.getElementById('community-section').scrollIntoView({behavior: 'smooth'})" data-i18n="nav_community">Community</a></li>
                 </ul>
             </div>
-            <div class="d-flex gap-2 d-none d-lg-flex">
-                <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-outline-green oobe-link">TetoYapping Chat</a>
-                <a href="https://donatekasaneproject.vercel.app" target="_blank" class="btn btn-donate oobe-link">Top-up & Support ☕</a>
+            <div class="d-flex gap-2 d-none d-lg-flex align-items-center">
+                <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-outline-green oobe-link" data-i18n="nav_chat">TetoYapping Chat</a>
+                <a href="https://donatekasaneproject.vercel.app" target="_blank" class="btn btn-donate oobe-link" data-i18n="nav_support">Top-up & Support ☕</a>
+                
+                <!-- LANGUAGE SWITCHER DROPDOWN -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-green dropdown-toggle d-flex align-items-center justify-content-center" type="button" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 8px 15px; border-radius: 8px; font-weight:bold;">
+                        🌐 ID
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end glass-dropdown" aria-labelledby="langDropdown" style="min-width: 140px; margin-top: 10px !important;">
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('id'); return false;">🇮🇩 Indonesia</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('en'); return false;">🇺🇸 English (US)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('ja'); return false;">🇯🇵 日本語</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('ru'); return false;">🇷🇺 Русский</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('zh'); return false;">🇨🇳 中文</a></li>
+                    </ul>
+                </div>
+                
                 <button class="btn btn-outline-green d-flex align-items-center justify-content-center" onclick="toggleTheme()" id="theme-btn" style="padding: 8px 15px; border-radius: 8px;">☀️</button>
             </div>
         </div>
     </nav>
 
-    <!-- GLOBAL EOS WARNING BANNER -->
+    <!-- GLOBAL NOTICES & BANNERS -->
     <div class="container" style="padding-top: 100px; padding-bottom: 0px;">
+        
+        <!-- UPDATE NOTICE BANNER -->
+        <div class="alert alert-update alert-dismissible fade show d-flex align-items-center mb-3" role="alert" style="border-radius: 12px;">
+            <div style="font-size: 1.5rem; margin-right: 15px;">🌐</div>
+            <div data-i18n="global_update_notice" style="font-size: 0.95rem;">
+                <strong>Website Update:</strong> Kami baru saja menambahkan fitur 5 Bahasa! Jika bahasa yang kamu cari belum tersedia atau kurang pas, harap bersabar ya, karena kami masih mencari dan menyesuaikan bahasa-bahasa yang penting.
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: invert(1) grayscale(100%) brightness(200%); opacity: 0.6;"></button>
+        </div>
+
+        <!-- EOS WARNING -->
         <div class="alert alert-warning d-flex align-items-center mb-0" role="alert" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; border-radius: 12px;">
             <div style="font-size: 1.5rem; margin-right: 15px;">⚠️</div>
-            <div>
+            <div data-i18n="global_eos_warning" style="font-size: 0.95rem;">
                 <strong>Peringatan EOS:</strong> tetoOS 10 Versi Maret 2026 (EA) memasuki masa End of Support (10 Oktober 2026). Versi <strong>CBT</strong> saat ini juga <strong>telah resmi ditutup (EOS)</strong>. Harap tunggu info perilisan versi Final dari Admin!
             </div>
         </div>
+        
     </div>
 
     <!-- ==============================================
@@ -462,28 +505,28 @@
             <div class="row align-items-center w-100 m-0">
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="status-badge"><span class="dot"></span> Nookleaf Projects</div>
-                    <h1 class="main-title">Redefining your<br><span class="text-gradient">Desktop Experience.</span></h1>
-                    <p class="hero-desc">Pusat pengembangan modifikasi Sistem Operasi yang dirancang khusus untuk memberikan latency terendah, penggunaan RAM efisien, dan stabilitas maksimal.</p>
+                    <h1 class="main-title" data-i18n="hero_title">Redefining your<br><span class="text-gradient">Desktop Experience.</span></h1>
+                    <p class="hero-desc" data-i18n="hero_desc">Pusat pengembangan modifikasi Sistem Operasi yang dirancang khusus untuk memberikan latency terendah, penggunaan RAM efisien, dan stabilitas maksimal.</p>
                     <div class="d-flex flex-wrap gap-3">
-                        <button type="button" class="btn btn-primary-green" onclick="toggleView('teto')">Explore tetoOS 10</button>
-                        <button type="button" class="btn btn-donate rickroll-trigger">Free Windows License 🎁</button>
+                        <button type="button" class="btn btn-primary-green" onclick="toggleView('teto')" data-i18n="btn_explore">Explore tetoOS 10</button>
+                        <button type="button" class="btn btn-donate rickroll-trigger" data-i18n="btn_license">Free Windows License 🎁</button>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="row gap-4 justify-content-end">
                         <div class="col-12 col-md-10">
                             <div class="glass-card">
-                                <span class="system-label">Project In Development</span>
+                                <span class="system-label" data-i18n="card_dev_label">Project In Development</span>
                                 <div class="d-flex justify-content-between align-items-center mb-3"><h3 class="m-0 fw-bold" style="color: #fff;">tetoOS 11</h3><span class="badge badge-comingsoon">COMING SOON</span></div>
-                                <div class="system-font mb-4"><span style="color: #10b981;">></span> Leader modder is now fully focused on tetoOS projects.<br><span style="color: #10b981;">></span> Focus: Privacy, Productivity & Fluid UI<br><span style="color: #10b981;">></span> Progress: Building kernel modules... 45%<br></div>
-                                <button class="btn w-100" style="background-color: rgba(255,255,255,0.02); color: #64748b; border: 1px dashed #475569; cursor: not-allowed; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem;" disabled>🔒 Changelog (Classified)</button>
+                                <div class="system-font mb-4" data-i18n="card_teto11_desc"><span style="color: #10b981;">></span> Leader modder is now fully focused on tetoOS projects.<br><span style="color: #10b981;">></span> Focus: Privacy, Productivity & Fluid UI<br><span style="color: #10b981;">></span> Progress: Building kernel modules... 45%<br></div>
+                                <button class="btn w-100" style="background-color: rgba(255,255,255,0.02); color: #64748b; border: 1px dashed #475569; cursor: not-allowed; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem;" disabled data-i18n="btn_changelog">🔒 Changelog (Classified)</button>
                             </div>
                         </div>
                         <div class="col-12 col-md-10">
                             <div class="glass-card" style="padding: 20px 30px; background: rgba(16, 185, 129, 0.05);">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <span class="system-label" style="margin-bottom: 5px;">Stable Release</span>
+                                        <span class="system-label" style="margin-bottom: 5px;" data-i18n="card_stable_label">Stable Release</span>
                                         <h5 class="m-0 fw-bold" style="color: #fff;">tetoOS 10</h5>
                                     </div>
                                     <span class="badge badge-stable">ONLINE</span>
@@ -501,8 +544,8 @@
          ============================================== -->
     <div id="news-view" style="display: none;">
         <section class="news-header container" style="padding: 120px 0 60px; text-align: center;">
-            <h1 class="news-title" style="font-size: 3.5rem; font-weight: 800; color: #fff; margin-bottom: 15px;">Nookleaf <span class="text-gradient" style="background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">News</span></h1>
-            <p class="news-subtitle" style="font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto;">Pembaruan terbaru, catatan rilis, dan informasi menarik dari ekosistem Nookleaf.</p>
+            <h1 class="news-title" style="font-size: 3.5rem; font-weight: 800; color: #fff; margin-bottom: 15px;" data-i18n="news_main_title">Nookleaf <span class="text-gradient">News</span></h1>
+            <p class="news-subtitle" style="font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto;" data-i18n="news_main_desc">Pembaruan terbaru, catatan rilis, dan informasi menarik dari ekosistem Nookleaf.</p>
         </section>
 
         <section class="container">
@@ -511,9 +554,9 @@
                     <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #fbbf24;">⚡</div>
                     <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
                         <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">10 Agustus 2026</div>
-                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Pengembangan tetoOS 11 Dimulai</h3>
-                        <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">Tim leader kami sekarang sepenuhnya berfokus pada pengerjaan tetoOS 11 yang dibangun di atas base Windows 11. Akan membawa pengalaman gaming maksimal tanpa bloatware.</p>
-                        <a href="https://www.facebook.com/share/p/19XKCHMZae/" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Baca di Facebook →</a>
+                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;" data-i18n="news1_title">Pengembangan tetoOS 11 Dimulai</h3>
+                        <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;" data-i18n="news1_desc">Tim leader kami sekarang sepenuhnya berfokus pada pengerjaan tetoOS 11 yang dibangun di atas base Windows 11. Akan membawa pengalaman gaming maksimal tanpa bloatware.</p>
+                        <a href="https://www.facebook.com/share/p/19XKCHMZae/" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" data-i18n="btn_read_more">Baca di Facebook →</a>
                     </div>
                 </div>
 
@@ -521,9 +564,9 @@
                     <div class="news-img-placeholder" style="width: 100%; height: 200px; background: rgba(16, 185, 129, 0.08); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid rgba(16, 185, 129, 0.1); color: #f43f5e;">🦅</div>
                     <div class="news-content" style="padding: 25px; flex-grow: 1; display: flex; flex-direction: column;">
                         <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">1 Agustus 2026</div>
-                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Proyek Archleaf Resmi Memasuki Masa EOS</h3>
+                        <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Proyek Archleaf Resmi Memas Masa EOS</h3>
                         <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">Terima kasih atas semua dukungan untuk Archleaf. Proyek ini resmi End of Support (EOS) dan seluruh tenaga pengembangan kami alihkan sepenuhnya untuk fokus pada ekosistem tetoOS.</p>
-                        <a href="https://www.facebook.com/share/p/18QGhSn5Yv/" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Baca di Facebook →</a>
+                        <a href="https://www.facebook.com/share/p/18QGhSn5Yv/" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" data-i18n="btn_read_more">Baca di Facebook →</a>
                     </div>
                 </div>
 
@@ -533,7 +576,7 @@
                         <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">15 Juli 2026</div>
                         <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Repository Nookleaf ala Linux Hadir!</h3>
                         <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">Terima kasih kepada Iqbal Rifai yang telah mengembangkan sistem repositori khusus untuk tetoOS. Kini menginstal modul dan pembaruan akan semudah menggunakan Linux.</p>
-                        <a href="#" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Pelajari Fitur Baru →</a>
+                        <a href="#" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;">Pelajari Fitur Baru →</a>
                     </div>
                 </div>
 
@@ -543,7 +586,7 @@
                         <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">06 Maret 2026</div>
                         <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">tetoOS 10 EA Resmi Dirilis ke Publik</h3>
                         <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">Versi STABLE dari tetoOS 10 akhirnya tersedia. Dilengkapi dengan Teto Aesthetic, Permanent Pause Update, dan optimasi menyeluruh untuk performa PC kentang.</p>
-                        <a href="https://www.facebook.com/HanaNookleaf/posts/pfbid02sUYcVt6fQYbpVDfPEXix5inWkcjD3JMZWFEwjJUbDXGbVrp2RzX8UJnhwYuQNhJCl" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Baca di Facebook →</a>
+                        <a href="https://www.facebook.com/HanaNookleaf/posts/pfbid02sUYcVt6fQYbpVDfPEXix5inWkcjD3JMZWFEwjJUbDXGbVrp2RzX8UJnhwYuQNhJCl" target="_blank" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" data-i18n="btn_read_more">Baca di Facebook →</a>
                     </div>
                 </div>
 
@@ -553,7 +596,7 @@
                         <div class="news-date" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #10b981; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">05 Juni 2026</div>
                         <h3 class="news-card-title" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 15px; line-height: 1.4;">Review Perdana dari Bootloop ID & LortLimbah</h3>
                         <p class="news-excerpt" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 25px; flex-grow: 1;">TetoOS 10 baru saja diuji coba oleh Tech Content Creator terkemuka. Simak ulasan mereka mengenai seberapa ringan OS ini untuk perangkat low-end!</p>
-                        <a href="#" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='rgba(16, 185, 129, 0.1)'; this.style.color='#34d399'; this.style.borderColor='#10b981';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#10b981'; this.style.borderColor='rgba(16, 185, 129, 0.4)';">Tonton Video →</a>
+                        <a href="#" class="btn-read-more" style="align-self: flex-start; background-color: transparent; color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease;">Tonton Video →</a>
                     </div>
                 </div>
             </div>
@@ -568,9 +611,9 @@
         
         <div class="teaser-container" style="position: relative; z-index: 1; text-align: center; padding: 40px; animation: fadeIn 2s ease-in-out;">
             <h1 class="main-title" style="font-size: clamp(3.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);">tetoOS <span style="color: #ef4444; background: linear-gradient(135deg, #f87171 0%, #dc2626 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">10</span></h1>
-            <div class="subtitle" style="font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: #a1a1aa; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px;">Final Version (Coming Soon)</div>
+            <div class="subtitle" style="font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: #a1a1aa; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px;" data-i18n="teto_final_soon">Final Version (Coming Soon)</div>
             
-            <div class="message" style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #d4d4d8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px);">
+            <div class="message" style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #d4d4d8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px);" data-i18n="teto_dev_status">
                 Status: <strong>Dalam Tahap Pengembangan Final 🛠️</strong><br><br>
                 Masa EA & CBT telah resmi berakhir (EOS). Tim kami saat ini berfokus penuh untuk membangun tetoOS 10 versi Final. Harap bersabar menunggu.
             </div>
@@ -598,11 +641,11 @@
             <div style="color: #fca5a5; font-size: 0.8rem; margin-bottom: 30px; font-family: 'JetBrains Mono', monospace;">10 September 2026, 02:00 AM (US Eastern Time)</div>
 
             <div style="margin-bottom: 25px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#eaWarningModal" style="background-color: #ef4444; color: #fff; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#f87171'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundColor='#ef4444'; this.style.transform='translateY(0)';">Download EA (EOS)</button>
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#cbtModal" style="background-color: #fbbf24; color: #78350f; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#f59e0b'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundColor='#fbbf24'; this.style.transform='translateY(0)';">CBT Access 🔒</button>
+                <button type="button" class="btn btn-primary-red" data-bs-toggle="modal" data-bs-target="#eaWarningModal" style="background-color: #ef4444; color: #fff; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); transition: all 0.3s ease;" data-i18n="btn_dl_ea">Download EA (EOS)</button>
+                <button type="button" class="btn btn-donate" data-bs-toggle="modal" data-bs-target="#cbtModal" style="background-color: #fbbf24; color: #78350f; font-weight: 700; padding: 10px 24px; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); transition: all 0.3s ease;" data-i18n="btn_cbt_access">CBT Access 🔒</button>
             </div>
 
-            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #ef4444; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#f87171'; this.style.borderBottom='1px solid #f87171'" onmouseout="this.style.color='#ef4444'; this.style.borderBottom='1px solid transparent'">← Kembali ke Beranda Nookleaf</a>
+            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #ef4444; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" data-i18n="btn_back_home">← Kembali ke Beranda Nookleaf</a>
         </div>
     </div> <!-- END WRAPPER TETO OS -->
 
@@ -614,17 +657,17 @@
         
         <div class="teaser-container" style="position: relative; z-index: 1; text-align: center; padding: 40px; animation: fadeIn 2s ease-in-out;">
             <h1 class="main-title" style="font-size: clamp(3.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);">tetoOS <span style="color: #eab308; background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">11</span></h1>
-            <div class="subtitle" style="font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: #a1a1aa; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px;">Next Generation Experience</div>
+            <div class="subtitle" style="font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: #a1a1aa; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px;" data-i18n="teto11_subtitle">Next Generation Experience</div>
             
             <div class="message" style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #d4d4d8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px);">
                 Status: <strong>Dalam Tahap Pengembangan 🛠️</strong><br><br>
                 Tim kami saat ini sedang membangun ekosistem tetoOS 11. Harap bersabar menunggu, informasi lebih lanjut akan segera diumumkan.
             </div>
             <div style="margin-bottom: 25px;">
-                <a href="#" class="btn rickroll-teto11-trigger" style="background-color: #eab308; color: #050505; font-weight: 700; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3); transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#facc15'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundColor='#eab308'; this.style.transform='translateY(0)';">Pre-Register Sekarang</a>
+                <a href="#" class="btn rickroll-teto11-trigger" style="background-color: #eab308; color: #050505; font-weight: 700; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.3); transition: all 0.3s ease;">Pre-Register Sekarang</a>
             </div>
 
-            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #eab308; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#facc15'; this.style.borderBottom='1px solid #facc15'" onmouseout="this.style.color='#eab308'; this.style.borderBottom='1px solid transparent'">← Kembali ke Beranda Nookleaf</a>
+            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #eab308; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" data-i18n="btn_back_home">← Kembali ke Beranda Nookleaf</a>
         </div>
     </div> <!-- END WRAPPER TETO11 OS -->
 
@@ -652,7 +695,7 @@
                 </button>
             </div>
 
-            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #3b82f6; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" onmouseover="this.style.color='#60a5fa'; this.style.borderBottom='1px solid #60a5fa'" onmouseout="this.style.color='#3b82f6'; this.style.borderBottom='1px solid transparent'">← Kembali ke Beranda Nookleaf</a>
+            <a href="#" onclick="toggleView('home'); return false;" class="back-link" style="display: inline-block; color: #3b82f6; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; border-bottom: 1px solid transparent;" data-i18n="btn_back_home">← Kembali ke Beranda Nookleaf</a>
         </div>
     </div> <!-- END WRAPPER TETO OS ZENTH -->
 
@@ -665,8 +708,8 @@
         <div style="padding: 80px 5%; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(16, 185, 129, 0.1); border-bottom: 1px solid rgba(16, 185, 129, 0.1);">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 60px;">
-                    <h2 class="section-title">Meet Our <span style="background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Development Team</span></h2>
-                    <p class="section-subtitle">Passionate developers creating amazing experiences</p>
+                    <h2 class="section-title" data-i18n="team_title">Meet Our <span style="background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Development Team</span></h2>
+                    <p class="section-subtitle" data-i18n="team_subtitle">Passionate developers creating amazing experiences</p>
                 </div>
                 <div class="dev-grid">
                     <div class="dev-card">
@@ -785,9 +828,9 @@
         <!-- COMMUNITY BERANDA SECTION -->
         <div id="community-section" style="padding: 100px 5%; background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 70%); border-top: 1px solid rgba(255,255,255,0.05);">
             <div class="container text-center">
-                <span class="system-label" style="letter-spacing: 2px; font-weight: 700; color: #64748b; margin-bottom: 20px; display: block;">JOIN OUR COMMUNITY</span>
-                <h2 class="main-title" style="margin-bottom: 20px; font-size: 3.5rem;">Be part of the <span class="text-gradient">Nookleaf Community</span></h2>
-                <p class="hero-desc mx-auto" style="max-width: 600px;">Ask smart questions, get fast support, share what you learn, and squad up — bergabunglah dengan ekosistem kami sekarang.</p>
+                <span class="system-label" style="letter-spacing: 2px; font-weight: 700; color: #64748b; margin-bottom: 20px; display: block;" data-i18n="comm_label">JOIN OUR COMMUNITY</span>
+                <h2 class="main-title" style="margin-bottom: 20px; font-size: 3.5rem;" data-i18n="comm_title">Be part of the <span class="text-gradient">Nookleaf Community</span></h2>
+                <p class="hero-desc mx-auto" style="max-width: 600px;" data-i18n="comm_desc">Ask smart questions, get fast support, share what you learn, and squad up — bergabunglah dengan ekosistem kami sekarang.</p>
 
                 <div class="row justify-content-center mt-5" style="max-width: 800px; margin: 0 auto; gap: 20px;">
                     <div class="col-md-5 p-0">
@@ -822,7 +865,7 @@
                         <div class="d-flex align-items-center mb-3">
                             <span class="footer-heading" style="font-size: 1.8rem; font-weight: 800; color: #fff; letter-spacing: normal; text-transform: none;">🌿 Nookleaf</span>
                         </div>
-                        <p class="footer-text" style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; max-width: 400px;">
+                        <p class="footer-text" style="color: #94a3b8; font-size: 0.95rem; line-height: 1.8; max-width: 400px;" data-i18n="footer_desc">
                             Built for speed. Tuned for gaming.<br>
                             Research-backed Windows & Linux optimizations.
                         </p>
@@ -849,14 +892,41 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-center" style="border-top: 1px solid rgba(16,185,129,0.1); padding-top: 30px;">
                     <div class="footer-text text-center text-md-start mb-3 mb-md-0">
                         <p style="color: #64748b; font-size: 0.9rem; margin: 0; margin-bottom: 5px;">© 2026 <strong style="color: #10b981;">Nookleaf</strong> — This site is a work in progress and subject to change.</p>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" style="color: #94a3b8; font-size: 0.85rem; transition: 0.3s; text-decoration: underline;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='#94a3b8'">Privacy Policy & Terms of Service</a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" style="color: #94a3b8; font-size: 0.85rem; transition: 0.3s; text-decoration: underline;" onmouseover="this.style.color='#10b981'" onmouseout="this.style.color='#94a3b8'" data-i18n="footer_privacy">Privacy Policy & Terms of Service</a>
                     </div>
-                    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; transition: 0.3s; cursor: pointer;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">↑ Back to top</button>
+                    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; transition: 0.3s; cursor: pointer;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'" data-i18n="btn_back_top">↑ Back to top</button>
                 </div>
             </div>
         </footer>
 
     </div> <!-- END SHARED BOTTOM SECTIONS -->
+
+    <!-- MODAL BARU: DOCS COMING SOON -->
+    <div class="modal fade" id="docsComingSoonModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-modal text-light border-0">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold" style="color: #fbbf24;">🚧 Docs Coming Soon</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body system-font text-center pt-2">
+            <div style="font-size: 3rem; margin-bottom: 10px;">📚</div>
+            <h4 style="font-weight: 700; color: #fff; margin-bottom: 15px;">Dokumentasi Belum Tersedia</h4>
+            <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 20px;">
+              Halaman Dokumentasi Resmi (Docs) dan FAQ sedang dalam tahap penyusunan oleh tim.
+            </p>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin-bottom: 30px;">
+              Dokumentasi lengkap ini akan dirilis bersamaan dengan peluncuran <strong>tetoOS versi Final</strong>. Harap bersabar! Jika ada pertanyaan mendesak, silakan tanyakan di grup WhatsApp atau Discord kami.
+            </p>
+
+            <div class="d-flex flex-column gap-2">
+                <button type="button" class="btn w-100" data-bs-dismiss="modal" style="background-color: transparent; border: 1px solid rgba(255,255,255,0.2); color: #cbd5e1; padding: 12px; font-size: 1rem; border-radius: 8px; transition: 0.3s;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.05)'" onmouseout="this.style.backgroundColor='transparent'">Tutup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- MODAL BARU: CBT ACCESS (CLOSED/EOS) -->
     <div class="modal fade" id="cbtModal" tabindex="-1">
@@ -975,31 +1045,262 @@
         </div>
     </div>
 
-    <!-- Modal Docs (WIP popup) -->
-    <div class="modal fade" id="docsModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content glass-modal text-light border-0">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold">📚 Documentation</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body system-font text-center">
-                    <p style="font-size: 1.05rem;">Dokumentasi resmi Nookleaf & tetoOS sedang dalam tahap penyusunan oleh tim.<br><br><span style="color: #fbbf24;">Status: WIP (Work In Progress) 🚧</span></p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modals (Credits) -->
     <div class="modal fade" id="creditsModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content glass-modal text-light border-0"><div class="modal-header"><h5 class="modal-title fw-bold">📝 CREDITS & INFO</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body system-font"><h6 class="fw-bold mb-3" style="color: #10b981;">Nookleaf and KasaneProject Collaboration</h6><p>Selamat datang di proyek kolaborasi spesial antara Nookleaf dan KasaneProject.</p><div class="changelog-section"><div class="changelog-title">🛠️ Tim Pengembang</div><ul class="custom-list"><li><strong>Lead Modder:</strong> Vincent, Hirolizia, Holymagi</li><li><strong>Ilustrator:</strong> Dwika Rahma Putri (Logo)</li><li><strong>Wallpaper Desainer:</strong> AES™</li><li><strong>Desainer:</strong> Hirolizia, Holymagi</li><li><strong>Sound Desainer:</strong> DavidMounder9598</li></ul></div><div class="warning-box"><div class="fw-bold mb-2" style="color: #fca5a5;">📜 Catatan Lisensi</div><ul class="mb-0 ps-3" style="color: #fecaca; font-size: 0.9rem;"><li>DILARANG KERAS mengambil, mengunggah ulang, atau mendistribusikan file ISO ini di platform lain tanpa izin tertulis dari pihak Modder (Nookleaf).</li><li>Seluruh aset visual (Wallpaper/Ilustrasi) dan audio adalah hak cipta kreator.</li><li>Mod ini disediakan untuk penggunaan pribadi, bukan untuk diperjualbelikan dan <strong>tidak boleh membagikan ulang file menggunakan shortlink pribadi demi keuntungan (cuan)</strong>.</li></ul></div></div><div class="modal-footer justify-content-center"><span class="text-muted" style="font-size: 0.85rem;">Copyright (c) 2024 Nookleaf</span></div></div></div></div>
 
-    <!-- Modal (Changelog) -->
-    <div class="modal fade" id="changelogModal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"><div class="modal-content glass-modal text-light border-0"><div class="modal-header"><h5 class="modal-title fw-bold">🖥️ [RELEASE] tetoOS Early Version</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body system-font"><p style="color: #cbd5e1; line-height: 1.7;">Halo sobat Nookleaf! Akhirnya yang ditunggu-tunggu tiba. tetoOS versi awal sudah siap untuk kalian coba! Dibangun di atas base Windows 10 Enterprise LTSC IoT 22H2, OS ini dirancang khusus untuk performa maksimal dengan sentuhan estetik Kasane Teto 🥖. Cocok banget buat kalian yang punya spek PC/Laptop "kentang" atau yang ingin performa gaming tanpa gangguan bloatware!</p><div class="changelog-section"><div class="changelog-title">📊 DETAIL INFORMASI</div><ul class="custom-list"><li><strong>File:</strong> tetoOS-early_ver-08513M26_prep.iso</li><li><strong>Edition:</strong> SUPERLITE</li><li><strong>State:</strong> Early Version (Prep)</li><li><strong>Base:</strong> Windows 10 Enterprise LTSC IoT 22H2</li><li><strong>Compiled:</strong> March 03, 2026</li><li><strong>MD5:</strong> 3C33150E210056DB9BDFBA19907AFC0D</li></ul></div><div class="changelog-section"><div class="changelog-title">✨ FITUR UNGGULAN</div><ul class="list-unstyled text-light" style="font-size: 0.95rem;"><li class="mb-2">✅ <strong>Teto Aesthetic:</strong> Kursor, wallpaper, dan skema suara eksklusif Kasane Teto.</li><li class="mb-2">✅ <strong>Performance Boost:</strong> Debloated, Compact NTFS Compression, & Custom Power Profile.</li><li class="mb-2">✅ <strong>New UI:</strong> Taskbar ala 8.x dan rebranding total brand Windows.</li><li class="mb-2">✅ <strong>Stay Stable:</strong> Windows Update Permanent Pause Mode (Anti-update tiba-tiba!).</li><li class="mb-2">✅ <strong>Low Footprint:</strong> Sangat ringan, ramah untuk perangkat low-mid spec.</li></ul></div><div class="changelog-section"><div class="changelog-title">🔗 LINK DOWNLOAD</div><ul class="custom-list"><li><a href="." target="_blank" class="oobe-link" style="color: #38bdf8; text-decoration: none;">https://nookleaf.vercel.app/</a></li><li style="color: #fbbf24;">Pilih KasaneProject</li></ul></div><div class="warning-box mb-4"><div class="fw-bold mb-2" style="color: #fca5a5;">⚠️ PERHATIAN (ISO RULES):</div><ul class="mb-0 ps-3" style="color: #fecaca; font-size: 0.9rem;"><li><strong>Dilarang Reupload!</strong> Gunakan link resmi untuk men-support project ini.</li><li><strong>Dilarang Shortlink Cuan!</strong> Jangan mengambil untung dari hasil reupload file kami.</li><li><strong>No Modifikasi!</strong> Dilarang membongkar/modifikasi ulang ISO ini tanpa izin.</li><li><strong>Resiko Sendiri:</strong> Gunakan di Virtual Machine terlebih dahulu jika ragu. Use at your own risk!</li></ul></div><div class="changelog-section mb-0"><div class="changelog-title">🤝 CREDITS & THANKS TO</div><ul class="custom-list"><li><strong>OS Base:</strong> elzeXD</li><li><strong>Lead Modder:</strong> Holymagi & Hirolizia</li><li><strong>Illustrators:</strong> Dwika Rahma Ghania Putri (Logo), Hirolizia (OS </li><li><strong>Stock Wallpaper:</strong> AES™</li><li><strong>Sound Schemes:</strong> DavidMounder9598</li></ul></div></div><div class="modal-footer justify-content-between"><span class="text-muted" style="font-size: 0.85rem;">Bergabunglah dengan komunitas kami di TetoYapping untuk diskusi lebih lanjut!</span><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button></div></div></div></div>
-
     <script>
+        // === TRANSLATION DICTIONARY ===
+        const translations = {
+            id: {
+                nav_overview: "Overview",
+                nav_news: "News",
+                nav_projects: "Projects",
+                nav_docs: "Docs",
+                nav_credits: "Credits",
+                nav_community: "Community",
+                nav_chat: "TetoYapping Chat",
+                nav_support: "Top-up & Support ☕",
+                oobe_welcome: "🌿 Welcome to Nook<span>leaf</span>",
+                oobe_prompt: "> PRESS ANY KEY OR CLICK TO INITIALIZE...",
+                oobe_bye: "👋 Bye bye!",
+                oobe_shutting: "Shutting down Nook Core...",
+                oobe_thanks: "Terima kasih telah berkunjung ke situs resmi Nookleaf.",
+                global_update_notice: "<strong>Website Update:</strong> Kami baru saja menambahkan fitur 5 Bahasa! Jika bahasa yang kamu cari belum tersedia atau kurang pas, harap bersabar ya, karena kami masih mencari dan menyesuaikan bahasa-bahasa yang penting.",
+                global_eos_warning: "<strong>Peringatan EOS:</strong> tetoOS 10 Versi Maret 2026 (EA) memasuki masa End of Support (10 Oktober 2026). Versi <strong>CBT</strong> saat ini juga <strong>telah resmi ditutup (EOS)</strong>. Harap tunggu info perilisan versi Final dari Admin!",
+                hero_title: "Redefining your<br><span class=\"text-gradient\">Desktop Experience.</span>",
+                hero_desc: "Pusat pengembangan modifikasi Sistem Operasi yang dirancang khusus untuk memberikan latency terendah, penggunaan RAM efisien, dan stabilitas maksimal.",
+                btn_explore: "Explore tetoOS 10",
+                btn_license: "Free Windows License 🎁",
+                card_dev_label: "Project In Development",
+                card_teto11_desc: "<span style=\"color: #10b981;\">></span> Leader modder is now fully focused on tetoOS projects.<br><span style=\"color: #10b981;\">></span> Focus: Privacy, Productivity & Fluid UI<br><span style=\"color: #10b981;\">></span> Progress: Building kernel modules... 45%<br>",
+                btn_changelog: "🔒 Changelog (Classified)",
+                card_stable_label: "Stable Release",
+                news_main_title: "Nookleaf <span class=\"text-gradient\">News</span>",
+                news_main_desc: "Pembaruan terbaru, catatan rilis, dan informasi menarik dari ekosistem Nookleaf.",
+                news1_title: "Pengembangan tetoOS 11 Dimulai",
+                news1_desc: "Tim leader kami sekarang sepenuhnya berfokus pada pengerjaan tetoOS 11 yang dibangun di atas base Windows 11. Akan membawa pengalaman gaming maksimal tanpa bloatware.",
+                btn_read_more: "Baca di Facebook →",
+                teto_final_soon: "Final Version (Coming Soon)",
+                teto_dev_status: "Status: <strong>Dalam Tahap Pengembangan Final 🛠️</strong><br><br>Masa EA & CBT telah resmi berakhir (EOS). Tim kami saat ini berfokus penuh untuk membangun tetoOS 10 versi Final. Harap bersabar menunggu.",
+                btn_dl_ea: "Download EA (EOS)",
+                btn_cbt_access: "CBT Access 🔒",
+                teto11_subtitle: "Next Generation Experience",
+                btn_back_home: "← Kembali ke Beranda Nookleaf",
+                team_title: "Meet Our <span style=\"background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Development Team</span>",
+                team_subtitle: "Passionate developers creating amazing experiences",
+                comm_label: "JOIN OUR COMMUNITY",
+                comm_title: "Be part of the <span class=\"text-gradient\">Nookleaf Community</span>",
+                comm_desc: "Ask smart questions, get fast support, share what you learn, and squad up — bergabunglah dengan ekosistem kami sekarang.",
+                footer_desc: "Built for speed. Tuned for gaming.<br>Research-backed Windows & Linux optimizations.",
+                footer_privacy: "Privacy Policy & Terms of Service",
+                btn_back_top: "↑ Back to top"
+            },
+            en: {
+                nav_overview: "Overview",
+                nav_news: "News",
+                nav_projects: "Projects",
+                nav_docs: "Docs",
+                nav_credits: "Credits",
+                nav_community: "Community",
+                nav_chat: "TetoYapping Chat",
+                nav_support: "Top-up & Support ☕",
+                oobe_welcome: "🌿 Welcome to Nook<span>leaf</span>",
+                oobe_prompt: "> PRESS ANY KEY OR CLICK TO INITIALIZE...",
+                oobe_bye: "👋 Bye bye!",
+                oobe_shutting: "Shutting down Nook Core...",
+                oobe_thanks: "Thank you for visiting the official Nookleaf website.",
+                global_update_notice: "<strong>Website Update:</strong> We just added a 5-Language feature! If your preferred language is missing, please be patient as we are still looking for and adjusting the most important ones.",
+                global_eos_warning: "<strong>EOS Warning:</strong> tetoOS 10 March 2026 (EA) is entering End of Support (Oct 10, 2026). The current <strong>CBT</strong> version is also <strong>officially closed (EOS)</strong>. Please wait for the Final release info!",
+                hero_title: "Redefining your<br><span class=\"text-gradient\">Desktop Experience.</span>",
+                hero_desc: "Operating System modification development center designed specifically to provide the lowest latency, efficient RAM usage, and maximum stability.",
+                btn_explore: "Explore tetoOS 10",
+                btn_license: "Free Windows License 🎁",
+                card_dev_label: "Project In Development",
+                card_teto11_desc: "<span style=\"color: #10b981;\">></span> Leader modder is now fully focused on tetoOS projects.<br><span style=\"color: #10b981;\">></span> Focus: Privacy, Productivity & Fluid UI<br><span style=\"color: #10b981;\">></span> Progress: Building kernel modules... 45%<br>",
+                btn_changelog: "🔒 Changelog (Classified)",
+                card_stable_label: "Stable Release",
+                news_main_title: "Nookleaf <span class=\"text-gradient\">News</span>",
+                news_main_desc: "Latest updates, release notes, and exciting info from the Nookleaf ecosystem.",
+                news1_title: "tetoOS 11 Development Begins",
+                news1_desc: "Our lead team is now fully focused on developing tetoOS 11 based on Windows 11. It will bring a maximum gaming experience without bloatware.",
+                btn_read_more: "Read on Facebook →",
+                teto_final_soon: "Final Version (Coming Soon)",
+                teto_dev_status: "Status: <strong>In Final Development Stage 🛠️</strong><br><br>The EA & CBT periods have officially ended (EOS). Our team is currently fully focused on building the Final version of tetoOS 10. Please be patient.",
+                btn_dl_ea: "Download EA (EOS)",
+                btn_cbt_access: "CBT Access 🔒",
+                teto11_subtitle: "Next Generation Experience",
+                btn_back_home: "← Back to Nookleaf Home",
+                team_title: "Meet Our <span style=\"background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Development Team</span>",
+                team_subtitle: "Passionate developers creating amazing experiences",
+                comm_label: "JOIN OUR COMMUNITY",
+                comm_title: "Be part of the <span class=\"text-gradient\">Nookleaf Community</span>",
+                comm_desc: "Ask smart questions, get fast support, share what you learn, and squad up — join our ecosystem today.",
+                footer_desc: "Built for speed. Tuned for gaming.<br>Research-backed Windows & Linux optimizations.",
+                footer_privacy: "Privacy Policy & Terms of Service",
+                btn_back_top: "↑ Back to top"
+            },
+            ja: {
+                nav_overview: "概要",
+                nav_news: "ニュース",
+                nav_projects: "プロジェクト",
+                nav_docs: "ドキュメント",
+                nav_credits: "クレジット",
+                nav_community: "コミュニティ",
+                nav_chat: "TetoYapping チャット",
+                nav_support: "トップアップ & サポート ☕",
+                oobe_welcome: "🌿 Nook<span>leaf</span>へようこそ",
+                oobe_prompt: "> 任意のキーを押すかクリックして初期化...",
+                oobe_bye: "👋 さようなら！",
+                oobe_shutting: "Nook Coreをシャットダウンしています...",
+                oobe_thanks: "Nookleaf公式サイトをご利用いただきありがとうございます。",
+                global_update_notice: "<strong>ウェブサイトの更新:</strong> 5か国語対応機能を追加しました！お探しの言語がない場合は、重要な言語を順次追加しておりますので、しばらくお待ちください。",
+                global_eos_warning: "<strong>EOS警告:</strong> tetoOS 10 2026年3月版 (EA) はサポート終了 (2026年10月10日) を迎えます。現在の<strong>CBT</strong>バージョンも<strong>正式に終了しました (EOS)</strong>。最終リリースの情報をお待ちください！",
+                hero_title: "デスクトップ体験を<br><span class=\"text-gradient\">再定義する。</span>",
+                hero_desc: "最小のレイテンシ、効率的なRAM使用、最大の安定性を提供するために特別に設計されたOSモディフィケーション開発センター。",
+                btn_explore: "tetoOS 10 を探索",
+                btn_license: "無料のWindowsライセンス 🎁",
+                card_dev_label: "開発中のプロジェクト",
+                card_teto11_desc: "<span style=\"color: #10b981;\">></span> リーダーモッダーは現在tetoOSプロジェクトに専念しています。<br><span style=\"color: #10b981;\">></span> フォーカス: プライバシー、生産性、流体UI<br><span style=\"color: #10b981;\">></span> 進行状況: カーネルモジュール構築中... 45%<br>",
+                btn_changelog: "🔒 変更履歴 (機密)",
+                card_stable_label: "安定版リリース",
+                news_main_title: "Nookleaf <span class=\"text-gradient\">ニュース</span>",
+                news_main_desc: "Nookleafエコシステムからの最新アップデート、リリースノート、エキサイティングな情報。",
+                news1_title: "tetoOS 11 の開発が開始",
+                news1_desc: "私たちのリードチームは現在、Windows 11 ベースの tetoOS 11 の開発に完全に集中しています...",
+                btn_read_more: "Facebookで読む →",
+                teto_final_soon: "最終バージョン (近日公開)",
+                teto_dev_status: "ステータス: <strong>最終開発段階 🛠️</strong><br><br>EAおよびCBT期間は正式に終了しました（EOS）。 私たちのチームは現在、tetoOS 10の最終バージョンの構築に完全に集中しています。お待ちください。",
+                btn_dl_ea: "EAをダウンロード (EOS)",
+                btn_cbt_access: "CBTアクセス 🔒",
+                teto11_subtitle: "次世代の体験",
+                btn_back_home: "← Nookleafホームに戻る",
+                team_title: "<span style=\"background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">開発チーム</span>のご紹介",
+                team_subtitle: "素晴らしい体験を創造する情熱的な開発者たち",
+                comm_label: "コミュニティに参加",
+                comm_title: "<span class=\"text-gradient\">Nookleaf コミュニティ</span>の一員になろう",
+                comm_desc: "スマートな質問をし、迅速なサポートを受け、学んだことを共有し、チームを組む — 今すぐエコシステムに参加してください。",
+                footer_desc: "スピードのために構築。ゲーム用に調整済み。<br>研究に裏打ちされたWindowsとLinuxの最適化。",
+                footer_privacy: "プライバシーポリシーと利用規約",
+                btn_back_top: "↑ トップに戻る"
+            },
+            ru: {
+                nav_overview: "Обзор",
+                nav_news: "Новости",
+                nav_projects: "Проекты",
+                nav_docs: "Документация",
+                nav_credits: "Авторы",
+                nav_community: "Сообщество",
+                nav_chat: "Чат TetoYapping",
+                nav_support: "Поддержка ☕",
+                oobe_welcome: "🌿 Добро пожаловать в Nook<span>leaf</span>",
+                oobe_prompt: "> НАЖМИТЕ ЛЮБУЮ КЛАВИШУ ИЛИ КЛИКНИТЕ ДЛЯ ИНИЦИАЛИЗАЦИИ...",
+                oobe_bye: "👋 Пока-пока!",
+                oobe_shutting: "Завершение работы Nook Core...",
+                oobe_thanks: "Спасибо за посещение официального сайта Nookleaf.",
+                global_update_notice: "<strong>Обновление сайта:</strong> Мы добавили поддержку 5 языков! Если вашего языка еще нет, пожалуйста, проявите терпение — мы все еще добавляем наиболее важные языки.",
+                global_eos_warning: "<strong>Предупреждение EOS:</strong> tetoOS 10 Март 2026 (EA) завершает поддержку (10 Окт. 2026). Текущая <strong>CBT</strong> версия также <strong>официально закрыта (EOS)</strong>.",
+                hero_title: "Переосмысление вашего<br><span class=\"text-gradient\">Опыта Рабочего Стола.</span>",
+                hero_desc: "Центр разработки модификаций ОС, созданный для обеспечения минимальной задержки, эффективного использования ОЗУ и максимальной стабильности.",
+                btn_explore: "Изучить tetoOS 10",
+                btn_license: "Бесплатная лицензия Windows 🎁",
+                card_dev_label: "Проект в разработке",
+                card_teto11_desc: "<span style=\"color: #10b981;\">></span> Главный моддер теперь полностью сосредоточен на tetoOS.<br><span style=\"color: #10b981;\">></span> Фокус: Приватность, Продуктивность и Плавный UI<br><span style=\"color: #10b981;\">></span> Прогресс: 45%<br>",
+                btn_changelog: "🔒 История изменений (Засекречено)",
+                card_stable_label: "Стабильный релиз",
+                news_main_title: "Новости <span class=\"text-gradient\">Nookleaf</span>",
+                news_main_desc: "Последние обновления, примечания к выпуску и интересная информация.",
+                news1_title: "Начало разработки tetoOS 11",
+                news1_desc: "Наша ведущая команда теперь полностью сосредоточена на tetoOS 11 на базе Windows 11...",
+                btn_read_more: "Читать в Facebook →",
+                teto_final_soon: "Финальная Версия (Скоро)",
+                teto_dev_status: "Статус: <strong>В финальной стадии разработки 🛠️</strong><br><br>Периоды EA и CBT официально завершены. Ждите релиз.",
+                btn_dl_ea: "Скачать EA (EOS)",
+                btn_cbt_access: "Доступ CBT 🔒",
+                teto11_subtitle: "Опыт Следующего Поколения",
+                btn_back_home: "← На главную",
+                team_title: "Наша <span style=\"background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Команда Разработчиков</span>",
+                team_subtitle: "Увлеченные разработчики, создающие потрясающий опыт",
+                comm_label: "ПРИСОЕДИНЯЙТЕСЬ",
+                comm_title: "Станьте частью <span class=\"text-gradient\">Сообщества</span>",
+                comm_desc: "Задавайте вопросы, получайте быструю поддержку и делитесь знаниями.",
+                footer_desc: "Создано для скорости. Настроено для игр.<br>Оптимизации Windows и Linux.",
+                footer_privacy: "Политика Конфиденциальности",
+                btn_back_top: "↑ Наверх"
+            },
+            zh: {
+                nav_overview: "概览",
+                nav_news: "新闻",
+                nav_projects: "项目",
+                nav_docs: "文档",
+                nav_credits: "致谢",
+                nav_community: "社区",
+                nav_chat: "TetoYapping 聊天",
+                nav_support: "充值与支持 ☕",
+                oobe_welcome: "🌿 欢迎来到 Nook<span>leaf</span>",
+                oobe_prompt: "> 按任意键或点击以初始化...",
+                oobe_bye: "👋 再见！",
+                oobe_shutting: "正在关闭 Nook Core...",
+                oobe_thanks: "感谢您访问 Nookleaf 官方网站。",
+                global_update_notice: "<strong>网站更新：</strong> 我们刚刚添加了5种语言功能！如果缺少您需要的语言，请耐心等待，我们仍在寻找并添加最重要的语言。",
+                global_eos_warning: "<strong>EOS 警告:</strong> tetoOS 10 2026年3月版(EA) 即将停止支持。当前的 <strong>CBT</strong> 版本也已 <strong>正式关闭 (EOS)</strong>。请等待最终版本发布信息！",
+                hero_title: "重新定义您的<br><span class=\"text-gradient\">桌面体验。</span>",
+                hero_desc: "专门设计用于提供最低延迟、高效内存使用和最高稳定性的操作系统修改开发中心。",
+                btn_explore: "探索 tetoOS 10",
+                btn_license: "免费 Windows 许可证 🎁",
+                card_dev_label: "开发中的项目",
+                card_teto11_desc: "<span style=\"color: #10b981;\">></span> 首席模组制作者现在完全专注于 tetoOS 项目。<br><span style=\"color: #10b981;\">></span> 焦点：隐私、生产力和流畅的用户界面<br><span style=\"color: #10b981;\">></span> 进度：构建内核模块... 45%<br>",
+                btn_changelog: "🔒 更新日志（机密）",
+                card_stable_label: "稳定版发布",
+                news_main_title: "Nookleaf <span class=\"text-gradient\">新闻</span>",
+                news_main_desc: "Nookleaf 生态系统的最新更新、发布说明和激动人心的信息。",
+                news1_title: "tetoOS 11 开发开始",
+                news1_desc: "我们的核心团队现在完全专注于基于 Windows 11 的 tetoOS 11 开发...",
+                btn_read_more: "在 Facebook 上阅读 →",
+                teto_final_soon: "最终版本 (即将推出)",
+                teto_dev_status: "状态: <strong>在最终开发阶段 🛠️</strong><br><br>EA 和 CBT 阶段已正式结束。我们目前正全力构建 tetoOS 10 最终版。",
+                btn_dl_ea: "下载 EA (EOS)",
+                btn_cbt_access: "CBT 访问权限 🔒",
+                teto11_subtitle: "下一代体验",
+                btn_back_home: "← 返回主页",
+                team_title: "认识我们的 <span style=\"background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">开发团队</span>",
+                team_subtitle: "充满激情的开发者创造惊人的体验",
+                comm_label: "加入我们的社区",
+                comm_title: "成为 <span class=\"text-gradient\">Nookleaf 社区</span> 的一部分",
+                comm_desc: "提出聪明的问题，获得快速的支持，分享您学到的知识——今天就加入我们的生态系统。",
+                footer_desc: "为速度而生，为游戏而调。<br>基于研究的 Windows 和 Linux 优化。",
+                footer_privacy: "隐私政策与服务条款",
+                btn_back_top: "↑ 返回顶部"
+            }
+        };
+
+        // === FUNGSI MENGGANTI BAHASA ===
+        function setLanguage(lang) {
+            localStorage.setItem('nookleaf_lang', lang);
+            document.documentElement.lang = lang;
+            
+            // Update Teks Dropdown
+            const langLabels = { id: '🇮🇩 ID', en: '🇺🇸 EN', ja: '🇯🇵 JA', ru: '🇷🇺 RU', zh: '🇨🇳 ZH' };
+            document.getElementById('langDropdown').innerText = langLabels[lang] || '🌐 Lang';
+
+            // Ganti semua teks ber-atribut data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                
+                // Coba ambil dari bahasa terpilih, jika tidak ada fallback ke ID
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                } else if (translations['id'] && translations['id'][key]) {
+                    el.innerHTML = translations['id'][key];
+                }
+            });
+        }
+
+        // Terapkan bahasa saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('nookleaf_lang') || 'id';
+            setLanguage(savedLang);
+        });
+
         // === LOGIKA TEMA (DARK/LIGHT MODE) ===
         function toggleTheme() {
             const body = document.body;
