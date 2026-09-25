@@ -133,6 +133,21 @@
         .btn-cbt { background-color: #fbbf24; color: #78350f; border: none; border-radius: 8px; padding: 10px 24px; font-weight: 700; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
         .btn-cbt:hover { background-color: #f59e0b; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); }
 
+        /* TOMBOL PILIHAN BAHASA PUTIH BERSIH & TERANG */
+        .btn-lang-bright {
+            background-color: #ffffff !important;
+            color: #05100a !important;
+            font-weight: 700 !important;
+            border: 1px solid #ffffff !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-lang-bright:hover, .btn-lang-bright:focus {
+            background-color: #f1f5f9 !important;
+            color: #05100a !important;
+            box-shadow: 0 4px 14px rgba(255, 255, 255, 0.4);
+        }
+
         /* === TETO OS RED THEME === */
         .status-badge-red { background: rgba(239, 68, 68, 0.1) !important; color: #f87171 !important; border: 1px solid rgba(239, 68, 68, 0.2) !important; display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; margin-bottom: 25px; transition: 0.3s; }
         .status-badge-red .dot { width: 8px; height: 8px; background-color: #f87171 !important; border-radius: 50%; margin-right: 10px; box-shadow: 0 0 10px #f87171 !important; }
@@ -395,9 +410,7 @@
         body.light-mode .rs-news-img-wrapper { background: #f1f5f9; }
         body.light-mode .rs-news-title { color: #0f172a; }
 
-        @media (max-width: 991px) {
-            .teto-mascot { max-height: 45vh; transform: scale(1); margin-top: 2rem; margin-bottom: 1.5rem; }
-        }
+        @media (max-width: 991px) {\n            .teto-mascot { max-height: 45vh; transform: scale(1); margin-top: 2rem; margin-bottom: 1.5rem; }\n        }
 
         @media (max-width: 768px) {
             body { overflow-y: auto; }
@@ -557,7 +570,7 @@
 
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" onclick="toggleView('teto')">
-                                    <div class="project-icon-box icon-teto10">🥖</div>
+                                    <div class="project-icon-box icon-teto">🥖</div>
                                     <div>
                                         <div class="dropdown-title">tetoOS 10 <span class="badge badge-comingsoon">IN PROGRESS</span></div>
                                         <p class="dropdown-desc" data-i18n="proj_teto10_desc">Target Release: 2027 • Final in Progress</p>
@@ -571,12 +584,12 @@
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#creditsModal" data-i18n="nav_credits">Credits</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="document.getElementById('community-section').scrollIntoView({behavior: 'smooth'})" data-i18n="nav_community">Community</a></li>
 
-                    <!-- KHUSUS MOBILE: KONTROL BAHASA & THEME DI DALAM MENU NAVIGASI -->
+                    <!-- KHUSUS MOBILE: KONTROL BAHASA & THEME DI DALAM MENU NAVIGASI (PUTIH TERANG) -->
                     <li class="nav-item d-lg-none mt-3 pt-3 border-top border-secondary w-100 text-center">
                         <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
                             <div class="dropdown">
-                                <button class="btn btn-outline-green dropdown-toggle" type="button" id="langDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 7px 16px; border-radius: 8px; font-weight: bold;">
-                                    🌐 EN
+                                <button class="btn btn-lang-bright dropdown-toggle" type="button" id="langDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 7px 16px; border-radius: 8px;">
+                                    🌐 🇺🇸 EN
                                 </button>
                                 <ul class="dropdown-menu glass-dropdown shadow" aria-labelledby="langDropdownMobile" style="min-width: 160px;">
                                     <li><a class="dropdown-item" href="#" onclick="setLanguage('en'); return false;">🇺🇸 English (US)</a></li>
@@ -599,12 +612,12 @@
                 <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-outline-green oobe-link" data-i18n="nav_chat">TetoYapping Chat</a>
                 <a href="https://donatekasaneproject.vercel.app" target="_blank" class="btn btn-donate oobe-link" data-i18n="nav_support">Top-up & Support ☕</a>
                 
-                <!-- LANGUAGE SWITCHER DESKTOP (TANPA BAHASA INDIA) -->
+                <!-- LANGUAGE SWITCHER DESKTOP (TOMBOL PUTIH TERANG TANPA BAHASA INDIA) -->
                 <div class="dropdown">
-                    <button class="btn btn-outline-green dropdown-toggle d-flex align-items-center justify-content-center" type="button" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 8px 15px; border-radius: 8px; font-weight:bold;">
-                        🌐 EN
+                    <button class="btn btn-lang-bright dropdown-toggle d-flex align-items-center justify-content-center" type="button" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 8px 16px; border-radius: 8px;">
+                        🌐 🇺🇸 EN
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end glass-dropdown" aria-labelledby="langDropdown" style="min-width: 140px; margin-top: 10px !important;">
+                    <ul class="dropdown-menu dropdown-menu-end glass-dropdown" aria-labelledby="langDropdown" style="min-width: 150px; margin-top: 10px !important;">
                         <li><a class="dropdown-item" href="#" onclick="setLanguage('en'); return false;">🇺🇸 English (US)</a></li>
                         <li><a class="dropdown-item" href="#" onclick="setLanguage('id'); return false;">🇮🇩 Indonesia</a></li>
                         <li><a class="dropdown-item" href="#" onclick="setLanguage('ja'); return false;">🇯🇵 日本語</a></li>
@@ -885,7 +898,7 @@
         <div style="padding: 80px 5%; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(16, 185, 129, 0.1); border-bottom: 1px solid rgba(16, 185, 129, 0.1);">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 60px;">
-                    <h2 class="section-title" data-i18n="team_title">Meet Our <span style="background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Development Team</span></h2>
+                    <h2 class="section-title" data-i18n="team_title">Meet Our <span style="background: linear-gradient(135deg, #34d399 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Development Team</span></h2>
                     <p class="section-subtitle" data-i18n="team_subtitle">Passionate developers creating amazing experiences</p>
                 </div>
                 <div class="dev-grid">
@@ -921,7 +934,7 @@
                     </div>
                     <div class="dev-card">
                         <img src="https://files.catbox.moe/j6wvaq.jpg" alt="AES™" style="border-color: rgba(6, 182, 212, 0.3);">
-                        <h4><a href="https://msha.ke/arieeka81#about-me" target="_blank" style="color: #fff; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#06b6d4'" onmouseout="this.style.color='inherit'">AES™</a></h4>
+                        <h4><a href="https://msha.ke/arieeka81#about-me" target="_blank" style="color: #fff; text-decoration: none; transition: 0.3s;" onmouseover="this.style.color='#06b6d4'\" onmouseout=\"this.style.color='inherit'">AES™</a></h4>
                         <p style="color: #06b6d4; font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Wallpaper Designer</p>
                         <p>Crafts stunning wallpapers and visual themes for an enhanced aesthetic experience.</p>
                     </div>
@@ -1067,13 +1080,13 @@
                     </div>
                 </div>
 
-                <!-- FOOTER LANGUAGE PICKER (MEMUDAHKAN PENGGUNA MOBILE GANTI BAHASA) -->
+                <!-- FOOTER LANGUAGE PICKER (TOMBOL PUTIH TERANG MEMUDAHKAN MOBILE) -->
                 <div class="row pt-3 pb-4 border-top border-secondary align-items-center">
                     <div class="col-12 col-md-6 text-center text-md-start mb-3 mb-md-0">
                         <span class="text-muted small me-2" style="font-family: 'JetBrains Mono', monospace;">Select Language / Pilih Bahasa:</span>
                         <div class="dropdown d-inline-block">
-                            <button class="btn btn-sm btn-outline-green dropdown-toggle" type="button" id="langDropdownFooter" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 6px; font-weight: bold;">
-                                🌐 EN
+                            <button class="btn btn-sm btn-lang-bright dropdown-toggle" type="button" id="langDropdownFooter" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 6px;">
+                                🌐 🇺🇸 EN
                             </button>
                             <ul class="dropdown-menu glass-dropdown shadow" aria-labelledby="langDropdownFooter" style="min-width: 150px;">
                                 <li><a class="dropdown-item" href="#" onclick="setLanguage('en'); return false;">🇺🇸 English (US)</a></li>
@@ -1147,10 +1160,11 @@
                     <!-- Right Column -->
                     <div class="modal-right-pane">
                         <div class="pane-title" data-i18n="dl_modal_edition">Edition</div>
+                        
                         <!-- Tabs -->
                         <div class="teto-tabs">
                             <button class="teto-tab active" data-tab="supported" data-i18n="dl_modal_supported">Supported (Final 2027)</button>
-                            <button class="teto-tab" data-tab="unsupported" data-i18n="dl_modal_unsupported">Unsupported (EA Maret)</button>
+                            <button class="teto-tab" data-tab="unsupported" data-i18n="dl_modal_unsupported">Unsupported / Archive</button>
                         </div>
                         
                         <!-- List Download -->
@@ -1237,18 +1251,18 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content glass-modal text-light border-0" style="border-left: 4px solid #ef4444 !important;">
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold" style="color: #ef4444;">⚠️ Notice: tetoOS 10 EA (March)</h5>
+                    <h5 class="modal-title fw-bold" style="color: #ef4444;">⚠️ Notice: Early Access / Unsupported Build</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body system-font pt-3 pb-4">
-                    <p style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.6;" data-i18n="ea_warn_p1">tetoOS 10 EA version (March) is available for download to test performance on legacy rigs.</p>
+                    <p style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.6;" data-i18n="ea_warn_p1">Build Early Access / Unsupported ini tersedia untuk eksperimen dan pengujian pada mesin lama.</p>
                     <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 15px; border-radius: 8px; margin-top: 15px;">
                         <p style="margin-bottom: 10px; font-size: 0.95rem; color: #fff;" data-i18n="ea_warn_p2">The official Final build is set for 2027.</p>
-                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #fca5a5;" data-i18n="ea_warn_p3">⚠️ Click below to continue downloading the EA March ISO file.</p>
+                        <p style="margin-bottom: 0; font-size: 0.95rem; color: #fca5a5;" data-i18n="ea_warn_p3">⚠️ Klik di bawah untuk melanjutkan pengunduhan file ISO.</p>
                     </div>
                 </div>
                 <div class="modal-footer border-0 justify-content-between pt-0 flex-wrap gap-2">
-                    <a href="#" target="_blank" class="text-white text-decoration-underline" style="font-size: 0.85rem;" onclick="document.querySelector('#eaWarningModal .btn-close').click();" id="continue-ea-dl" data-i18n="ea_warn_continue">Continue to EA March Download &rarr;</a>
+                    <a href="#" target="_blank" class="text-white text-decoration-underline" style="font-size: 0.85rem;" onclick="document.querySelector('#eaWarningModal .btn-close').click();" id="continue-ea-dl" data-i18n="ea_warn_continue">Continue to Download &rarr;</a>
                     <div class="d-flex gap-2">
                         <a href="https://chat.whatsapp.com/LsL4iUHmES3EbYVkcT2xUp" target="_blank" class="btn btn-outline-success">WhatsApp Group</a>
                         <button type="button" class="btn btn-cbt" data-bs-dismiss="modal" onclick="switchToSupportedTab()" data-i18n="btn_use_supported">View Release Status</button>
@@ -1303,7 +1317,7 @@
             en: {
                 nav_overview: "Overview", nav_news: "News", nav_projects: "Projects", nav_docs: "Docs", nav_credits: "Credits", nav_community: "Community",
                 nav_chat: "TetoYapping Chat", nav_support: "Top-up & Support ☕",
-                oobe_welcome: "🌿 Welcome to Nook<span>leaf</span>", oobe_prompt: "> PRESS ANY KEY OR CLICK TO INITIALIZE...", oobe_bye: "👋 Bye bye!",
+                oobe_welcome: "🌿 Welcome to Nook<span>leaf</span>", oobe_prompt: "> PRESS ANY KEY OR CLICK TO INITIALIZE...", oobe_bye: "👋 Bye bye!...",
                 oobe_shutting: "Shutting down Nook Core...", oobe_thanks: "Thank you for visiting the official Nookleaf website.",
                 global_update_notice: "<strong>Website Update:</strong> tetoOS 10 is currently undergoing final tuning with an official release target in 2027. Early Access (EA) download is available below.",
                 hero_title: "Redefining your<br><span class=\"text-gradient\">Desktop Experience.</span>",
@@ -1347,7 +1361,7 @@
                 dl_modal_version: "Windows Version",
                 dl_modal_edition: "Edition",
                 dl_modal_supported: "Supported (Final 2027)",
-                dl_modal_unsupported: "Unsupported (EA Maret)",
+                dl_modal_unsupported: "Unsupported / Archive",
                 dl_modal_helper: "Choose an edition.",
                 dl_modal_no_selection: "No edition selected.",
                 dl_modal_btn_dl: "Download",
@@ -1356,16 +1370,16 @@
                 cbt_modal_title: "Launch Scheduled for 2027",
                 cbt_modal_desc: "tetoOS 10 Final version is currently in heavy tuning and scheduled for public launch in <strong>2027</strong>.",
                 cbt_modal_info: "In the meantime, you can test out the EA Maret ISO from the download menu.",
-                ea_warn_p1: "tetoOS 10 EA version (March) is available for download to test performance on legacy rigs.",
+                ea_warn_p1: "Build Early Access / Unsupported ini tersedia untuk eksperimen dan pengujian pada mesin lama.",
                 ea_warn_p2: "The official Final build is set for 2027.",
-                ea_warn_p3: "⚠️ Click below to continue downloading the EA March ISO file.",
-                ea_warn_continue: "Continue to EA March Download &rarr;",
+                ea_warn_p3: "⚠️ Klik di bawah untuk melanjutkan pengunduhan file ISO.",
+                ea_warn_continue: "Continue to Download &rarr;",
                 btn_use_supported: "View Release Status"
             },
             id: {
                 nav_overview: "Overview", nav_news: "News", nav_projects: "Projects", nav_docs: "Docs", nav_credits: "Credits", nav_community: "Community",
                 nav_chat: "TetoYapping Chat", nav_support: "Top-up & Support ☕",
-                oobe_welcome: "🌿 Welcome to Nook<span>leaf</span>", oobe_prompt: "> PRESS ANY KEY OR CLICK TO INITIALIZE...", oobe_bye: "👋 Bye bye!",
+                oobe_welcome: "🌿 Welcome to Nook<span>leaf</span>", oobe_prompt: "> PRESS ANY KEY OR CLICK TO INITIALIZE...", oobe_bye: "👋 Bye bye!...",
                 oobe_shutting: "Shutting down Nook Core...", oobe_thanks: "Terima kasih telah berkunjung ke situs resmi Nookleaf.",
                 global_update_notice: "<strong>Website Update:</strong> tetoOS 10 saat ini dalam tahap finalisasi dan ditargetkan rilis pada tahun 2027. File EA Maret tetap dapat diunduh.",
                 hero_title: "Redefining your<br><span class=\"text-gradient\">Desktop Experience.</span>",
@@ -1409,7 +1423,7 @@
                 dl_modal_version: "Versi Windows",
                 dl_modal_edition: "Edisi",
                 dl_modal_supported: "Supported (Final 2027)",
-                dl_modal_unsupported: "Unsupported (EA Maret)",
+                dl_modal_unsupported: "Unsupported / Arsip",
                 dl_modal_helper: "Pilih sebuah edisi.",
                 dl_modal_no_selection: "Tidak ada edisi yang dipilih.",
                 dl_modal_btn_dl: "Download",
@@ -1418,10 +1432,10 @@
                 cbt_modal_title: "Peluncuran Dijadwalkan 2027",
                 cbt_modal_desc: "tetoOS 10 versi Final saat ini masih <strong>dalam tahap peracikan intensif</strong> dan ditargetkan rilis pada tahun <strong>2027</strong>.",
                 cbt_modal_info: "Sambil menunggu versi 2027, Anda tetap dapat mencoba dan mengunduh versi <strong>EA Maret</strong> di menu download.",
-                ea_warn_p1: "tetoOS 10 EA versi Maret tetap dapat diunduh untuk pengujian stabilitas sistem lama Anda.",
+                ea_warn_p1: "Build Early Access / Unsupported ini tersedia untuk eksperimen dan pengujian pada mesin lama.",
                 ea_warn_p2: "Versi Final tetoOS 10 saat ini sedang diproses secara penuh dengan target rilis 2027.",
-                ea_warn_p3: "⚠️ Klik tautan di bawah untuk melanjutkan pengunduhan file ISO EA Maret.",
-                ea_warn_continue: "Lanjut Download EA Maret &rarr;",
+                ea_warn_p3: "⚠️ Klik tautan di bawah untuk melanjutkan pengunduhan file ISO.",
+                ea_warn_continue: "Lanjut Download &rarr;",
                 btn_use_supported: "Lihat Status Rilis"
             },
             ja: {
@@ -1471,7 +1485,7 @@
                 dl_modal_version: "Windowsバージョン",
                 dl_modal_edition: "エディション",
                 dl_modal_supported: "サポート対象 (Final 2027)",
-                dl_modal_unsupported: "サポート対象外 (EA Maret)",
+                dl_modal_unsupported: "サポート対象外 / アーカイブ",
                 dl_modal_helper: "エディションを選択してください。",
                 dl_modal_no_selection: "エディションが選択されていません。",
                 dl_modal_btn_dl: "ダウンロード",
@@ -1480,10 +1494,10 @@
                 cbt_modal_title: "2027年公開予定",
                 cbt_modal_desc: "tetoOS 10の最終版は現在集中開発中であり、<strong>2027年</strong>のリリースを目指しています。",
                 cbt_modal_info: "その間、ダウンロードメニューからEA MaretのISOを引き続きお試しいただけます。",
-                ea_warn_p1: "tetoOS 10 EAバージョン(3月)は引き続きダウンロードしてテスト可能です。",
+                ea_warn_p1: "Build Early Access / Unsupported ini tersedia untuk eksperimen dan pengujian pada mesin lama.",
                 ea_warn_p2: "正式なFinal版は2027年に予定されています。",
-                ea_warn_p3: "⚠️ 下のリンクをクリックしてEA MaretのISOダウンロードを続行してください。",
-                ea_warn_continue: "EA Maretのダウンロードを続行 &rarr;",
+                ea_warn_p3: "⚠️ 下のリンクをクリックしてダウンロードを続行してください。",
+                ea_warn_continue: "ダウンロードを続行 &rarr;",
                 btn_use_supported: "ステータスを確認"
             },
             ru: {
@@ -1533,7 +1547,7 @@
                 dl_modal_version: "Версия Windows",
                 dl_modal_edition: "Издание",
                 dl_modal_supported: "Поддерживается (Final 2027)",
-                dl_modal_unsupported: "Не поддерживается (EA Maret)",
+                dl_modal_unsupported: "Не поддерживается / Архив",
                 dl_modal_helper: "Выберите издание.",
                 dl_modal_no_selection: "Издание не выбрано.",
                 dl_modal_btn_dl: "Скачать",
@@ -1542,10 +1556,10 @@
                 cbt_modal_title: "Запуск запланирован на 2027 год",
                 cbt_modal_desc: "Финальная версия tetoOS 10 сейчас находится в активной разработке с релизом в <strong>2027 году</strong>.",
                 cbt_modal_info: "Тем временем вы можете загрузить ISO-образ EA Maret из меню загрузки.",
-                ea_warn_p1: "Версия tetoOS 10 EA (Март) доступна для загрузки для тестирования.",
+                ea_warn_p1: "Build Early Access / Unsupported ini tersedia untuk eksperimen dan pengujian pada mesin lama.",
                 ea_warn_p2: "Финальная сборка выйдет в 2027 году.",
-                ea_warn_p3: "⚠️ Нажмите ниже, чтобы продолжить загрузку ISO-образа EA Maret.",
-                ea_warn_continue: "Продолжить скачивание EA Maret &rarr;",
+                ea_warn_p3: "⚠️ Нажмите ниже, чтобы продолжить загрузку.",
+                ea_warn_continue: "Продолжить скачивание &rarr;",
                 btn_use_supported: "Статус релиза"
             },
             zh: {
@@ -1595,7 +1609,7 @@
                 dl_modal_version: "Windows 版本",
                 dl_modal_edition: "版本类型",
                 dl_modal_supported: "受支持的 (Final 2027)",
-                dl_modal_unsupported: "不受支持的 (EA Maret)",
+                dl_modal_unsupported: "不受支持的 / 存档",
                 dl_modal_helper: "选择一个版本。",
                 dl_modal_no_selection: "未选择版本。",
                 dl_modal_btn_dl: "下载",
@@ -1604,10 +1618,10 @@
                 cbt_modal_title: "定于 2027 年发布",
                 cbt_modal_desc: "tetoOS 10 最终版目前正处于全面开发阶段，目标于 <strong>2027 年</strong> 正式上线。",
                 cbt_modal_info: "在此期间，您依然可以在下载列表中下载 EA Maret ISO 进行体验。",
-                ea_warn_p1: "tetoOS 10 EA 3月版依然开放下载，供测试旧平台稳定性。",
+                ea_warn_p1: "Build Early Access / Unsupported ini tersedia untuk eksperimen dan pengujian pada mesin lama.",
                 ea_warn_p2: "正式 Final 镜像将于 2027 年面世。",
-                ea_warn_p3: "⚠️ 点击下方链接继续下载 EA Maret ISO 镜像。",
-                ea_warn_continue: "继续下载 EA Maret &rarr;",
+                ea_warn_p3: "⚠️ 点击下方链接继续下载。",
+                ea_warn_continue: "继续下载 &rarr;",
                 btn_use_supported: "查看发布进度"
             },
             ko: {
@@ -1657,7 +1671,7 @@
                 dl_modal_version: "Windows 버전",
                 dl_modal_edition: "에디션",
                 dl_modal_supported: "지원됨 (Final 2027)",
-                dl_modal_unsupported: "지원되지 않음 (EA Maret)",
+                dl_modal_unsupported: "지원되지 않음 / 아카이브",
                 dl_modal_helper: "에디션을 선택하세요.",
                 dl_modal_no_selection: "선택된 에디션이 없습니다.",
                 dl_modal_btn_dl: "다운로드",
@@ -1666,10 +1680,10 @@
                 cbt_modal_title: "2027년 출시 예정",
                 cbt_modal_desc: "tetoOS 10 최종 버전은 현재 집중 튜닝 중이며 <strong>2027년</strong>에 출시될 예정입니다.",
                 cbt_modal_info: "그 동안 다운로드 메뉴에서 EA Maret ISO를 계속 사용해 보실 수 있습니다.",
-                ea_warn_p1: "tetoOS 10 EA 버전(3월)은 테스트 목적으로 계속 다운로드할 수 있습니다.",
+                ea_warn_p1: "Build Early Access / Unsupported ini tersedia untuk eksperimen dan pengujian pada mesin lama.",
                 ea_warn_p2: "정식 Final 빌드는 2027년으로 예정되어 있습니다.",
-                ea_warn_p3: "⚠️ EA Maret ISO 파일을 다운로드하려면 아래를 클릭하세요.",
-                ea_warn_continue: "EA Maret 다운로드 계속 &rarr;",
+                ea_warn_p3: "⚠️ 다운로드를 계속하려면 아래를 클릭하세요.",
+                ea_warn_continue: "다운로드 계속 &rarr;",
                 btn_use_supported: "출시 현황 보기"
             },
             ar: {
@@ -1719,7 +1733,7 @@
                 dl_modal_version: "إصدار Windows",
                 dl_modal_edition: "الإصدار",
                 dl_modal_supported: "مدعوم (Final 2027)",
-                dl_modal_unsupported: "غير مدعوم (EA Maret)",
+                dl_modal_unsupported: "غير مدعوم / أرشيف",
                 dl_modal_helper: "اختر إصدارًا.",
                 dl_modal_no_selection: "لم يتم اختيار أي إصدار.",
                 dl_modal_btn_dl: "تحميل",
@@ -1728,10 +1742,10 @@
                 cbt_modal_title: "الإطلاق مقرر في 2027",
                 cbt_modal_desc: "الإصدار النهائي من tetoOS 10 قيد التطوير المكثف حاليًا مع استهداف الإطلاق في <strong>2027</strong>.",
                 cbt_modal_info: "في هذه الأثناء، يمكنك تجربة وتنزيل ملف EA Maret ISO من قائمة التحميل.",
-                ea_warn_p1: "لا يزال إصدار tetoOS 10 EA (مارس) متاحًا للتنزيل لاختبار الأداء.",
+                ea_warn_p1: "Build Early Access / Unsupported ini tersedia untuk eksperimen dan pengujian pada mesin lama.",
                 ea_warn_p2: "الإصدار النهائي مقرر في عام 2027.",
-                ea_warn_p3: "⚠️ انقر أدناه لمتابعة تنزيل ملف ISO الخاص بـ EA Maret.",
-                ea_warn_continue: "متابعة تنزيل EA Maret &rarr;",
+                ea_warn_p3: "⚠️ انقر أدناه لمتابعة التنزيل.",
+                ea_warn_continue: "متابعة التنزيل &rarr;",
                 btn_use_supported: "عرض حالة الإصدار"
             }
         };
@@ -1828,7 +1842,7 @@
             window.scrollTo(0, 0);
         }
 
-        // === LOGIKA DOWNLOAD MODAL (TETO 10) ===
+        // === DATA DOWNLOAD TERMASUK LINK EA MARET & CBT V6 BARU ===
         const editionsData = {
             'sl': {
                 'supported': [
@@ -1836,7 +1850,8 @@
                     { name: 'tetoOS Superlite RC1 21H2 (On Proses)', disabled: true }
                 ],
                 'unsupported': [
-                    { name: 'tetoOS Superlite EA Maret (Available)', disabled: false, url: 'https://sfl.gl/1V1v', isEa: true }
+                    { name: 'tetoOS Superlite EA Maret (Available)', disabled: false, url: 'https://sfl.gl/HQfCtx', isEa: true },
+                    { name: 'tetoOS CBT v6 (Legacy / Unsupported)', disabled: false, url: 'https://sfl.gl/Tnj58g', isEa: true }
                 ]
             },
             'normal': {
@@ -1844,7 +1859,9 @@
                     { name: 'tetoOS Normal Final (Target 2027)', disabled: true },
                     { name: 'tetoOS Normal RC1 21H2 (On Proses)', disabled: true }
                 ],
-                'unsupported': [] 
+                'unsupported': [
+                    { name: 'tetoOS CBT v6 (Legacy / Unsupported)', disabled: false, url: 'https://sfl.gl/Tnj58g', isEa: true }
+                ] 
             }
         };
 
